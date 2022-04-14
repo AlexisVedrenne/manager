@@ -31,16 +31,24 @@
             <q-icon color="secondary" name="lock" />
           </template>
         </q-input>
-        <div class="column q-mt-md">
-          <div class="col self-end">
-            <q-icon color="grey-7" name="help_outline" />
-            <span class="q-ml-sm q-mt-sm q-mr-sm text-grey-7"
-              >Mot de passe oublié ?
-            </span>
+        <div class="row items-center justify-end q-mt-md">
+          <div class="q-mr-sm">
+            <q-btn
+              size="12px"
+              icon="help_outline"
+              flat
+              no-caps
+              style="border-radius: 5px;align-self: flex-end; !important"
+              color="grey-7"
+              label="Mot de passe oublié ?"
+              :to="{ name: 'resetPassword' }"
+            />
+          </div>
+          <div class="col-2 q-mr-md">
             <q-btn
               :loading="loading"
               type="submit"
-              class="q-mr-md q-mb-md"
+              class="q-mr-md"
               size="18px"
               round
               color="accent"

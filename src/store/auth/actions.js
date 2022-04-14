@@ -1,7 +1,28 @@
 import fire from "src/boot/Firebase";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { Notify } from "quasar";
 import "core-js/es/array";
+
+export async function lostPassword({ commit }, { email }) {
+  try {
+    await sendPasswordResetEmail(fire.auth, email.toString().trim());
+    Notify.create({
+      icon: "done",
+      message: "Email de résiliation de mot de passe envoyé",
+      color: "positive",
+    });
+  } catch (error) {
+    Notify.create({
+      icon: "done",
+      message: "Email de résiliation de mot de passe envoyé",
+      color: "positive",
+    });
+  }
+}
 
 export async function signIn({ commit }, { infos }) {
   try {
@@ -26,7 +47,7 @@ export async function signIn({ commit }, { infos }) {
   }
 }
 
-export async function sinOut({ commit }) {
+export async function signLeft({ commit }) {
   try {
     signOut(fire.auth);
     commit("out");

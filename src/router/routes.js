@@ -8,6 +8,11 @@ const routes = [
         path: "",
         component: () => import("pages/ConnexionPage.vue"),
       },
+      {
+        name: "resetPassword",
+        path: "reset/password",
+        component: () => import("pages/app/ResetPasswordPage.vue"),
+      },
     ],
   },
   {
