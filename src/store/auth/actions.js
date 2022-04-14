@@ -3,6 +3,10 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
 } from "firebase/auth";
 import { Notify } from "quasar";
 import "core-js/es/array";
@@ -61,5 +65,38 @@ export async function signLeft({ commit }) {
       message: e.message,
       color: "red",
     });
+  }
+}
+
+export async function logInGoogle() {
+  try {
+    const provider = new GoogleAuthProvider();
+    provider.addScope("https://www.googleapis.com/auth/user.addresses.read");
+    provider.addScope("https://www.googleapis.com/auth/user.birthday.read");
+    provider.addScope("https://www.googleapis.com/auth/user.phonenumbers.read");
+    provider.addScope("https://www.googleapis.com/auth/userinfo.email");
+    provider.addScope("https://www.googleapis.com/auth/userinfo.profile");
+    let result = await signInWithPopup(fire.auth, provider);
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    console.log(credential);
+  } catch (error) {
+    console.log(error);
+    Notify.create({
+      message: "Erreur lors de la connexion à Google",
+      color: "red",
+    });
+  }
+}
+
+export async function logFacebook() {
+  try {
+    const provider = new FacebookAuthProvider();
+    provider.addScope("email");
+    provider.addScope("instagram_basic");
+    let result = await signInWithPopup(fire.auth, provider);
+    const credential = FacebookAuthProvider.credentialFromResult(result);
+    console.log(credential);
+  } catch (error) {
+    console.log(error);
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "org.cordova.manager.app",
+  "name": "org.cordova.quasar.app",
   "displayName": "Manager",
   "version": "1.0.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
@@ -13,18 +13,19 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "devDependencies": {
-    "cordova-android": "^10.1.1",
-    "cordova-plugin-ionic-webview": "^5.0.0"
+    "cordova-android": "^10.1.1"
   },
   "cordova": {
     "platforms": [
       "android"
     ],
     "plugins": {
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-buildinfo": {},
+      "cordova-plugin-inappbrowser": {}
     }
   },
   "dependencies": {
-    "yarn": "^1.22.18"
+    "cordova-plugin-buildinfo": "4.0.0",
+    "cordova-plugin-inappbrowser": "5.0.0"
   }
 }

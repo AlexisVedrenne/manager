@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.cordova.manager.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.cordova.quasar.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Manager</name>
     <description>L'objectif de cette application est de faciliter la vie à tous ceux qui voudrons l'utiliser. Je voulais créer quelque de chose d'utilisable facilement et de façon intuitive. Pour que ceux qui comme moi on du mal à gérer leur quotidien et qui on besoin d'aide pour l'organiser un peu mieux chaque jours.</description>
     <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
@@ -10,3 +10,10 @@
     <allow-intent href="https://*/*" />
     <allow-navigation href="about:*" />
 </widget>
+<universal-links>
+    <host name="DYNAMIC_LINK_DOMAIN" scheme="https" />
+    <host name="alexis-vedrenne.fr" scheme="https">
+        <path url="/__/auth/callback"/>
+    </host>
+</universal-links>
+<preference name="AndroidLaunchMode" value="singleTask" />

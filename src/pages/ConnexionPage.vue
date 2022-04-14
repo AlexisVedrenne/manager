@@ -62,12 +62,14 @@
       <p class="q-mt-md text-bold text-grey-8 text-center">Se connecter avec</p>
       <div class="row justify-center q-mb-md">
         <q-btn
+          @click="logGoogle"
           class="q-mr-sm"
           round
           style="background-color: #ff5252; color: white"
           icon="ion-logo-google"
         />
         <q-btn
+          @click="logFaceBook"
           class="q-mr-sm"
           round
           style="background-color: #3b5998; color: white"
@@ -121,6 +123,12 @@ export default {
       this.loading = true;
       await this.$store.dispatch("signIn", { infos: this.infos });
       this.loading = false;
+    },
+    async logGoogle() {
+      await this.$store.dispatch("logInGoogle");
+    },
+    async logFaceBook() {
+      await this.$store.dispatch("logFacebook");
     },
   },
 };
