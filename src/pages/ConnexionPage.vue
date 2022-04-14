@@ -7,13 +7,26 @@
           src="~assets/images/manager.svg"
         />
       </div>
-      <q-form>
-        <q-input class="q-mb-md" color="secondary" autofocus label="e-mail">
+      <q-form @submit="submit">
+        <q-input
+          type="email"
+          v-model="infos.email"
+          class="q-mb-md"
+          color="secondary"
+          label="e-mail"
+          required
+        >
           <template v-slot:prepend>
             <q-icon color="secondary" name="mail" />
           </template>
         </q-input>
-        <q-input type="password" color="secondary" label="mot de passe">
+        <q-input
+          required
+          v-model="infos.password"
+          type="password"
+          color="secondary"
+          label="mot de passe"
+        >
           <template v-slot:prepend>
             <q-icon color="secondary" name="lock" />
           </template>
@@ -25,6 +38,8 @@
               >Mot de passe oublié ?
             </span>
             <q-btn
+              :loading="loading"
+              type="submit"
               class="q-mr-md q-mb-md"
               size="18px"
               round
@@ -82,3 +97,23 @@
     </div>
   </main>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      infos: {
+        email: "",
+        password: "",
+      },
+      loading: false,
+    };
+  },
+  methods: {
+    async submit() {
+      this.loading = true;
+      await this.$store.dispatch("signIn", { infos: this.infos });
+      this.loading = false;
+    },
+  },
+};
+</script>
