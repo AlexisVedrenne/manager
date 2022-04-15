@@ -1,2 +1,3 @@
-export function someGetter (/* state */) {
+export function getUserId(state) {
+  return state.userId;
 }

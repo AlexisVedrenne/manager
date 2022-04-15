@@ -14,18 +14,26 @@
           class="q-mb-md"
           color="secondary"
           label="e-mail"
-          required
+          lazy-rules
+          :rules="[
+            (val) =>
+              (val.includes('@') && val.includes('.')) ||
+              'Entrer une adresse e-mail valide !',
+          ]"
         >
           <template v-slot:prepend>
             <q-icon color="secondary" name="mail" />
           </template>
         </q-input>
         <q-input
-          required
           v-model="infos.password"
           type="password"
           color="secondary"
           label="mot de passe"
+          lazy-rules
+          :rules="[
+            (val) => val != '' || 'Vous devez entrer votre mot de passe !',
+          ]"
         >
           <template v-slot:prepend>
             <q-icon color="secondary" name="lock" />
@@ -104,6 +112,7 @@
           style="border-radius: 5px"
           color="grey-7"
           label="En savoir plus ?"
+          :to="{ name: 'A propos' }"
         />
       </div>
     </div>

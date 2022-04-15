@@ -1,5 +1,5 @@
 <template>
-  <main class="container q-pt-xl">
+  <main class="container q-mt-xl">
     <section class="row items-center">
       <div>
         <q-btn
@@ -30,7 +30,7 @@
           :rules="[
             (val) =>
               (val.includes('@') && val.includes('.')) ||
-              'Entrer una adresse e-mail valide !',
+              'Entrer une adresse e-mail valide !',
           ]"
         >
           <template v-slot:prepend>
@@ -100,15 +100,16 @@
           </div>
           <div class="col">
             <q-btn
-              no-caps
               flat
+              class="q-pa-none q-ml-md"
+              no-caps
               :href="'CGU.pdf'"
               target="_blank"
               label="J'ai lu & accepté les conditions général d'utilisation"
             />
           </div>
         </div>
-        <div class="row justify-center q-mt-md">
+        <div class="row justify-center q-mt-md q-pb-xl">
           <q-btn
             type="submit"
             no-caps

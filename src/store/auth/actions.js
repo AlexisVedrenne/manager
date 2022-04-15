@@ -82,6 +82,7 @@ export async function logInGoogle() {
     console.log(credential);
   } catch (error) {
     Notify.create({
+      icon: "error",
       message: "Erreur lors de la connexion à Google",
       color: "red",
     });
@@ -109,6 +110,7 @@ export async function logApple() {
     console.log(credential);
   } catch (error) {
     Notify.create({
+      icon: "error",
       message: "Erreur lors de la connexion à Apple",
       color: "red",
     });

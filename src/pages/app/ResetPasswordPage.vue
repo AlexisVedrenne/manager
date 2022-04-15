@@ -26,6 +26,12 @@
           color="secondary"
           class="col"
           label="Entrer votre e-mail"
+          lazy-rules
+          :rules="[
+            (val) =>
+              (val.includes('@') && val.includes('.')) ||
+              'Entrer une adresse e-mail valide !',
+          ]"
         >
           <template v-slot:prepend>
             <q-icon color="secondary" name="mail" />
