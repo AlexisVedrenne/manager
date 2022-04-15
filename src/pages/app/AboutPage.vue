@@ -1,15 +1,17 @@
 <template>
   <main>
     <q-card>
-      <div class="row justify-center">
-        <q-img
-          style="width: 80%; height: 80%"
-          src="~assets/images/manager.svg"
-        />
-      </div>
-      <p class="text-center text-primary" style="font-size: 18px">
-        Une application pour tous !
-      </p>
+      <q-card-section>
+        <div class="row justify-center">
+          <q-img
+            style="width: 80%; height: 80%"
+            src="~assets/images/manager.svg"
+          />
+        </div>
+        <p class="text-center text-primary" style="font-size: 18px">
+          Une application pour tous !
+        </p></q-card-section
+      >
     </q-card>
 
     <q-card class="q-ma-sm">
@@ -62,6 +64,7 @@
       </q-card-section>
       <div class="row justify-end">
         <q-btn
+          :to="{ name: 'Contact' }"
           no-caps
           flat
           color="accent"
