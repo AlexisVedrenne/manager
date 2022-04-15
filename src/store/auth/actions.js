@@ -7,6 +7,7 @@ import {
   FacebookAuthProvider,
   signInWithPopup,
   signInWithRedirect,
+  OAuthProvider,
 } from "firebase/auth";
 import { Notify } from "quasar";
 import "core-js/es/array";
@@ -76,11 +77,10 @@ export async function logInGoogle() {
     provider.addScope("https://www.googleapis.com/auth/user.phonenumbers.read");
     provider.addScope("https://www.googleapis.com/auth/userinfo.email");
     provider.addScope("https://www.googleapis.com/auth/userinfo.profile");
-    let result = await signInWithPopup(fire.auth, provider);
+    let result = await signInWithRedirect(fire.auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
     console.log(credential);
   } catch (error) {
-    console.log(error);
     Notify.create({
       message: "Erreur lors de la connexion à Google",
       color: "red",
@@ -96,7 +96,21 @@ export async function logFacebook() {
     let result = await signInWithPopup(fire.auth, provider);
     const credential = FacebookAuthProvider.credentialFromResult(result);
     console.log(credential);
+  } catch (error) {}
+}
+
+export async function logApple() {
+  try {
+    const provider = new OAuthProvider("apple.com");
+    provider.addScope("email");
+    provider.addScope("name");
+    await signInWithPopup(fire.auth, provider);
+    const credential = OAuthProvider.credentialFromResult(result);
+    console.log(credential);
   } catch (error) {
-    console.log(error);
+    Notify.create({
+      message: "Erreur lors de la connexion à Apple",
+      color: "red",
+    });
   }
 }

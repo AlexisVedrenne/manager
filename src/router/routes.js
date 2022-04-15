@@ -13,6 +13,11 @@ const routes = [
         path: "reset/password",
         component: () => import("pages/app/ResetPasswordPage.vue"),
       },
+      {
+        name: "signUp",
+        path: "signUp",
+        component: () => import("pages/SignUpPage.vue"),
+      },
     ],
   },
   {

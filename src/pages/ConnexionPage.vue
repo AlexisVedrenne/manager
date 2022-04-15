@@ -68,7 +68,7 @@
           style="background-color: #ff5252; color: white"
           icon="ion-logo-google"
         />
-        <q-btn
+        <!-- <q-btn
           @click="logFaceBook"
           class="q-mr-sm"
           round
@@ -80,8 +80,9 @@
           round
           style="background-color: #00acee; color: white"
           icon="ion-logo-twitter"
-        />
+        /> -->
         <q-btn
+          @click="logApple"
           round
           style="background-color: #000000; color: white"
           icon="ion-logo-apple"
@@ -89,6 +90,7 @@
       </div>
       <div class="row justify-center q-mt-md">
         <q-btn
+          :to="{ name: 'signUp' }"
           no-caps
           style="border-radius: 5px"
           color="primary"
@@ -129,6 +131,9 @@ export default {
     },
     async logFaceBook() {
       await this.$store.dispatch("logFacebook");
+    },
+    async logApple() {
+      await this.$store.dispatch("logApple");
     },
   },
 };
