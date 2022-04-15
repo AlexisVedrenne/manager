@@ -111,6 +111,7 @@
         </div>
         <div class="row justify-center q-mt-md q-pb-xl">
           <q-btn
+            :loading="loading"
             type="submit"
             no-caps
             style="width: 200px;height:50px border-radius: 5px"
@@ -136,10 +137,11 @@ export default {
       },
       password: "",
       utils: useQuasar(),
+      loading: false,
     };
   },
   methods: {
-    submit() {
+    async submit() {
       if (this.inscription.cgu !== true) {
         this.utils.notify({
           color: "warning",
@@ -148,12 +150,9 @@ export default {
           message: "Vous devez accepter les conditions général d'utilisation !",
         });
       } else {
-        this.utils.notify({
-          color: "green-4",
-          textColor: "white",
-          icon: "cloud_done",
-          message: "Submitted",
-        });
+        this.loading = true;
+        await this.$store.dispatch("signUp", { inscription: this.inscription });
+        this.loading = false;
       }
     },
   },

@@ -8,6 +8,8 @@ import {
   signInWithPopup,
   signInWithRedirect,
   OAuthProvider,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
 } from "firebase/auth";
 import { Notify } from "quasar";
 import "core-js/es/array";
@@ -112,6 +114,34 @@ export async function logApple() {
     Notify.create({
       icon: "error",
       message: "Erreur lors de la connexion à Apple",
+      color: "red",
+    });
+  }
+}
+
+export async function signUp({ commit }, { inscription }) {
+  try {
+    let res = await createUserWithEmailAndPassword(
+      fire.auth,
+      inscription.email,
+      inscription.password
+    );
+    let user = res.user;
+    Notify.create({
+      icon: "success",
+      message: "Votre compte à bien été créer !",
+      color: "positive",
+    });
+    await sendEmailVerification(user);
+    Notify.create({
+      icon: "info",
+      message: "Email de vérification envoyer !",
+      color: "warning",
+    });
+  } catch (error) {
+    Notify.create({
+      icon: "error",
+      message: "Erreur lors de la création du compte",
       color: "red",
     });
   }
