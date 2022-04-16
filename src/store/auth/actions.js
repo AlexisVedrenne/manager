@@ -1,5 +1,17 @@
 import fire from "src/boot/Firebase";
 import {
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  query,
+  orderBy,
+  where,
+  deleteDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore";
+import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
@@ -119,7 +131,7 @@ export async function logApple() {
   }
 }
 
-export async function signUp({ commit }, { inscription }) {
+export async function signUp({ dispatch }, { inscription }) {
   try {
     let res = await createUserWithEmailAndPassword(
       fire.auth,
@@ -127,22 +139,54 @@ export async function signUp({ commit }, { inscription }) {
       inscription.password
     );
     let user = res.user;
+    await dispatch("createUser", { user: user });
     Notify.create({
       icon: "success",
       message: "Votre compte à bien été créer !",
       color: "positive",
     });
     await sendEmailVerification(user);
+
     Notify.create({
       icon: "info",
       message: "Email de vérification envoyer !",
       color: "warning",
     });
   } catch (error) {
+    console.log(error);
     Notify.create({
       icon: "error",
       message: "Erreur lors de la création du compte",
       color: "red",
     });
   }
+}
+
+export async function createUser({ commit }, { user }) {
+  let account = {
+    banques: [],
+    chat: {
+      amis: [],
+      demandes: [],
+    },
+    heure: {
+      fiches: [],
+      param: {
+        nbHeureSemaine: 35,
+      },
+    },
+    isFirstConnect: true,
+    paie: {
+      fiches: [],
+      param: {
+        annuel: 19237.4,
+        horraire: 10.57,
+        menseul: 1603.12,
+      },
+    },
+    phone: "",
+    birth: "",
+    uid: user.uid,
+  };
+  await addDoc(collection(fire.firebasebd, "utilisateurs"), account);
 }
