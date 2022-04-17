@@ -1,16 +1,5 @@
 import fire from "src/boot/Firebase";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  getDoc,
-  query,
-  orderBy,
-  where,
-  deleteDoc,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -22,6 +11,8 @@ import {
   OAuthProvider,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  setPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 import { Notify } from "quasar";
 import "core-js/es/array";
@@ -43,8 +34,10 @@ export async function lostPassword({ commit }, { email }) {
   }
 }
 
-export async function signIn({ commit }, { infos }) {
+export async function signIn({ commit, dispatch }, { infos }) {
   try {
+    await dispatch("signLeft");
+    setPersistence(fire.auth, browserLocalPersistence);
     let user = await signInWithEmailAndPassword(
       fire.auth,
       infos.email.toString().trim(),
@@ -52,12 +45,11 @@ export async function signIn({ commit }, { infos }) {
     );
     commit("setUser", { user: user });
     Notify.create({
-      message: "Connexion réussie !",
+      message: "Vous etes en ligne.",
       color: "positive",
     });
-    return user.user;
+    return user;
   } catch (error) {
-    console.log(error);
     Notify.create({
       icon: "warning",
       message: "Adresse e-mail ou mot de passe incorrect.",
@@ -93,7 +85,6 @@ export async function logInGoogle() {
     provider.addScope("https://www.googleapis.com/auth/userinfo.profile");
     let result = await signInWithRedirect(fire.auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    console.log(credential);
   } catch (error) {
     Notify.create({
       icon: "error",
@@ -110,7 +101,6 @@ export async function logFacebook() {
     provider.addScope("instagram_basic");
     let result = await signInWithPopup(fire.auth, provider);
     const credential = FacebookAuthProvider.credentialFromResult(result);
-    console.log(credential);
   } catch (error) {}
 }
 
@@ -121,7 +111,6 @@ export async function logApple() {
     provider.addScope("name");
     await signInWithPopup(fire.auth, provider);
     const credential = OAuthProvider.credentialFromResult(result);
-    console.log(credential);
   } catch (error) {
     Notify.create({
       icon: "error",
@@ -146,14 +135,15 @@ export async function signUp({ dispatch }, { inscription }) {
       color: "positive",
     });
     await sendEmailVerification(user);
-
     Notify.create({
       icon: "info",
       message: "Email de vérification envoyer !",
       color: "warning",
     });
+    await dispatch("signIn", {
+      infos: { email: inscription.email, password: inscription.password },
+    });
   } catch (error) {
-    console.log(error);
     Notify.create({
       icon: "error",
       message: "Erreur lors de la création du compte",

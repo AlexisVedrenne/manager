@@ -13,21 +13,11 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "devDependencies": {
-    "cordova-android": "^10.1.2",
-    "cordova-ios": "^6.2.0",
-    "cordova-plugin-inappbrowser": "^5.0.0",
-    "cordova-plugin-ionic-webview": "^5.0.0",
-    "cordova-plugin-wkwebview-engine": "^1.2.2"
+    "cordova-android": "^10.1.2"
   },
   "cordova": {
     "platforms": [
-      "android",
-      "ios"
-    ],
-    "plugins": {
-      "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-wkwebview-engine": {},
-      "cordova-plugin-inappbrowser": {}
-    }
+      "android"
+    ]
   }
 }
