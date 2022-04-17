@@ -36,8 +36,19 @@ const routes = [
         path: "/contact",
         component: () => import("pages/app/ContactPage.vue"),
       },
-      {},
     ],
+  },
+  {
+    path:"/starting",
+    component:()=>import("layouts/EmptyLayout.vue"),
+    meta: { mustBeLogged: true },
+    children:[
+      {
+        name:"debut",
+        path:"",
+        component:()=>import("pages/guide/StartGuidePage.vue")
+      }
+    ]
   },
 
   // Always leave this as last one,

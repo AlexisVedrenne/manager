@@ -153,6 +153,7 @@ export default {
         this.loading = true;
         await this.$store.dispatch("signUp", { inscription: this.inscription });
         this.loading = false;
+        this.$router.push({name:"debut"});
       }
     },
   },
