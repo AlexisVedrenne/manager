@@ -23,6 +23,7 @@ const routes = [
   {
     path: "/manager",
     component: () => import("layouts/MainLayout.vue"),
+    meta: { mustBeLogged: true },
     children: [
       { path: "", component: () => import("pages/IndexPage.vue") },
       {
@@ -35,6 +36,7 @@ const routes = [
         path: "/contact",
         component: () => import("pages/app/ContactPage.vue"),
       },
+      {},
     ],
   },
 
