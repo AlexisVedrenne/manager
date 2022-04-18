@@ -46,8 +46,12 @@ export default {
   methods: {
     async verify() {
       this.loading = true;
-      this.verif = await this.$store.dispatch("verifyEmail");
+      let res = await this.$store.dispatch("verifyEmail");
+      this.verif = res;
       this.loading = false;
+      if (res) {
+        this.$router.push({ name: "completeProfile" });
+      }
     },
   },
 };

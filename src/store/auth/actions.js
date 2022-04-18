@@ -220,6 +220,7 @@ export async function verifyEmail() {
         message: "Votre adresse e-mail à bien été vérifier.",
         color: "positive",
       });
+      return true;
     } else {
       Notify.create({
         icon: "warning",
@@ -232,8 +233,8 @@ export async function verifyEmail() {
         message: "Email de vérification envoyer !",
         color: "warning",
       });
+      return false;
     }
-    return false;
   } catch (error) {
     console.log(error);
   }

@@ -51,6 +51,11 @@ const routes = [
         path: "/verify-email",
         component: () => import("pages/guide/VerifyMailPage.vue"),
       },
+      {
+        name: "completeProfile",
+        path: "/complete-profile",
+        component: () => import("pages/guide/CompleteProfilePage.vue"),
+      },
     ],
   },
 
