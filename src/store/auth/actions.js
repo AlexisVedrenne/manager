@@ -1,5 +1,5 @@
 import fire from "src/boot/Firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -34,15 +34,39 @@ export async function lostPassword({ commit }, { email }) {
   }
 }
 
+export async function setUser({ dispatch, commit }, { uid }) {
+  let user = await dispatch("getUserInfo", { uid: uid });
+  commit("setUser", { user: user });
+}
+
+export async function getUserInfo({ commit }, { uid }) {
+  try {
+    const q = await query(
+      collection(fire.firebasebd, "utilisateurs"),
+      where("uid", "==", uid)
+    );
+    const res = await getDocs(q);
+    let userInfo = res.docs[0].data();
+    return userInfo;
+  } catch (error) {
+    Notify.create({
+      icon: "error",
+      message: "Error lors de la récupération des informations",
+      color: "negative",
+    });
+  }
+}
+
 export async function signIn({ commit, dispatch }, { infos }) {
   try {
-    await dispatch("signLeft");
     setPersistence(fire.auth, browserLocalPersistence);
-    let user = await signInWithEmailAndPassword(
+    const res = await signInWithEmailAndPassword(
       fire.auth,
       infos.email.toString().trim(),
       infos.password.toString().trim()
     );
+    let uid = res.user.uid;
+    let user = await dispatch("getUserInfo", { uid: uid });
     commit("setUser", { user: user });
     Notify.create({
       message: "Vous etes en ligne.",
@@ -128,7 +152,7 @@ export async function signUp({ dispatch }, { inscription }) {
       inscription.password
     );
     let user = res.user;
-    await dispatch("createUser", { user: user });
+    await dispatch("createUser", { user: user, infos: inscription });
     Notify.create({
       icon: "success",
       message: "Votre compte à bien été créer !",
@@ -152,8 +176,10 @@ export async function signUp({ dispatch }, { inscription }) {
   }
 }
 
-export async function createUser({ commit }, { user }) {
+export async function createUser({ commit }, { user, infos }) {
   let account = {
+    nom: infos.nom,
+    prenom: infos.prenom,
     banques: [],
     chat: {
       amis: [],
@@ -179,4 +205,5 @@ export async function createUser({ commit }, { user }) {
     uid: user.uid,
   };
   await addDoc(collection(fire.firebasebd, "utilisateurs"), account);
+  commit("setUser", { user: account });
 }

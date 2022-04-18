@@ -1,3 +1,3 @@
-export function getUserId(state) {
-  return state.userId;
+export function getUser(state) {
+  return state.user;
 }

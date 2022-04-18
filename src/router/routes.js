@@ -18,14 +18,6 @@ const routes = [
         path: "signUp",
         component: () => import("pages/SignUpPage.vue"),
       },
-    ],
-  },
-  {
-    path: "/manager",
-    component: () => import("layouts/MainLayout.vue"),
-    meta: { mustBeLogged: true },
-    children: [
-      { path: "", component: () => import("pages/IndexPage.vue") },
       {
         name: "A propos",
         path: "/about",
@@ -39,16 +31,22 @@ const routes = [
     ],
   },
   {
-    path:"/starting",
-    component:()=>import("layouts/EmptyLayout.vue"),
+    path: "/manager",
+    component: () => import("layouts/MainLayout.vue"),
     meta: { mustBeLogged: true },
-    children:[
+    children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
+  },
+  {
+    path: "/starting",
+    component: () => import("layouts/EmptyLayout.vue"),
+    meta: { mustBeLogged: true },
+    children: [
       {
-        name:"debut",
-        path:"",
-        component:()=>import("pages/guide/StartGuidePage.vue")
-      }
-    ]
+        name: "debut",
+        path: "",
+        component: () => import("pages/guide/StartGuidePage.vue"),
+      },
+    ],
   },
 
   // Always leave this as last one,
