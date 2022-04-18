@@ -9,12 +9,22 @@
       </p>
       <div class="row justify-center q-mt-lg q-mb-md">
         <q-btn
+          v-if="verif"
           :loading="loading"
           @click="verify"
           color="accent"
           no-caps
           class="q-pr-xl q-pl-xl"
           label="Vérifier"
+        />
+        <q-btn
+          v-if="!verif"
+          :loading="loading"
+          :to="{ name: 'connexion' }"
+          color="positive"
+          no-caps
+          class="q-pr-xl q-pl-xl"
+          label="Se reconnecter"
         />
       </div>
     </section>
@@ -27,6 +37,7 @@ export default {
     return {
       user: null,
       loading: false,
+      verif: true,
     };
   },
   mounted() {
@@ -35,7 +46,7 @@ export default {
   methods: {
     async verify() {
       this.loading = true;
-      await this.$store.dispatch("verifyEmail");
+      this.verif = await this.$store.dispatch("verifyEmail");
       this.loading = false;
     },
   },

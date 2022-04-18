@@ -13,6 +13,7 @@ import {
   sendEmailVerification,
   setPersistence,
   indexedDBLocalPersistence,
+  updateCurrentUser,
 } from "firebase/auth";
 import { Notify } from "quasar";
 import "core-js/es/array";
@@ -69,6 +70,7 @@ export async function signIn({ commit, dispatch }, { infos }) {
     let user = await dispatch("getUserInfo", { uid: uid });
     commit("setUser", { user: user });
     Notify.create({
+      icon: "insert_emoticon",
       message: "Vous etes en ligne.",
       color: "positive",
     });
@@ -210,6 +212,7 @@ export async function createUser({ commit }, { user, infos }) {
 
 export async function verifyEmail() {
   try {
+    // updateCurrentUser(fire.auth);
     let user = fire.auth.currentUser;
     if (user.emailVerified) {
       Notify.create({
@@ -230,5 +233,8 @@ export async function verifyEmail() {
         color: "warning",
       });
     }
-  } catch (error) {}
+    return false;
+  } catch (error) {
+    console.log(error);
+  }
 }
