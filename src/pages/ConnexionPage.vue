@@ -132,8 +132,11 @@ export default {
   methods: {
     async submit() {
       this.loading = true;
-      await this.$store.dispatch("signIn", { infos: this.infos });
+      let user = await this.$store.dispatch("signIn", { infos: this.infos });
       this.loading = false;
+      if (user && user.isFirstConnect) {
+        this.$router.push({ name: "debut" });
+      }
     },
     async logGoogle() {
       await this.$store.dispatch("logInGoogle");

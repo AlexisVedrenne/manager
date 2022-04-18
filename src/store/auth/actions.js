@@ -12,7 +12,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   setPersistence,
-  browserLocalPersistence,
+  indexedDBLocalPersistence,
 } from "firebase/auth";
 import { Notify } from "quasar";
 import "core-js/es/array";
@@ -59,7 +59,7 @@ export async function getUserInfo({ commit }, { uid }) {
 
 export async function signIn({ commit, dispatch }, { infos }) {
   try {
-    setPersistence(fire.auth, browserLocalPersistence);
+    setPersistence(fire.auth, indexedDBLocalPersistence);
     const res = await signInWithEmailAndPassword(
       fire.auth,
       infos.email.toString().trim(),
@@ -154,7 +154,7 @@ export async function signUp({ dispatch }, { inscription }) {
     let user = res.user;
     await dispatch("createUser", { user: user, infos: inscription });
     Notify.create({
-      icon: "success",
+      icon: "done",
       message: "Votre compte à bien été créer !",
       color: "positive",
     });
@@ -206,4 +206,29 @@ export async function createUser({ commit }, { user, infos }) {
   };
   await addDoc(collection(fire.firebasebd, "utilisateurs"), account);
   commit("setUser", { user: account });
+}
+
+export async function verifyEmail() {
+  try {
+    let user = fire.auth.currentUser;
+    if (user.emailVerified) {
+      Notify.create({
+        icon: "done",
+        message: "Votre adresse e-mail à bien été vérifier.",
+        color: "positive",
+      });
+    } else {
+      Notify.create({
+        icon: "warning",
+        message: "Adresse mail non vérifier, regarder votre boite mail.",
+        color: "negative",
+      });
+      await sendEmailVerification(user);
+      Notify.create({
+        icon: "info",
+        message: "Email de vérification envoyer !",
+        color: "warning",
+      });
+    }
+  } catch (error) {}
 }

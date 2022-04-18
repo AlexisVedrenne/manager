@@ -46,6 +46,11 @@ const routes = [
         path: "",
         component: () => import("pages/guide/StartGuidePage.vue"),
       },
+      {
+        name: "verifyEmail",
+        path: "/verify-email",
+        component: () => import("pages/guide/VerifyMailPage.vue"),
+      },
     ],
   },
 

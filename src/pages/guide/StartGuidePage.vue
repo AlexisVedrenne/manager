@@ -16,7 +16,7 @@
       </p>
     </section>
     <section class="row items-end justify-end q-mt-xl q-mb-sm q-mr-md">
-      <q-btn flat color="secondary" label="Commencer" />
+      <q-btn @click="start" flat color="secondary" label="Commencer" />
     </section>
   </main>
 </template>
@@ -29,6 +29,11 @@ export default {
   },
   async mounted() {
     this.user = this.$store.getters.getUser;
+  },
+  methods: {
+    start() {
+      this.$router.push({ name: "verifyEmail" });
+    },
   },
 };
 </script>
