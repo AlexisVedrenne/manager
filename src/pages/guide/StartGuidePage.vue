@@ -29,6 +29,9 @@ export default {
   },
   async mounted() {
     this.user = this.$store.getters.getUser;
+    if (!this.user.isFirstConnect) {
+      this.$router.push({ name: "home" });
+    }
   },
   methods: {
     start() {

@@ -45,7 +45,7 @@
         @click="submit"
         flat
         color="secondary"
-        label="Suivant"
+        :label="infos.phone != '' ? 'Suivant' : 'Ignorer'"
       />
     </section>
   </main>
@@ -57,15 +57,21 @@ export default {
     return {
       loading: false,
       infos: { phone: "", date: "" },
+      label: "Ignorer",
     };
   },
   mounted() {
     let user = this.$store.getters.getUser;
+    if (!user.isFirstConnect) {
+      this.$router.push({ name: "home" });
+    }
     if (user.phone != "") {
       this.infos.phone = user.phone;
+      this.label = "Suivant";
     }
     if (user.birth != "") {
       this.infos.date = user.birth;
+      this.label = "Suivant";
     }
   },
   methods: {

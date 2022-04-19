@@ -14,7 +14,7 @@
         color="secondary"
         v-model="infos.type"
         :options="options"
-        label="Sélection du type de compte *"
+        label="Sélection du type de compte"
       >
         <template v-slot:prepend>
           <q-icon color="secondary" name="account_balance_wallet" />
@@ -63,7 +63,7 @@
         @click="submit"
         flat
         color="secondary"
-        label="Suivant"
+        :label="infos.type != '' ? 'Suivant' : 'Ignorer'"
       />
     </section>
   </main>
@@ -82,6 +82,7 @@ export default {
         op: [],
       },
       options: [
+        "",
         "Compte individuel",
         "Livret A",
         "Livret jeune",
@@ -90,6 +91,12 @@ export default {
         "Compte joint",
       ],
     };
+  },
+  mounted() {
+    let user = this.$store.getters.getUser;
+    if (!user.isFirstConnect) {
+      this.$router.push({ name: "home" });
+    }
   },
   methods: {
     async submit() {
@@ -102,6 +109,9 @@ export default {
         this.loading = true;
         await this.$store.dispatch("addBanque", { banque: this.infos });
         this.loading = false;
+        this.$router.push({ name: "finGuide" });
+      }
+      if (this.infos.type == "" && this.infos.nom == "") {
         this.$router.push({ name: "finGuide" });
       }
     },

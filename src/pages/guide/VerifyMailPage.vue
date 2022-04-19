@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import fire from "boot/Firebase.js";
 export default {
   data() {
     return {
@@ -42,6 +43,10 @@ export default {
   },
   async mounted() {
     this.user = this.$store.getters.getUser;
+    if (!this.user.isFirstConnect) {
+      this.$router.push({ name: "home" });
+    }
+    await this.verify();
   },
   methods: {
     async verify() {

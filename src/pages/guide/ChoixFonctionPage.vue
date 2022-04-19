@@ -60,6 +60,9 @@ export default {
   },
   mounted() {
     let user = this.$store.getters.getUser;
+    if (!user.isFirstConnect) {
+      this.$router.push({ name: "home" });
+    }
     this.choix.heure = user.heure.active;
     this.choix.paie = user.paie.active;
     this.choix.banque = user.banque.active;

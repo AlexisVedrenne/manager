@@ -93,6 +93,9 @@ export default {
   mounted() {
     let user = this.$store.getters.getUser;
     this.user = user;
+    if (!this.user.isFirstConnect) {
+      this.$router.push({ name: "home" });
+    }
     this.compte = user.banque.comptes[0];
     this.infos.mensuel = user.paie.param.mensuel;
     this.infos.annuel = user.paie.param.annuel;

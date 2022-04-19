@@ -16,7 +16,38 @@
       </p>
     </section>
     <section class="row items-end justify-end q-mt-xl q-mb-sm q-mr-md">
-      <q-btn size="18px" flat color="secondary" label="Terminer" />
+      <q-btn
+        :loading="loading"
+        size="18px"
+        flat
+        color="secondary"
+        label="Terminer"
+        @click="end"
+      />
     </section>
   </main>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      loading: false,
+    };
+  },
+  methods: {
+    async end() {
+      this.loading = true;
+      await this.$store.dispatch("endGuide");
+      this.loading = false;
+      this.$router.push({ name: "home" });
+    },
+  },
+  mounted() {
+    let user = this.$store.getters.getUser;
+    if (!user.isFirstConnect) {
+      this.$router.push({ name: "home" });
+    }
+  },
+};
+</script>

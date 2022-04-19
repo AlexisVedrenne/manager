@@ -44,6 +44,9 @@ export default {
   },
   mounted() {
     let user = this.$store.getters.getUser;
+    if (!user.isFirstConnect) {
+      this.$router.push({ name: "home" });
+    }
     this.nbheure = user.heure.param.nbHeureSemaine;
   },
   methods: {

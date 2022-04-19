@@ -2,6 +2,7 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/EmptyLayout.vue"),
+    meta: { mustBeLogged: false },
     children: [
       {
         name: "connexion",
@@ -34,7 +35,13 @@ const routes = [
     path: "/manager",
     component: () => import("layouts/MainLayout.vue"),
     meta: { mustBeLogged: true },
-    children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
+    children: [
+      {
+        name: "home",
+        path: "",
+        component: () => import("pages/IndexPage.vue"),
+      },
+    ],
   },
   {
     path: "/starting",
@@ -88,6 +95,7 @@ const routes = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
+    meta: { mustBeLogged: false },
     component: () => import("pages/ErrorNotFound.vue"),
   },
 ];

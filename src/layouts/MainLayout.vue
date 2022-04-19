@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn
-          v-if="this.$store.getters.getUserId"
+          v-if="this.$store.getters.getUser"
           flat
           dense
           round

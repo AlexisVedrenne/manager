@@ -136,6 +136,8 @@ export default {
       this.loading = false;
       if (user && user.isFirstConnect) {
         this.$router.push({ name: "debut" });
+      } else {
+        this.$router.push({ name: "home" });
       }
     },
     async logGoogle() {
