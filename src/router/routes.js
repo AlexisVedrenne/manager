@@ -56,6 +56,11 @@ const routes = [
         path: "/complete-profile",
         component: () => import("pages/guide/CompleteProfilePage.vue"),
       },
+      {
+        name: "choixFonction",
+        path: "/choix-fonctionalites",
+        component: () => import("pages/guide/ChoixFonctionPage.vue"),
+      },
     ],
   },
 

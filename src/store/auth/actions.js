@@ -165,21 +165,17 @@ export async function signUp({ dispatch }, { inscription }) {
     );
     let user = res.user;
     await dispatch("createUser", { user: user, infos: inscription });
-    await sendEmailVerification(user);
-    Notify.create({
-      icon: "info",
-      message: "Email de vérification envoyer !",
-      color: "warning",
-    });
     await dispatch("signIn", {
       infos: { email: inscription.email, password: inscription.password },
     });
+    return true;
   } catch (error) {
     Notify.create({
       icon: "error",
       message: "Erreur lors de la création du compte",
       color: "red",
     });
+    return false;
   }
 }
 
@@ -187,12 +183,16 @@ export async function createUser({ commit }, { user, infos }) {
   let account = {
     nom: infos.nom,
     prenom: infos.prenom,
-    banques: [],
+    banque: {
+      active: true,
+      comptes: [],
+    },
     chat: {
       amis: [],
       demandes: [],
     },
     heure: {
+      active: true,
       fiches: [],
       param: {
         nbHeureSemaine: 35,
@@ -200,6 +200,7 @@ export async function createUser({ commit }, { user, infos }) {
     },
     isFirstConnect: true,
     paie: {
+      active: true,
       fiches: [],
       param: {
         annuel: 19237.4,
@@ -266,4 +267,25 @@ export async function completeProfile({ commit }, { infos }) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function choixFonctions({ commit }, { choix }) {
+  const uid = fire.auth.currentUser.uid;
+  const q = await query(
+    collection(fire.firebasebd, "utilisateurs"),
+    where("uid", "==", uid)
+  );
+  const res = await getDocs(q);
+  let user = res.docs[0].data();
+  const id = res.docs[0].ref.id;
+  user.heure.active = choix.heure;
+  user.paie.active = choix.paie;
+  user.banque.active = choix.banque;
+  await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
+  commit("setUser", { user: user });
+  Notify.create({
+    icon: "info",
+    message: "Profile mis à jour.",
+    color: "info",
+  });
 }

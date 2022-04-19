@@ -151,9 +151,13 @@ export default {
         });
       } else {
         this.loading = true;
-        await this.$store.dispatch("signUp", { inscription: this.inscription });
+        let res = await this.$store.dispatch("signUp", {
+          inscription: this.inscription,
+        });
         this.loading = false;
-        this.$router.push({name:"debut"});
+        if (res == true) {
+          this.$router.push({ name: "debut" });
+        }
       }
     },
   },

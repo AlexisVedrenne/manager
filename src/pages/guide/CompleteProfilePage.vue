@@ -75,6 +75,7 @@ export default {
         await this.$store.dispatch("completeProfile", { infos: this.infos });
         this.loading = false;
       }
+      this.$router.push({ name: "choixFonction" });
     },
   },
 };
