@@ -38,6 +38,12 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach(async (to, from, next) => {
+    if (
+      (to.name == "connexion" || to.name == "signUp") &&
+      fire.auth.currentUser
+    ) {
+      next({ name: "home" });
+    }
     if (to.meta.mustBeLogged && !fire.auth.currentUser) {
       next({ name: "connexion", query: { redirect: to.fullPath } });
     } else next();

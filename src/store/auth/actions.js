@@ -285,13 +285,6 @@ export async function completeProfile({ commit }, { infos }) {
     user.birth = infos.date;
     await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
     commit("setUser", { user: user });
-    Notify.create({
-      progress: true,
-      timeout: 1000,
-      icon: "info",
-      message: "Profile mis à jour.",
-      color: "info",
-    });
   } catch (error) {
     console.log(error);
   }
@@ -311,13 +304,6 @@ export async function choixFonctions({ commit }, { choix }) {
   user.banque.active = choix.banque;
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
   commit("setUser", { user: user });
-  Notify.create({
-    progress: true,
-    timeout: 1000,
-    icon: "info",
-    message: "Profile mis à jour.",
-    color: "info",
-  });
 }
 
 export async function heureGuide({ commit }, { nb }) {
@@ -332,13 +318,6 @@ export async function heureGuide({ commit }, { nb }) {
   user.heure.param.nbHeureSemaine = nb;
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
   commit("setUser", { user: user });
-  Notify.create({
-    progress: true,
-    timeout: 1000,
-    icon: "info",
-    message: "Profile mis à jour.",
-    color: "info",
-  });
 }
 
 export async function paieGuide({ commit }, { infos }) {
@@ -356,25 +335,27 @@ export async function paieGuide({ commit }, { infos }) {
   user.paie.param.mois = infos.mois;
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
   commit("setUser", { user: user });
-  Notify.create({
-    progress: true,
-    timeout: 1000,
-    icon: "info",
-    message: "Profile mis à jour.",
-    color: "info",
-  });
 }
 
 export async function endGuide({ commit }) {
-  const uid = fire.auth.currentUser.uid;
-  const q = await query(
-    collection(fire.firebasebd, "utilisateurs"),
-    where("uid", "==", uid)
-  );
-  const res = await getDocs(q);
-  let user = res.docs[0].data();
-  const id = res.docs[0].ref.id;
-  user.isFirstConnect = false;
-  await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
-  commit("setUser", { user: user });
+  try {
+    const uid = fire.auth.currentUser.uid;
+    const q = await query(
+      collection(fire.firebasebd, "utilisateurs"),
+      where("uid", "==", uid)
+    );
+    const res = await getDocs(q);
+    let user = res.docs[0].data();
+    const id = res.docs[0].ref.id;
+    user.isFirstConnect = false;
+    await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
+    commit("setUser", { user: user });
+    Notify.create({
+      progress: true,
+      timeout: 1000,
+      icon: "info",
+      message: "Profile mis à jour.",
+      color: "info",
+    });
+  } catch (error) {}
 }
