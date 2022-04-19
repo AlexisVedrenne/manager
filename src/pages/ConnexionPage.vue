@@ -89,12 +89,12 @@
           style="background-color: #00acee; color: white"
           icon="ion-logo-twitter"
         /> -->
-        <q-btn
+        <!-- <q-btn
           @click="logApple"
           round
           style="background-color: #000000; color: white"
           icon="ion-logo-apple"
-        />
+        /> -->
       </div>
       <div class="row justify-center q-mt-md">
         <q-btn

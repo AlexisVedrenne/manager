@@ -20,7 +20,7 @@
         <q-btn
           v-if="!verif"
           :loading="loading"
-          :to="{ name: 'connexion' }"
+          @click="reAuth"
           color="positive"
           no-caps
           class="q-pr-xl q-pl-xl"
@@ -40,7 +40,7 @@ export default {
       verif: true,
     };
   },
-  mounted() {
+  async mounted() {
     this.user = this.$store.getters.getUser;
   },
   methods: {
@@ -52,6 +52,10 @@ export default {
       if (res) {
         this.$router.push({ name: "completeProfile" });
       }
+    },
+    async reAuth() {
+      await this.$store.dispatch("signLeft");
+      this.$router.push({ name: "connexion" });
     },
   },
 };

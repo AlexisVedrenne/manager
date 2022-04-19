@@ -1,5 +1,13 @@
 import fire from "src/boot/Firebase";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -36,12 +44,13 @@ export async function lostPassword({ commit }, { email }) {
 }
 
 export async function setUser({ dispatch, commit }, { uid }) {
-  let user = await dispatch("getUserInfo", { uid: uid });
+  let user = await dispatch("getUserInfo");
   commit("setUser", { user: user });
 }
 
-export async function getUserInfo({ commit }, { uid }) {
+export async function getUserInfo({ commit }) {
   try {
+    let uid = fire.auth.currentUser.uid;
     const q = await query(
       collection(fire.firebasebd, "utilisateurs"),
       where("uid", "==", uid)
@@ -86,9 +95,10 @@ export async function signIn({ commit, dispatch }, { infos }) {
 
 export async function signLeft({ commit }) {
   try {
-    signOut(fire.auth);
+    await signOut(fire.auth);
     commit("out");
     Notify.create({
+      icon: "warning",
       message: "Vous avez été deconnecté",
       color: "warning",
       textColor: "dark",
@@ -155,11 +165,6 @@ export async function signUp({ dispatch }, { inscription }) {
     );
     let user = res.user;
     await dispatch("createUser", { user: user, infos: inscription });
-    Notify.create({
-      icon: "done",
-      message: "Votre compte à bien été créer !",
-      color: "positive",
-    });
     await sendEmailVerification(user);
     Notify.create({
       icon: "info",
@@ -212,8 +217,7 @@ export async function createUser({ commit }, { user, infos }) {
 
 export async function verifyEmail() {
   try {
-    // updateCurrentUser(fire.auth);
-    let user = fire.auth.currentUser;
+    let user = await fire.auth.currentUser;
     if (user.emailVerified) {
       Notify.create({
         icon: "done",
@@ -235,6 +239,30 @@ export async function verifyEmail() {
       });
       return false;
     }
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export async function completeProfile({ commit }, { infos }) {
+  try {
+    const uid = fire.auth.currentUser.uid;
+    const q = await query(
+      collection(fire.firebasebd, "utilisateurs"),
+      where("uid", "==", uid)
+    );
+    const res = await getDocs(q);
+    let user = res.docs[0].data();
+    const id = res.docs[0].ref.id;
+    user.phone = infos.phone;
+    user.birth = infos.date;
+    await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
+    commit("setUser", { user: user });
+    Notify.create({
+      icon: "info",
+      message: "Profile mis à jour.",
+      color: "info",
+    });
   } catch (error) {
     console.log(error);
   }
