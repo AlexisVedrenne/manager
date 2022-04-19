@@ -102,6 +102,7 @@ export default {
         this.loading = true;
         await this.$store.dispatch("addBanque", { banque: this.infos });
         this.loading = false;
+        this.$router.push({ name: "finGuide" });
       }
     },
   },

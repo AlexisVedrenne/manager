@@ -106,6 +106,8 @@ export default {
       this.loading = false;
       if (!this.compte) {
         this.$router.push({ name: "banqueGuide" });
+      } else {
+        this.$router.push({ name: "finGuide" });
       }
     },
     change() {
