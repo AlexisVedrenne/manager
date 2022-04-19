@@ -11,7 +11,9 @@ npm install
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
-quasar dev
+yarn dev for web
+yarn android for android
+yarn windows for windows
 ```
 
 
