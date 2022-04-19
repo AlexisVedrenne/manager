@@ -66,6 +66,11 @@ const routes = [
         path: "/heure",
         component: () => import("pages/guide/HeureGuidePage.vue"),
       },
+      {
+        name: "paieGuide",
+        path: "/paie",
+        component: () => import("pages/guide/PaieGuidePage.vue"),
+      },
     ],
   },
 

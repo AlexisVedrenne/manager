@@ -8,13 +8,13 @@
         Veuillez compléter votre profile
       </p>
       <p class="text-grey text-center">
-        Note : Vous pouvez toujours compléter ses informations plus tard.
+        Note : Vous pouvez toujours compléter ces informations plus tard.
       </p>
       <q-form>
         <q-input
           v-model="infos.phone"
           class="q-mb-md"
-          type="number"
+          type="tel"
           color="secondary"
           label="Numéro de téléphone"
           lazy-rules

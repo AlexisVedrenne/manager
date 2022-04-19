@@ -8,7 +8,7 @@
         Entrer les paramètres de vos heure.
       </p>
       <p class="text-grey text-center">
-        Note : Vous pouvez toujours compléter ses informations plus tard.
+        Note : Vous pouvez toujours compléter ces informations plus tard.
       </p>
       <q-input
         type="clock"
@@ -51,6 +51,7 @@ export default {
       this.loading = true;
       await this.$store.dispatch("heureGuide", { nb: this.nbheure });
       this.loading = false;
+      this.$router.push({ name: "paieGuide" });
     },
   },
 };

@@ -224,7 +224,8 @@ export async function createUser({ commit }, { user, infos }) {
       param: {
         annuel: 19237.4,
         horraire: 10.57,
-        menseul: 1603.12,
+        mensuel: 1603.12,
+        mois: 12,
       },
     },
     phone: "",
@@ -329,6 +330,30 @@ export async function heureGuide({ commit }, { nb }) {
   let user = res.docs[0].data();
   const id = res.docs[0].ref.id;
   user.heure.param.nbHeureSemaine = nb;
+  await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
+  commit("setUser", { user: user });
+  Notify.create({
+    progress: true,
+    timeout: 1000,
+    icon: "info",
+    message: "Profile mis à jour.",
+    color: "info",
+  });
+}
+
+export async function paieGuide({ commit }, { infos }) {
+  const uid = fire.auth.currentUser.uid;
+  const q = await query(
+    collection(fire.firebasebd, "utilisateurs"),
+    where("uid", "==", uid)
+  );
+  const res = await getDocs(q);
+  let user = res.docs[0].data();
+  const id = res.docs[0].ref.id;
+  user.paie.param.mensuel = infos.mensuel;
+  user.paie.param.annuel = infos.annuel;
+  user.paie.param.horraire = infos.horraire;
+  user.paie.param.mois = infos.mois;
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
   commit("setUser", { user: user });
   Notify.create({

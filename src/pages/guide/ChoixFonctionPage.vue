@@ -8,7 +8,7 @@
         Quelles fonctionnalité voulez vous ?
       </p>
       <p class="text-grey text-center">
-        Note : Vous pouvez toujours compléter ses informations plus tard.
+        Note : Vous pouvez toujours compléter ces informations plus tard.
       </p>
       <section class="column items-center justify-center">
         <div class="col">
