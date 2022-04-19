@@ -71,6 +71,11 @@ const routes = [
         path: "/paie",
         component: () => import("pages/guide/PaieGuidePage.vue"),
       },
+      {
+        name: "banqueGuide",
+        path: "/banque",
+        component: () => import("pages/guide/BanqueGuidePage.vue"),
+      },
     ],
   },
 

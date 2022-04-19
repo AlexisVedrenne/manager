@@ -79,6 +79,7 @@
 export default {
   data() {
     return {
+      compte: null,
       loading: false,
       user: null,
       infos: {
@@ -92,6 +93,7 @@ export default {
   mounted() {
     let user = this.$store.getters.getUser;
     this.user = user;
+    this.compte = user.banque.comptes[0];
     this.infos.mensuel = user.paie.param.mensuel;
     this.infos.annuel = user.paie.param.annuel;
     this.infos.horraire = user.paie.param.horraire;
@@ -102,6 +104,9 @@ export default {
       this.loading = true;
       await this.$store.dispatch("paieGuide", { infos: this.infos });
       this.loading = false;
+      if (!this.compte) {
+        this.$router.push({ name: "banqueGuide" });
+      }
     },
     change() {
       let mensuel = parseFloat(this.infos.mensuel);
