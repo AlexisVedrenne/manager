@@ -30,12 +30,16 @@ export async function lostPassword({ commit }, { email }) {
   try {
     await sendPasswordResetEmail(fire.auth, email.toString().trim());
     Notify.create({
+      progress: true,
+      timeout: 1000,
       icon: "done",
       message: "Email de résiliation de mot de passe envoyé",
       color: "positive",
     });
   } catch (error) {
     Notify.create({
+      progress: true,
+      timeout: 1000,
       icon: "done",
       message: "Email de résiliation de mot de passe envoyé",
       color: "positive",
@@ -60,6 +64,8 @@ export async function getUserInfo({ commit }) {
     return userInfo;
   } catch (error) {
     Notify.create({
+      progress: true,
+      timeout: 1000,
       icon: "error",
       message: "Error lors de la récupération des informations",
       color: "negative",
@@ -79,6 +85,8 @@ export async function signIn({ commit, dispatch }, { infos }) {
     let user = await dispatch("getUserInfo", { uid: uid });
     commit("setUser", { user: user });
     Notify.create({
+      progress: true,
+      timeout: 1000,
       icon: "insert_emoticon",
       message: "Vous etes en ligne.",
       color: "positive",
@@ -86,6 +94,8 @@ export async function signIn({ commit, dispatch }, { infos }) {
     return user;
   } catch (error) {
     Notify.create({
+      progress: true,
+      timeout: 1000,
       icon: "warning",
       message: "Adresse e-mail ou mot de passe incorrect.",
       color: "negative",
@@ -98,6 +108,7 @@ export async function signLeft({ commit }) {
     await signOut(fire.auth);
     commit("out");
     Notify.create({
+      progress: true,
       icon: "warning",
       message: "Vous avez été deconnecté",
       color: "warning",
@@ -105,6 +116,8 @@ export async function signLeft({ commit }) {
     });
   } catch (e) {
     Notify.create({
+      progress: true,
+      timeout: 1000,
       message: e.message,
       color: "red",
     });
@@ -123,6 +136,8 @@ export async function logInGoogle() {
     const credential = GoogleAuthProvider.credentialFromResult(result);
   } catch (error) {
     Notify.create({
+      progress: true,
+      timeout: 1000,
       icon: "error",
       message: "Erreur lors de la connexion à Google",
       color: "red",
@@ -149,6 +164,8 @@ export async function logApple() {
     const credential = OAuthProvider.credentialFromResult(result);
   } catch (error) {
     Notify.create({
+      progress: true,
+      timeout: 1000,
       icon: "error",
       message: "Erreur lors de la connexion à Apple",
       color: "red",
@@ -171,6 +188,8 @@ export async function signUp({ dispatch }, { inscription }) {
     return true;
   } catch (error) {
     Notify.create({
+      progress: true,
+      timeout: 1000,
       icon: "error",
       message: "Erreur lors de la création du compte",
       color: "red",
@@ -221,6 +240,8 @@ export async function verifyEmail() {
     let user = await fire.auth.currentUser;
     if (user.emailVerified) {
       Notify.create({
+        progress: true,
+        timeout: 1000,
         icon: "done",
         message: "Votre adresse e-mail à bien été vérifier.",
         color: "positive",
@@ -228,12 +249,16 @@ export async function verifyEmail() {
       return true;
     } else {
       Notify.create({
+        progress: true,
+        timeout: 1000,
         icon: "warning",
         message: "Adresse mail non vérifier, regarder votre boite mail.",
         color: "negative",
       });
       await sendEmailVerification(user);
       Notify.create({
+        progress: true,
+        timeout: 1000,
         icon: "info",
         message: "Email de vérification envoyer !",
         color: "warning",
@@ -260,6 +285,8 @@ export async function completeProfile({ commit }, { infos }) {
     await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
     commit("setUser", { user: user });
     Notify.create({
+      progress: true,
+      timeout: 1000,
       icon: "info",
       message: "Profile mis à jour.",
       color: "info",
@@ -284,6 +311,29 @@ export async function choixFonctions({ commit }, { choix }) {
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
   commit("setUser", { user: user });
   Notify.create({
+    progress: true,
+    timeout: 1000,
+    icon: "info",
+    message: "Profile mis à jour.",
+    color: "info",
+  });
+}
+
+export async function heureGuide({ commit }, { nb }) {
+  const uid = fire.auth.currentUser.uid;
+  const q = await query(
+    collection(fire.firebasebd, "utilisateurs"),
+    where("uid", "==", uid)
+  );
+  const res = await getDocs(q);
+  let user = res.docs[0].data();
+  const id = res.docs[0].ref.id;
+  user.heure.param.nbHeureSemaine = nb;
+  await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
+  commit("setUser", { user: user });
+  Notify.create({
+    progress: true,
+    timeout: 1000,
     icon: "info",
     message: "Profile mis à jour.",
     color: "info",

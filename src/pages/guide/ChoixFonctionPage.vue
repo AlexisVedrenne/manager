@@ -69,6 +69,7 @@ export default {
       this.loading = true;
       await this.$store.dispatch("choixFonctions", { choix: this.choix });
       this.loading = false;
+      this.$router.push({ name: "heureGuide" });
     },
   },
 };
