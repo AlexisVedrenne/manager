@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn
-          v-if="this.$store.getters.getUser"
+          v-if="utils.localStorage.getItem('user')"
           flat
           dense
           round
@@ -12,7 +12,11 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> {{ this.$route.name }}</q-toolbar-title>
+        <q-toolbar-title>
+          {{
+            this.$route.name != "home" ? this.$route.name : ""
+          }}</q-toolbar-title
+        >
       </q-toolbar>
     </q-header>
 
@@ -25,6 +29,7 @@
           :key="link.title"
           v-bind="link"
         />
+        <q-btn @click="left" label="Déconnexion" />
       </q-list>
     </q-drawer>
 
@@ -37,49 +42,12 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-
+import { useQuasar } from "quasar";
 const linksList = [
   {
     title: "A propos",
     caption: "quasar.dev",
     icon: "school",
-    link: "https://quasar.dev",
-  },
-  {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
-  },
-  {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
   },
 ];
 
@@ -89,7 +57,17 @@ export default defineComponent({
   components: {
     EssentialLink,
   },
-
+  data() {
+    return {
+      utils: useQuasar(),
+    };
+  },
+  methods: {
+    async left() {
+      await this.$store.dispatch("signLeft");
+      this.$router.push({ name: "connexion" });
+    },
+  },
   setup() {
     const leftDrawerOpen = ref(false);
 

@@ -21,18 +21,15 @@
   </main>
 </template>
 <script>
+import { useQuasar } from "quasar";
 export default {
   data() {
     return {
+      utils: useQuasar(),
       user: null,
     };
   },
-  async mounted() {
-    this.user = this.$store.getters.getUser;
-    if (!this.user.isFirstConnect) {
-      this.$router.push({ name: "home" });
-    }
-  },
+
   methods: {
     start() {
       this.$router.push({ name: "verifyEmail" });

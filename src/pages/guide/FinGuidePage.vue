@@ -29,9 +29,11 @@
 </template>
 
 <script>
+import { useQuasar } from "quasar";
 export default {
   data() {
     return {
+      utils: useQuasar(),
       loading: false,
     };
   },
@@ -42,12 +44,6 @@ export default {
       this.loading = false;
       this.$router.push({ name: "home" });
     },
-  },
-  mounted() {
-    let user = this.$store.getters.getUser;
-    if (!user.isFirstConnect) {
-      this.$router.push({ name: "home" });
-    }
   },
 };
 </script>

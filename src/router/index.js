@@ -1,6 +1,5 @@
 import { route } from "quasar/wrappers";
-import fire from "src/boot/Firebase";
-import store from "src/store";
+import { LocalStorage } from "quasar";
 import {
   createRouter,
   createMemoryHistory,
@@ -38,14 +37,19 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach(async (to, from, next) => {
-    if (
-      (to.name == "connexion" || to.name == "signUp") &&
-      fire.auth.currentUser
-    ) {
-      next({ name: "home" });
-    }
-    if (to.meta.mustBeLogged && !fire.auth.currentUser) {
-      next({ name: "connexion", query: { redirect: to.fullPath } });
+    let credential = LocalStorage.getItem("authCredential");
+    let user = LocalStorage.getItem("user");
+    if (to.meta.mustBeLogged && credential) {
+      if (to.meta.tuto && to.meta.mustBeLogged && user.isFirstConnect) {
+        next();
+      } else if (to.meta.tuto && to.meta.mustBeLogged && !user.isFirstConnect)
+        next({ name: "home" });
+      else next();
+    } else if (to.meta.mustBeLogged && !credential) {
+      next({ name: "connexion" });
+    } else if (!to.meta.mustBeLogged && credential) {
+      if (to.name == "connexion" || to.name == "signUp") next({ name: "home" });
+      else next();
     } else next();
   });
   return Router;

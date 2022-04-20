@@ -39,14 +39,14 @@ const routes = [
       {
         name: "home",
         path: "",
-        component: () => import("pages/IndexPage.vue"),
+        component: () => import("pages/heure/IndexPage.vue"),
       },
     ],
   },
   {
     path: "/starting",
     component: () => import("layouts/EmptyLayout.vue"),
-    meta: { mustBeLogged: true },
+    meta: { mustBeLogged: true, tuto: true },
     children: [
       {
         name: "debut",

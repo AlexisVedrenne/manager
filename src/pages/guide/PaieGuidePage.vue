@@ -76,9 +76,11 @@
 </template>
 
 <script>
+import { useQuasar } from "quasar";
 export default {
   data() {
     return {
+      utils: useQuasar(),
       compte: null,
       loading: false,
       user: null,
@@ -91,11 +93,8 @@ export default {
     };
   },
   mounted() {
-    let user = this.$store.getters.getUser;
+    let user = this.utils.localStorage.getItem("user");
     this.user = user;
-    if (!this.user.isFirstConnect) {
-      this.$router.push({ name: "home" });
-    }
     this.compte = user.banque.comptes[0];
     this.infos.mensuel = user.paie.param.mensuel;
     this.infos.annuel = user.paie.param.annuel;

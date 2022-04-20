@@ -1,4 +1,5 @@
 import fire from "src/boot/Firebase";
+import { LocalStorage } from "quasar";
 import {
   collection,
   addDoc,
@@ -21,7 +22,7 @@ import {
   sendEmailVerification,
   setPersistence,
   indexedDBLocalPersistence,
-  updateCurrentUser,
+  dqsdq,
 } from "firebase/auth";
 import { Notify } from "quasar";
 import "core-js/es/array";
@@ -47,11 +48,6 @@ export async function lostPassword({ commit }, { email }) {
   }
 }
 
-export async function setUser({ dispatch, commit }, { uid }) {
-  let user = await dispatch("getUserInfo");
-  commit("setUser", { user: user });
-}
-
 export async function getUserInfo({ commit }) {
   try {
     let uid = fire.auth.currentUser.uid;
@@ -61,6 +57,8 @@ export async function getUserInfo({ commit }) {
     );
     const res = await getDocs(q);
     let userInfo = res.docs[0].data();
+    await LocalStorage.set("user", userInfo);
+    commit("setUser", { user: userInfo });
     return userInfo;
   } catch (error) {
     Notify.create({
@@ -81,9 +79,8 @@ export async function signIn({ commit, dispatch }, { infos }) {
       infos.email.toString().trim(),
       infos.password.toString().trim()
     );
-    let uid = res.user.uid;
-    let user = await dispatch("getUserInfo", { uid: uid });
-    commit("setUser", { user: user });
+    await LocalStorage.set("authCredential", res);
+    let user = await dispatch("getUserInfo");
     Notify.create({
       progress: true,
       timeout: 1000,
@@ -106,6 +103,7 @@ export async function signIn({ commit, dispatch }, { infos }) {
 export async function signLeft({ commit }) {
   try {
     await signOut(fire.auth);
+    LocalStorage.clear();
     commit("out");
     Notify.create({
       progress: true,

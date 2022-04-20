@@ -35,18 +35,17 @@
 </template>
 
 <script>
+import { useQuasar } from "quasar";
 export default {
   data() {
     return {
+      utils: useQuasar(),
       loading: false,
       nbheure: 35,
     };
   },
   mounted() {
-    let user = this.$store.getters.getUser;
-    if (!user.isFirstConnect) {
-      this.$router.push({ name: "home" });
-    }
+    let user = this.utils.localStorage.getItem("user");
     this.nbheure = user.heure.param.nbHeureSemaine;
   },
   methods: {

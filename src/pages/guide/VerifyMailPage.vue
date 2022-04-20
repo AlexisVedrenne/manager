@@ -33,19 +33,17 @@
 
 <script>
 import fire from "boot/Firebase.js";
+import { useQuasar } from "quasar";
 export default {
   data() {
     return {
+      utils: useQuasar(),
       user: null,
       loading: false,
       verif: true,
     };
   },
   async mounted() {
-    this.user = this.$store.getters.getUser;
-    if (!this.user.isFirstConnect) {
-      this.$router.push({ name: "home" });
-    }
     await this.verify();
   },
   methods: {
