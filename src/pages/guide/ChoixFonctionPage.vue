@@ -62,7 +62,6 @@ export default {
   },
   mounted() {
     let user = this.utils.localStorage.getItem("user");
-
     this.choix.heure = user.heure.active;
     this.choix.paie = user.paie.active;
     this.choix.banque = user.banque.active;

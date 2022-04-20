@@ -1,9 +1,9 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
         <q-btn
-          v-if="utils.localStorage.getItem('user')"
+          v-if="user"
           flat
           dense
           round
@@ -22,7 +22,9 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label v-if="user" header>
+          {{ user.prenom }} {{ user.nom }}
+        </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -60,7 +62,11 @@ export default defineComponent({
   data() {
     return {
       utils: useQuasar(),
+      user: null,
     };
+  },
+  mounted() {
+    this.user = this.utils.localStorage.getItem("user");
   },
   methods: {
     async left() {

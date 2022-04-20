@@ -289,7 +289,8 @@ export async function completeProfile({ commit }, { infos }) {
 }
 
 export async function choixFonctions({ commit }, { choix }) {
-  const uid = fire.auth.currentUser.uid;
+  const credential = await LocalStorage.getItem("authCredential");
+  const uid = credential.user.uid;
   const q = await query(
     collection(fire.firebasebd, "utilisateurs"),
     where("uid", "==", uid)
