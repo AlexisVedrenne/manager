@@ -79,6 +79,7 @@ export default {
       date: null,
       journer: {
         start: { value: null, parse: null },
+        status: 0,
         event: [],
         end: { value: null, parse: null },
       },
@@ -86,43 +87,37 @@ export default {
   },
   mounted() {
     this.date = new Date();
-    if (
-      this.utils.localStorage.getItem("workTime") &&
-      this.utils.localStorage.getItem("workTime") != "down"
-    ) {
-      let value = this.utils.localStorage.getItem("workTime");
-      let dayly = this.utils.localStorage.getItem("dayly");
+    let workTime = this.utils.localStorage.getItem("workTime");
+    let dayly = this.utils.localStorage.getItem("dayly");
+    if ((workTime && dayly) !== null) {
+      let value = { hours: null, minutes: null, seconds: null };
       this.journer = dayly;
-      let date = new Date(
-        this.date.getFullYear(),
-        this.date.getMonth(),
-        this.date.getDay(),
-        value.hours,
-        value.minutes,
-        value.seconds
-      );
       let timeNow = this.date.getTime(this.date);
       let start = new Date(dayly.start.value);
-      console.log(
-        "début :",
-        start.getHours() + ":" + start.getMinutes(),
-        " now : ",
-        this.date.getHours() + ":" + this.date.getMinutes()
-      );
       let timeStarted = start.getTime(start);
-
       let diff = timeNow - timeStarted;
       let timeDiff = new Date(diff);
       value.hours = timeDiff.getHours() - 1;
       value.minutes = timeDiff.getMinutes();
       value.seconds = timeDiff.getSeconds();
+      console.log(dayly.status);
       timer.start({ startValues: value });
+      if (dayly.status == 1) {
+        this.icon = "play_arrow";
+        timer.pause();
+        document.getElementById("time").innerText = timer
+          .getTimeValues()
+          .toString();
+      } else {
+        this.icon = "pause";
+      }
       this.firstStart = true;
-      this.icon = "pause";
+    } else {
+      this.timeDataCloud();
     }
   },
   methods: {
-    stop() {
+    async stop() {
       this.journer.end.value = new Date();
       let value = this.journer.end.value;
       this.journer.end.parse = this.journer.end.parse =
@@ -133,13 +128,44 @@ export default {
       this.icon = "schedule";
       this.firstStart = false;
       document.getElementById("time").innerText = "Cliquer sur le bouton...";
-      this.utils.localStorage.set("workTime", "down");
+      this.utils.localStorage.set("workTime", null);
       this.utils.localStorage.set("dayly", null);
+      await this.$store.dispatch("endDay");
     },
-    start() {
+    timeDataCloud() {
+      let user = this.utils.localStorage.getItem("user");
+      if (user.heure.dayly.start.value) {
+        let value = { hours: null, minutes: null, seconds: null };
+        let dayly = user.heure.dayly;
+        this.journer = dayly;
+        this.utils.localStorage.set("dayly", this.journer);
+        let timeNow = this.date.getTime(this.date);
+        let start = new Date(dayly.start.value);
+        let timeStarted = start.getTime(start);
+        let diff = timeNow - timeStarted;
+        let timeDiff = new Date(diff);
+        value.hours = timeDiff.getHours() - 1;
+        value.minutes = timeDiff.getMinutes();
+        value.seconds = timeDiff.getSeconds();
+        timer.start({ startValues: value });
+        if (dayly.status == 1) {
+          this.icon = "play_arrow";
+          timer.pause();
+          document.getElementById("time").innerText = timer
+            .getTimeValues()
+            .toString();
+        } else {
+          this.icon = "pause";
+        }
+        this.firstStart = true;
+        return;
+      }
+    },
+    async start() {
       if (!this.firstStart) {
         this.journer = {
           start: { value: null, parse: null },
+          status: 0,
           event: [],
           end: { value: null, parse: null },
         };
@@ -154,15 +180,24 @@ export default {
         this.utils.localStorage.set("dayly", this.journer);
         this.firstStart = true;
         this.icon = "pause";
+        await this.$store.dispatch("setStartWork", {
+          time: this.journer.start,
+        });
         return;
       }
       if (timer.isPaused()) {
         let tmpDate = new Date();
         tmpDate = tmpDate.getHours() + ":" + tmpDate.getMinutes();
         this.journer.event.push({ value: tmpDate, type: "terminé à" });
+        this.journer.status = 0;
         let dayly = this.utils.localStorage.getItem("dayly");
         dayly.event = this.journer.event;
+        dayly.status = this.journer.status;
         this.utils.localStorage.set("dayly", dayly);
+        await this.$store.dispatch("addEventDay", {
+          event: dayly.event,
+          status: this.journer.status,
+        });
         this.icon = "pause";
         timer.start();
         return;
@@ -171,9 +206,15 @@ export default {
         let tmpDate = new Date();
         tmpDate = tmpDate.getHours() + ":" + tmpDate.getMinutes();
         this.journer.event.push({ value: tmpDate, type: "prise à" });
+        this.journer.status = 1;
         let dayly = this.utils.localStorage.getItem("dayly");
         dayly.event = this.journer.event;
+        dayly.status = this.journer.status;
         this.utils.localStorage.set("dayly", dayly);
+        await this.$store.dispatch("addEventDay", {
+          event: dayly.event,
+          status: this.journer.status,
+        });
         this.icon = "play_arrow";
         timer.pause();
         return;

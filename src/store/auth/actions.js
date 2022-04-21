@@ -210,6 +210,12 @@ export async function createUser({ commit }, { user, infos }) {
     },
     heure: {
       active: true,
+      dayly: {
+        start: { value: null, parse: null },
+        status: 0,
+        event: [],
+        end: { value: null, parse: null },
+      },
       fiches: [],
       param: {
         nbHeureSemaine: 35,
@@ -357,4 +363,29 @@ export async function endGuide({ commit }) {
       color: "info",
     });
   } catch (error) {}
+}
+
+export async function updateUserInfo({ commit }, { userInfos }) {
+  try {
+    let currentUser = LocalStorage.getItem("user");
+    const uid = currentUser.uid;
+    const q = await query(
+      collection(fire.firebasebd, "utilisateurs"),
+      where("uid", "==", uid)
+    );
+    const res = await getDocs(q);
+    let user = userInfos;
+    const id = res.docs[0].ref.id;
+    await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
+    commit("setUser", { user: user });
+    LocalStorage.set("user", userInfos);
+  } catch (error) {
+    Notify.create({
+      progress: true,
+      timeout: 1000,
+      icon: "error",
+      message: "Erreur lors de la sauvegarde du profile",
+      color: "red",
+    });
+  }
 }
