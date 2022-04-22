@@ -54,7 +54,7 @@ export async function endDay({ dispatch }) {
     let heureJour = new Date(1990, 12, 1, nbHeureJour);
     let heureSupp = totalTime.getTime() - heureJour.getTime();
     if (heureSupp < 0) {
-      heureSupp = 0;
+      heureSupp = "00:00:00";
     }
     user.heure.fiches.push({
       baniere: null,
@@ -136,7 +136,8 @@ export async function deleteFiche({ dispatch }, { index }) {
     Notify.create({
       progress: true,
       timeout: 1000,
-      icon: "done",
+      icon: "info",
+      textColor: "primary",
       message: "Fiche supprimée.",
       color: "info",
     });
@@ -146,6 +147,19 @@ export async function deleteFiche({ dispatch }, { index }) {
       timeout: 1000,
       icon: "error",
       message: "Erreur lors de la supression de la fiche !",
+      color: "red",
+    });
+  }
+}
+
+export async function editFiche({ dispatch }, { fiche }) {
+  try {
+  } catch (error) {
+    Notify.create({
+      progress: true,
+      timeout: 1000,
+      icon: "error",
+      message: "Erreur lors de l'édition de la fiche !",
       color: "red",
     });
   }

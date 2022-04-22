@@ -43,7 +43,11 @@
       <template v-slot:prepend> <q-icon name="search" /> </template
     ></q-input>
     <section v-for="(heure, index) in heures" :key="index" class="q-ma-sm">
-      <CardHeure @delete="deleteFiche(index)" :fiche="heure" />
+      <CardHeure
+        @delete="confirm(index, heure.nom)"
+        @edit="edit(index)"
+        :fiche="heure"
+      />
     </section>
   </main>
   <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -70,6 +74,9 @@ export default {
     this.refresh();
   },
   methods: {
+    edit(index) {
+      this.$router.push("/heure/edit/" + index);
+    },
     async deleteFiche(index) {
       await this.$store.dispatch("deleteFiche", { index: index });
       this.refresh();
@@ -77,6 +84,32 @@ export default {
     refresh() {
       let user = this.utils.localStorage.getItem("user");
       this.heures = user.heure.fiches;
+    },
+    async confirm(index, name) {
+      this.utils
+        .dialog({
+          title: "Attention !",
+          message:
+            "Vous etes sur de vouloir supprimer la fiche '" + name + "' ?",
+          cancel: true,
+          persistent: true,
+          ok: {
+            label: "Supprimer",
+            color: "negative",
+            flat: true,
+          },
+          cancel: {
+            label: "fermer",
+            flat: true,
+            color: "primary",
+          },
+        })
+        .onOk(async () => {
+          await this.deleteFiche(index);
+        })
+        .onOk(async () => {})
+        .onCancel(() => {})
+        .onDismiss(() => {});
     },
   },
 };

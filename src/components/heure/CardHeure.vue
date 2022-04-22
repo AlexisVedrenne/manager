@@ -42,7 +42,12 @@
         </div>
         <div class="row justify-end">
           <q-btn-group flat>
-            <q-btn class="q-pa-sm" text-color="secondary" icon="edit" />
+            <q-btn
+              @click="this.$emit('edit')"
+              class="q-pa-sm"
+              text-color="secondary"
+              icon="edit"
+            />
             <q-btn
               @click="this.$emit('delete')"
               class="q-pa-sm"
