@@ -41,6 +41,16 @@ const routes = [
         path: "",
         component: () => import("pages/heure/IndexPage.vue"),
       },
+      {
+        name: "Fiches heure",
+        path: "/heure",
+        component: () => import("pages/heure/ListHeurePage.vue"),
+      },
+      {
+        name: "Ajout heure",
+        path: "/heure/add",
+        component: () => import("pages/heure/AddHeurePage.vue"),
+      },
     ],
   },
   {

@@ -17,7 +17,11 @@
     <p id="time" class="text-center text-grey" style="font-size: 18px">
       Cliquer sur le bouton...
     </p>
-    <p class="text-grey-8 q-ml-md" style="font-size: 20px">
+    <p
+      v-if="journer.start.parse"
+      class="text-grey-8 q-ml-md"
+      style="font-size: 20px"
+    >
       Détail de votre journée
     </p>
     <q-card class="q-ml-md q-mr-md q-mb-md" v-if="journer.start.parse"
@@ -89,7 +93,7 @@ export default {
     this.date = new Date();
     let workTime = this.utils.localStorage.getItem("workTime");
     let dayly = this.utils.localStorage.getItem("dayly");
-    if ((workTime && dayly) !== null) {
+    if (workTime !== "null" && dayly !== "null" && workTime && dayly) {
       let value = { hours: null, minutes: null, seconds: null };
       this.journer = dayly;
       let timeNow = this.date.getTime(this.date);
@@ -128,9 +132,9 @@ export default {
       this.icon = "schedule";
       this.firstStart = false;
       document.getElementById("time").innerText = "Cliquer sur le bouton...";
-      this.utils.localStorage.set("workTime", null);
-      this.utils.localStorage.set("dayly", null);
+      this.utils.localStorage.set("dayly", "null");
       await this.$store.dispatch("endDay");
+      this.utils.localStorage.set("workTime", "null");
     },
     timeDataCloud() {
       let user = this.utils.localStorage.getItem("user");

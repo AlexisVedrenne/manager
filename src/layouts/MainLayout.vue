@@ -3,20 +3,28 @@
     <q-header>
       <q-toolbar>
         <q-btn
+          color="secondary"
           v-if="user"
           flat
           dense
           round
-          icon="menu"
+          :icon="leftDrawerOpen ? 'menu_open' : 'menu'"
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
 
         <q-toolbar-title>
-          {{
-            this.$route.name != "home" ? this.$route.name : ""
-          }}</q-toolbar-title
-        >
+          <q-btn
+            v-if="this.$route.name != 'home'"
+            :to="{ name: 'home' }"
+            class="q-pa-none"
+            :icon-right="iconSelect"
+            size="20px"
+            no-caps
+            flat
+            :label="this.$route.name != 'home' ? this.$route.name : ''"
+          />
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -31,7 +39,15 @@
           :key="link.title"
           v-bind="link"
         />
-        <q-btn @click="left" label="Déconnexion" />
+        <q-item @click="left" clickable>
+          <q-item-section avatar>
+            <q-icon name="logout" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="text-bold">Déconnexion</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -47,9 +63,10 @@ import EssentialLink from "components/EssentialLink.vue";
 import { useQuasar } from "quasar";
 const linksList = [
   {
-    title: "A propos",
-    caption: "quasar.dev",
-    icon: "school",
+    title: "Fiches heure",
+    caption: "Consulter, ajouter...",
+    icon: "watch_later",
+    link: { name: "Fiches heure" },
   },
 ];
 
@@ -63,15 +80,23 @@ export default defineComponent({
     return {
       utils: useQuasar(),
       user: null,
+      iconSelect: "",
     };
   },
   mounted() {
     this.user = this.utils.localStorage.getItem("user");
+    if (this.$route.name != "home") {
+      this.iconSelect = this.getIcon(this.$route.name);
+    }
   },
   methods: {
     async left() {
       await this.$store.dispatch("signLeft");
       this.$router.push({ name: "connexion" });
+    },
+    getIcon(name) {
+      let link = linksList.filter((val) => val.title === name);
+      return link.length > 0 ? link[0].icon : "";
     },
   },
   setup() {

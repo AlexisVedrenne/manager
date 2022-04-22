@@ -380,11 +380,13 @@ export async function updateUserInfo({ commit }, { userInfos }) {
     commit("setUser", { user: user });
     LocalStorage.set("user", userInfos);
   } catch (error) {
+    console.log(error);
     Notify.create({
       progress: true,
       timeout: 1000,
       icon: "error",
-      message: "Erreur lors de la sauvegarde du profile",
+      message:
+        "Erreur lors de la sauvegarde du profile, veuillez vous reconnectez !",
       color: "red",
     });
   }
