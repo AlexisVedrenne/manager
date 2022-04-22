@@ -127,3 +127,26 @@ export async function addFiche({ dispatch }, { fiche }) {
     });
   }
 }
+
+export async function deleteFiche({ dispatch }, { index }) {
+  try {
+    let user = LocalStorage.getItem("user");
+    user.heure.fiches.splice(index, 1);
+    await dispatch("updateUserInfo", { userInfos: user });
+    Notify.create({
+      progress: true,
+      timeout: 1000,
+      icon: "done",
+      message: "Fiche supprimée.",
+      color: "info",
+    });
+  } catch (error) {
+    Notify.create({
+      progress: true,
+      timeout: 1000,
+      icon: "error",
+      message: "Erreur lors de la supression de la fiche !",
+      color: "red",
+    });
+  }
+}

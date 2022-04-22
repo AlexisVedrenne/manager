@@ -118,7 +118,6 @@
           today-btn
           color="secondary"
           v-model="heure.date"
-          landscape
         />
       </div>
       <q-input

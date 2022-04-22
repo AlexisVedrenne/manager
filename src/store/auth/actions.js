@@ -1,5 +1,6 @@
 import fire from "src/boot/Firebase";
 import { LocalStorage } from "quasar";
+import router from "src/router";
 import {
   collection,
   addDoc,
@@ -48,9 +49,16 @@ export async function lostPassword({ commit }, { email }) {
   }
 }
 
-export async function getUserInfo({ commit }) {
+export async function getUserInfo({ commit, dispatch }) {
   try {
-    let uid = fire.auth.currentUser.uid;
+    let credential = LocalStorage.getItem("authCredential");
+    let uid = "";
+    if (fire.auth.currentUser) {
+      uid = fire.auth.currentUser.uid;
+    } else {
+      uid = credential.user.uid;
+    }
+
     const q = await query(
       collection(fire.firebasebd, "utilisateurs"),
       where("uid", "==", uid)
@@ -61,6 +69,7 @@ export async function getUserInfo({ commit }) {
     commit("setUser", { user: userInfo });
     return userInfo;
   } catch (error) {
+    console.log(error);
     Notify.create({
       progress: true,
       timeout: 1000,
@@ -68,6 +77,7 @@ export async function getUserInfo({ commit }) {
       message: "Error lors de la récupération des informations",
       color: "negative",
     });
+    await dispatch("signLeft");
   }
 }
 

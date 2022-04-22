@@ -89,7 +89,7 @@ export default {
       },
     };
   },
-  mounted() {
+  async mounted() {
     this.date = new Date();
     let workTime = this.utils.localStorage.getItem("workTime");
     let dayly = this.utils.localStorage.getItem("dayly");
@@ -117,7 +117,7 @@ export default {
       }
       this.firstStart = true;
     } else {
-      this.timeDataCloud();
+      await this.timeDataCloud();
     }
   },
   methods: {
@@ -136,8 +136,8 @@ export default {
       await this.$store.dispatch("endDay");
       this.utils.localStorage.set("workTime", "null");
     },
-    timeDataCloud() {
-      let user = this.utils.localStorage.getItem("user");
+    async timeDataCloud() {
+      let user = await this.$store.dispatch("getUserInfo");
       if (user.heure.dayly.start.value) {
         let value = { hours: null, minutes: null, seconds: null };
         let dayly = user.heure.dayly;

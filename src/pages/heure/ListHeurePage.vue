@@ -43,7 +43,7 @@
       <template v-slot:prepend> <q-icon name="search" /> </template
     ></q-input>
     <section v-for="(heure, index) in heures" :key="index" class="q-ma-sm">
-      <CardHeure :fiche="heure" />
+      <CardHeure @delete="deleteFiche(index)" :fiche="heure" />
     </section>
   </main>
   <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -65,9 +65,19 @@ export default {
       heures: [],
     };
   },
+
   mounted() {
-    let user = this.utils.localStorage.getItem("user");
-    this.heures = user.heure.fiches;
+    this.refresh();
+  },
+  methods: {
+    async deleteFiche(index) {
+      await this.$store.dispatch("deleteFiche", { index: index });
+      this.refresh();
+    },
+    refresh() {
+      let user = this.utils.localStorage.getItem("user");
+      this.heures = user.heure.fiches;
+    },
   },
 };
 </script>
