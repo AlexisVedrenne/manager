@@ -108,6 +108,11 @@ export async function endDay({ dispatch }) {
 export async function addFiche({ dispatch }, { fiche }) {
   try {
     let user = await dispatch("getUserInfo");
+    if (fiche.baniere) {
+      let img = await dispatch("uploadImage", { image: fiche.baniere });
+      fiche.baniere = img;
+    }
+
     user.heure.fiches.push(fiche);
     await dispatch("updateUserInfo", { userInfos: user });
     Notify.create({
@@ -118,6 +123,7 @@ export async function addFiche({ dispatch }, { fiche }) {
       color: "positive",
     });
   } catch (error) {
+    console.log(error);
     Notify.create({
       progress: true,
       timeout: 1000,

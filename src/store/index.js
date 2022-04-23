@@ -5,6 +5,7 @@ import { createStore } from "vuex";
 import auth from "./auth";
 import banque from "./banque";
 import heure from "./heure";
+import storage from "./storage";
 
 /*
  * If not building with SSR mode, you can
@@ -21,6 +22,7 @@ export default store(function (/* { ssrContext } */) {
       auth,
       banque,
       heure,
+      storage,
     },
 
     // enable strict mode (adds overhead!)

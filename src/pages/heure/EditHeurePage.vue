@@ -107,50 +107,6 @@
         </div>
       </div>
       <div class="row items-center q-mb-md">
-        <q-icon size="18px" color="secondary" name="event" />
-        <p style="font-size: 18px" class="text-grey q-ma-none q-ml-sm">
-          Date du jour travaillé
-        </p>
-      </div>
-      <div class="row justify-center">
-        <q-date
-          style="width: 50%; heigth: 50%"
-          today-btn
-          color="secondary"
-          v-model="heure.date"
-        />
-      </div>
-      <div class="column items-center">
-        <div class="row items-center q-mb-md">
-          <q-icon size="18px" color="secondary" name="schedule" />
-          <p style="font-size: 18px" class="text-grey q-ma-none q-ml-sm">
-            Heure total travaillée
-          </p>
-        </div>
-        <q-time
-          format24h
-          with-seconds
-          v-model="heure.heureTotal"
-          color="secondary"
-          class="q-mb-md q-mt-md"
-          label="Heure total effectuée"
-        />
-        <div class="row items-center q-mb-md">
-          <q-icon size="18px" color="secondary" name="schedule" />
-          <p style="font-size: 18px" class="text-grey q-ma-none q-ml-sm">
-            Heure supplémentaire effectuée
-          </p>
-        </div>
-        <q-time
-          format24h
-          with-seconds
-          v-model="heure.heureSupp"
-          color="secondary"
-          class="q-mb-md q-mt-md"
-          label="Heure total effectuée"
-        />
-      </div>
-      <div class="row items-center q-mb-md">
         <q-icon size="18px" color="secondary" name="description" />
         <p style="font-size: 18px" class="text-grey q-ma-none q-ml-sm">
           Description du travail réaliser
