@@ -262,7 +262,10 @@ export default {
   methods: {
     async submit() {
       this.loading = true;
-      //   await this.$store.dispatch("addFiche", { fiche: this.heure });
+      await this.$store.dispatch("editFiche", {
+        fiche: this.heure,
+        index: this.$route.params.index,
+      });
       this.loading = false;
     },
     addTag() {

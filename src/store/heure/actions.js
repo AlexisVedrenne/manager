@@ -158,8 +158,22 @@ export async function deleteFiche({ dispatch }, { index }) {
   }
 }
 
-export async function editFiche({ dispatch }, { fiche }) {
+export async function editFiche({ dispatch }, { fiche, index }) {
   try {
+    let user = LocalStorage.getItem("user");
+    user.heure.fiches[index] = fiche;
+    if ((typeof fiche.baniere).includes("object") && fiche.baniere) {
+      let img = await dispatch("uploadImage", { image: fiche.baniere });
+      fiche.baniere = img;
+    }
+    await dispatch("updateUserInfo", { userInfos: user });
+    Notify.create({
+      progress: true,
+      timeout: 1000,
+      icon: "done",
+      message: "Fiche mise à jour",
+      color: "info",
+    });
   } catch (error) {
     Notify.create({
       progress: true,
