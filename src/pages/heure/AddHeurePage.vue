@@ -271,6 +271,7 @@ export default {
       this.loading = true;
       await this.$store.dispatch("addFiche", { fiche: this.heure });
       this.loading = false;
+      this.$router.push({ name: "Fiches heure" });
     },
     addTag() {
       this.heure.tag.push("tag");

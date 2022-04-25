@@ -226,37 +226,39 @@ export default {
   mounted() {
     let user = this.utils.localStorage.getItem("user");
     let heure = user.heure.fiches[this.$route.params.index];
-    let heureTotal = new Date(heure.heureTotal);
-    let hours =
-      heureTotal.getHours() < 9
-        ? "0" + heureTotal.getHours()
-        : heureTotal.getHours();
-    let minutes =
-      heureTotal.getMinutes() < 9
-        ? "0" + heureTotal.getMinutes()
-        : heureTotal.getMinutes();
-    let seconds =
-      heureTotal.getSeconds() < 9
-        ? "0" + heureTotal.getSeconds()
-        : heureTotal.getSeconds();
-    heureTotal = hours + ":" + minutes + ":" + seconds;
-    if (heure.heureSupp != "00:00:00") {
-      let heureSupp = new Date(heure.heureSupp);
-      hours =
-        heureSupp.getHours() < 9
-          ? "0" + heureSupp.getHours()
-          : heureSupp.getHours();
-      minutes =
-        heureSupp.getMinutes() < 9
-          ? "0" + heureSupp.getMinutes()
-          : heureSupp.getMinutes();
-      seconds =
-        heureSupp.getSeconds() < 9
-          ? "0" + heureSupp.getSeconds()
-          : heureSupp.getSeconds();
-      heure.heureSupp = hours + ":" + minutes + ":" + seconds;
+    if (!heure.heureTotal.toString().includes(":")) {
+      let heureTotal = new Date(heure.heureTotal);
+      let hours =
+        heureTotal.getHours() < 9
+          ? "0" + heureTotal.getHours()
+          : heureTotal.getHours();
+      let minutes =
+        heureTotal.getMinutes() < 9
+          ? "0" + heureTotal.getMinutes()
+          : heureTotal.getMinutes();
+      let seconds =
+        heureTotal.getSeconds() < 9
+          ? "0" + heureTotal.getSeconds()
+          : heureTotal.getSeconds();
+      heureTotal = hours + ":" + minutes + ":" + seconds;
+      if (heure.heureSupp != "00:00:00") {
+        let heureSupp = new Date(heure.heureSupp);
+        hours =
+          heureSupp.getHours() < 9
+            ? "0" + heureSupp.getHours()
+            : heureSupp.getHours();
+        minutes =
+          heureSupp.getMinutes() < 9
+            ? "0" + heureSupp.getMinutes()
+            : heureSupp.getMinutes();
+        seconds =
+          heureSupp.getSeconds() < 9
+            ? "0" + heureSupp.getSeconds()
+            : heureSupp.getSeconds();
+        heure.heureSupp = hours + ":" + minutes + ":" + seconds;
+      }
+      heure.heureTotal = heureTotal;
     }
-    heure.heureTotal = heureTotal;
     this.heure = heure;
   },
   methods: {
@@ -267,6 +269,7 @@ export default {
         index: this.$route.params.index,
       });
       this.loading = false;
+      this.$router.push({ name: "Fiches heure" });
     },
     addTag() {
       this.heure.tag.push("tag");

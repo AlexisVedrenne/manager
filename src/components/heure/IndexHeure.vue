@@ -94,25 +94,37 @@ export default {
     let workTime = this.utils.localStorage.getItem("workTime");
     let dayly = this.utils.localStorage.getItem("dayly");
     if (workTime !== "null" && dayly !== "null" && workTime && dayly) {
-      let value = { hours: null, minutes: null, seconds: null };
-      this.journer = dayly;
-      let timeNow = this.date.getTime(this.date);
-      let start = new Date(dayly.start.value);
-      let timeStarted = start.getTime(start);
-      let diff = timeNow - timeStarted;
-      let timeDiff = new Date(diff);
-      value.hours = timeDiff.getHours() - 1;
-      value.minutes = timeDiff.getMinutes();
-      value.seconds = timeDiff.getSeconds();
-      console.log(dayly.status);
-      timer.start({ startValues: value });
-      if (dayly.status == 1) {
+      if (dayly.status === 1) {
         this.icon = "play_arrow";
+        timer.stop();
+        timer.start({ startValues: workTime });
         timer.pause();
+        this.journer = dayly;
         document.getElementById("time").innerText = timer
           .getTimeValues()
           .toString();
       } else {
+        let value = { hours: null, minutes: null, seconds: null };
+        this.journer = dayly;
+        let timeNow = this.date.getTime(this.date);
+        let start = new Date(dayly.start.value);
+        let event = 0;
+        let eventTime = 0;
+        if (dayly.event.length > 1) {
+          event = new Date(dayly.event[dayly.event.length - 2].time);
+          eventTime = event.getTime(event);
+        }
+
+        let timeStarted = start.getTime(start);
+        timeStarted = event - timeStarted;
+        let diff = timeNow - timeStarted;
+        let timeDiff = new Date(diff);
+        timeStarted = new Date(timeStarted);
+        value.hours = timeStarted.getHours() - 1;
+        value.minutes = timeDiff.getMinutes();
+        value.seconds = timeDiff.getSeconds();
+        timer.stop();
+        timer.start({ startValues: value });
         this.icon = "pause";
       }
       this.firstStart = true;
@@ -139,28 +151,49 @@ export default {
     async timeDataCloud() {
       let user = await this.$store.dispatch("getUserInfo");
       if (user.heure.dayly.start.value) {
-        let value = { hours: null, minutes: null, seconds: null };
-        let dayly = user.heure.dayly;
-        this.journer = dayly;
-        this.utils.localStorage.set("dayly", this.journer);
-        let timeNow = this.date.getTime(this.date);
-        let start = new Date(dayly.start.value);
-        let timeStarted = start.getTime(start);
-        let diff = timeNow - timeStarted;
-        let timeDiff = new Date(diff);
-        value.hours = timeDiff.getHours() - 1;
-        value.minutes = timeDiff.getMinutes();
-        value.seconds = timeDiff.getSeconds();
-        timer.start({ startValues: value });
-        if (dayly.status == 1) {
+        if (user.heure.dayly.status === 1) {
+          let value = { hours: null, minutes: null, seconds: null };
+          let dayly = user.heure.dayly;
+          this.journer = dayly;
+          this.utils.localStorage.set("dayly", this.journer);
+          let start = new Date(dayly.start.value);
+          let event = 0;
+          let eventTime = 0;
+          if (dayly.event.length > 1) {
+            event = new Date(dayly.event[dayly.event.length - 2].time);
+            eventTime = event.getTime(event);
+          }
+          let timeStarted = start.getTime(start);
+          timeStarted = event - timeStarted;
+          let diff = timeNow - timeStarted;
+          let timeDiff = new Date(diff);
+          value.hours = timeDiff.getHours() - 1;
+          value.minutes = timeDiff.getMinutes();
+          value.seconds = timeDiff.getSeconds();
+          timer.start({ startValues: value });
           this.icon = "play_arrow";
+          timer.start({ startValues: value });
           timer.pause();
           document.getElementById("time").innerText = timer
             .getTimeValues()
             .toString();
         } else {
+          let value = { hours: null, minutes: null, seconds: null };
+          let dayly = user.heure.dayly;
+          this.journer = dayly;
+          this.utils.localStorage.set("dayly", this.journer);
+          let timeNow = this.date.getTime(this.date);
+          let start = new Date(dayly.start.value);
+          let timeStarted = start.getTime(start);
+          let diff = timeNow - timeStarted;
+          let timeDiff = new Date(diff);
+          value.hours = timeDiff.getHours() - 1;
+          value.minutes = timeDiff.getMinutes();
+          value.seconds = timeDiff.getSeconds();
+          timer.start({ startValues: value });
           this.icon = "pause";
         }
+
         this.firstStart = true;
         return;
       }
@@ -191,8 +224,13 @@ export default {
       }
       if (timer.isPaused()) {
         let tmpDate = new Date();
+        let time = tmpDate.getTime();
         tmpDate = tmpDate.getHours() + ":" + tmpDate.getMinutes();
-        this.journer.event.push({ value: tmpDate, type: "terminé à" });
+        this.journer.event.push({
+          time: time,
+          value: tmpDate,
+          type: "terminé à",
+        });
         this.journer.status = 0;
         let dayly = this.utils.localStorage.getItem("dayly");
         dayly.event = this.journer.event;
@@ -202,14 +240,20 @@ export default {
           event: dayly.event,
           status: this.journer.status,
         });
+
         this.icon = "pause";
         timer.start();
         return;
       }
       if (timer.isRunning()) {
         let tmpDate = new Date();
+        let time = tmpDate.getTime();
         tmpDate = tmpDate.getHours() + ":" + tmpDate.getMinutes();
-        this.journer.event.push({ value: tmpDate, type: "prise à" });
+        this.journer.event.push({
+          time: time,
+          value: tmpDate,
+          type: "prise à",
+        });
         this.journer.status = 1;
         let dayly = this.utils.localStorage.getItem("dayly");
         dayly.event = this.journer.event;

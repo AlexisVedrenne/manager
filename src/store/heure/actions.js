@@ -62,12 +62,12 @@ export async function endDay({ dispatch }) {
         "Fiche du " +
         date.getFullYear() +
         "/" +
-        date.getDay() +
+        date.getDate() +
         "/" +
         date.getMonth(),
       nomEntreprise: "",
       tag: [],
-      date: date.getFullYear() + "/" + date.getDay() + "/" + date.getMonth(),
+      date: date.getFullYear() + "/" + date.getDate() + "/" + date.getMonth(),
       description: "",
       heureTotal: totalTime.getTime(),
       heureSupp: heureSupp,
@@ -102,7 +102,9 @@ export async function endDay({ dispatch }) {
         },
       ],
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function addFiche({ dispatch }, { fiche }) {

@@ -20,13 +20,16 @@
     ></q-card>
     <q-parallax :height="200" :speed="0.5">
       <template v-slot:media>
-        <img :src="fiche.baniere" />
+        <img
+          :src="fiche.baniere !== null ? fiche.baniere : 'images/heure.png'"
+        />
       </template>
 
       <h1 class="text-white text-center">{{ fiche.nomEntreprise }}</h1>
     </q-parallax>
     <div class="row justify-center q-mt-md">
       <q-badge
+        class="q-mr-sm"
         style="height: 25px"
         v-for="(tag, index) in fiche.tag"
         :key="index"
@@ -94,7 +97,7 @@ export default {
   mounted() {
     let user = this.utils.localStorage.getItem("user");
     let heure = user.heure.fiches[this.$route.params.index];
-    if (!heure.heureTotal.includes(":")) {
+    if (!heure.heureTotal.toString().includes(":")) {
       let heureTotal = new Date(heure.heureTotal);
       let hours =
         heureTotal.getHours() < 9

@@ -66,7 +66,6 @@ export async function getUserInfo({ commit, dispatch }) {
     const res = await getDocs(q);
     let userInfo = res.docs[0].data();
     await LocalStorage.set("user", userInfo);
-    commit("setUser", { user: userInfo });
     return userInfo;
   } catch (error) {
     console.log(error);
@@ -247,7 +246,6 @@ export async function createUser({ commit }, { user, infos }) {
     uid: user.uid,
   };
   await addDoc(collection(fire.firebasebd, "utilisateurs"), account);
-  commit("setUser", { user: account });
 }
 
 export async function verifyEmail() {
@@ -298,7 +296,6 @@ export async function completeProfile({ commit }, { infos }) {
     user.phone = infos.phone;
     user.birth = infos.date;
     await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
-    commit("setUser", { user: user });
   } catch (error) {
     console.log(error);
   }
@@ -318,7 +315,6 @@ export async function choixFonctions({ commit }, { choix }) {
   user.paie.active = choix.paie;
   user.banque.active = choix.banque;
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
-  commit("setUser", { user: user });
 }
 
 export async function heureGuide({ commit }, { nb }) {
@@ -332,7 +328,6 @@ export async function heureGuide({ commit }, { nb }) {
   const id = res.docs[0].ref.id;
   user.heure.param.nbHeureSemaine = nb;
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
-  commit("setUser", { user: user });
 }
 
 export async function paieGuide({ commit }, { infos }) {
@@ -349,7 +344,6 @@ export async function paieGuide({ commit }, { infos }) {
   user.paie.param.horraire = infos.horraire;
   user.paie.param.mois = infos.mois;
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
-  commit("setUser", { user: user });
 }
 
 export async function endGuide({ commit }) {
@@ -364,7 +358,7 @@ export async function endGuide({ commit }) {
     const id = res.docs[0].ref.id;
     user.isFirstConnect = false;
     await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
-    commit("setUser", { user: user });
+
     Notify.create({
       progress: true,
       timeout: 1000,
@@ -387,7 +381,6 @@ export async function updateUserInfo({ commit }, { userInfos }) {
     let user = userInfos;
     const id = res.docs[0].ref.id;
     await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
-    commit("setUser", { user: user });
     LocalStorage.set("user", userInfos);
   } catch (error) {
     console.log(error);

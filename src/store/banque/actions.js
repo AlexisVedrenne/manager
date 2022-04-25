@@ -22,7 +22,6 @@ export async function addBanque({ commit }, { banque }) {
   const id = res.docs[0].ref.id;
   user.banque.comptes.push(banque);
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
-  commit("setUser", { user: user });
   Notify.create({
     progress: true,
     timeout: 1000,

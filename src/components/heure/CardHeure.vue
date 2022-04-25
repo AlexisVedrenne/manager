@@ -17,15 +17,6 @@
               spaced
             />
             <p class="text-grey">{{ fiche.date }}</p>
-            <q-badge
-              style="height: 25px"
-              v-for="(tag, index) in fiche.tag"
-              :key="index"
-              rounded
-              outline
-              color="accent"
-              :label="tag"
-            />
           </div>
           <div class="col">
             <div class="row justify-end">
@@ -41,6 +32,16 @@
             </div>
           </div>
         </div>
+        <q-badge
+          class="q-mr-sm"
+          style="height: 25px"
+          v-for="(tag, index) in fiche.tag"
+          :key="index"
+          rounded
+          outline
+          color="accent"
+          :label="tag"
+        />
         <div class="row justify-end">
           <q-btn-group flat>
             <q-btn
