@@ -134,19 +134,46 @@ export default {
   },
   methods: {
     async stop() {
-      this.journer.end.value = new Date();
-      let value = this.journer.end.value;
-      this.journer.end.parse = this.journer.end.parse =
-        value.getHours() + ":" + value.getMinutes();
-      timer.pause();
-      timer.reset();
-      timer.stop();
-      this.icon = "schedule";
-      this.firstStart = false;
-      document.getElementById("time").innerText = "Cliquer sur le bouton...";
-      this.utils.localStorage.set("dayly", "null");
-      await this.$store.dispatch("endDay");
-      this.utils.localStorage.set("workTime", "null");
+      if (timer.isRunning()) {
+        this.journer.end.value = new Date();
+        let value = this.journer.end.value;
+        this.journer.end.parse = this.journer.end.parse =
+          value.getHours() + ":" + value.getMinutes();
+        timer.pause();
+        timer.reset();
+        timer.stop();
+        this.icon = "schedule";
+        this.firstStart = false;
+        document.getElementById("time").innerText = "Cliquer sur le bouton...";
+        this.utils.localStorage.set("dayly", "null");
+        let index = await this.$store.dispatch("endDay");
+        this.utils.localStorage.set("workTime", "null");
+        this.utils.notify({
+          progress: true,
+          icon: "error",
+          textColor: "secondary",
+          message: "Votre fiche de travail à été partiellement complété.",
+          color: "primary",
+          actions: [
+            {
+              label: "Compléter",
+              color: "secondary",
+              noCaps: true,
+              handler: () => {
+                this.$router.push("/heure/edit/" + index);
+              },
+            },
+            {
+              noCaps: true,
+              label: "Compléter plus tard",
+              color: "secondary",
+              handler: () => {
+                /* ... */
+              },
+            },
+          ],
+        });
+      }
     },
     async timeDataCloud() {
       let user = await this.$store.dispatch("getUserInfo");
@@ -197,6 +224,9 @@ export default {
         this.firstStart = true;
         return;
       }
+    },
+    getTempsPause() {
+      let res = 0;
     },
     async start() {
       if (!this.firstStart) {

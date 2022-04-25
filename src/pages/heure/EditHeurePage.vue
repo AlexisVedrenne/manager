@@ -12,9 +12,9 @@
           />
           <p
             class="q-ma-none q-mr-sm text-white text-bold text-center"
-            style="font-size: 25px"
+            style="font-size: 23px"
           >
-            Ajout d'une fiche d'heure
+            Edition d'une fiche d'heure
           </p>
         </div></q-card-section
       ></q-card

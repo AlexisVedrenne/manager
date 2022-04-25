@@ -1,4 +1,5 @@
-import { LocalStorage } from "quasar";
+import { LocalStorage, Loading, QSpinnerGears } from "quasar";
+import route from "src/router";
 import {
   collection,
   addDoc,
@@ -10,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { Notify } from "quasar";
 import "core-js/es/array";
+import { RouterLink, RouterView } from "vue-router";
 
 export async function setWorkTime({ commit }, { time }) {
   await LocalStorage.set("workTime", time);
@@ -79,29 +81,7 @@ export async function endDay({ dispatch }) {
     user.heure.dayly.end.parse = null;
     LocalStorage.set("workTime", "null");
     await dispatch("updateUserInfo", { userInfos: user });
-    Notify.create({
-      progress: true,
-      icon: "error",
-      textColor: "secondary",
-      message: "Votre fiche de travail à été partiellement complété.",
-      color: "primary",
-      actions: [
-        {
-          label: "Compléter",
-          color: "secondary",
-          handler: () => {
-            /* ... */
-          },
-        },
-        {
-          label: "Compléter plus tard",
-          color: "secondary",
-          handler: () => {
-            /* ... */
-          },
-        },
-      ],
-    });
+    return user.heure.fiches.length - 1;
   } catch (error) {
     console.log(error);
   }
@@ -138,9 +118,11 @@ export async function addFiche({ dispatch }, { fiche }) {
 
 export async function deleteFiche({ dispatch }, { index }) {
   try {
+    Loading.show();
     let user = LocalStorage.getItem("user");
     user.heure.fiches.splice(index, 1);
     await dispatch("updateUserInfo", { userInfos: user });
+    Loading.hide();
     Notify.create({
       progress: true,
       timeout: 1000,
