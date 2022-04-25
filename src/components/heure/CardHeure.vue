@@ -30,6 +30,7 @@
           <div class="col">
             <div class="row justify-end">
               <q-btn
+                @click="this.$emit('detail')"
                 size="20px"
                 style="width: 110px"
                 rounded

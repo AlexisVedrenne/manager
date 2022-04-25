@@ -56,6 +56,11 @@ const routes = [
         path: "/heure/edit/:index",
         component: () => import("pages/heure/EditHeurePage.vue"),
       },
+      {
+        name: "Détail des heures",
+        path: "/heure/detail/:index",
+        component: () => import("pages/heure/DetailHeurePage.vue"),
+      },
     ],
   },
   {

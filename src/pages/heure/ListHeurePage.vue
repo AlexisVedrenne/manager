@@ -46,6 +46,7 @@
       <CardHeure
         @delete="confirm(index, heure.nom)"
         @edit="edit(index)"
+        @detail="detail(index)"
         :fiche="heure"
       />
     </section>
@@ -74,6 +75,9 @@ export default {
     this.refresh();
   },
   methods: {
+    detail(index) {
+      this.$router.push("/heure/detail/" + index);
+    },
     edit(index) {
       this.$router.push("/heure/edit/" + index);
     },
