@@ -61,15 +61,27 @@ export async function endDay({ dispatch }) {
     user.heure.fiches.push({
       baniere: null,
       nom:
-        "Fiche du " +
-        date.getFullYear() +
-        "/" +
-        date.getDate() +
-        "/" +
-        date.getMonth(),
+        "Fiche du " + date.getDate() < 9
+          ? "0" + date.getDate()
+          : date.getDate() +
+            "/" +
+            (date.getMonth() + 1 < 9
+              ? "0" + (date.getMonth() + 1)
+              : date.getMonth() + 1) +
+            "/" +
+            date.getFullYear(),
       nomEntreprise: "",
       tag: [],
-      date: date.getFullYear() + "/" + date.getDate() + "/" + date.getMonth(),
+      date:
+        date.getDate() < 9
+          ? "0" + date.getDate()
+          : date.getDate() +
+            "/" +
+            (date.getMonth() + 1 < 9
+              ? "0" + (date.getMonth() + 1)
+              : date.getMonth() + 1) +
+            "/" +
+            date.getFullYear(),
       description: "",
       heureTotal: totalTime.getTime(),
       heureSupp: heureSupp,
