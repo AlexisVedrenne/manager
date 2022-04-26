@@ -46,7 +46,7 @@ export async function endDay({ dispatch }) {
     let totalTime = new Date(
       1990,
       12,
-      parseInt(workTime.days),
+      1,
       parseInt(workTime.hours),
       parseInt(workTime.minutes),
       parseInt(workTime.seconds)

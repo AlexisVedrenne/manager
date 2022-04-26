@@ -4,7 +4,7 @@
       ><q-card-section class="column items-center">
         <div class="row items-center justify-center">
           <q-btn
-            :to="{ name: 'Fiches heure' }"
+            :to="{ name: 'Heure' }"
             text-color="secondary"
             round
             flat
@@ -112,12 +112,13 @@ export default {
           ? "0" + heureTotal.getSeconds()
           : heureTotal.getSeconds();
       heureTotal = hours + ":" + minutes + ":" + seconds;
-      if (heure.heureSupp != "00:00:00") {
+      if (heure.heureSupp !== "00:00:00") {
         let heureSupp = new Date(heure.heureSupp);
+        console.log(heureSupp);
         hours =
           heureSupp.getHours() < 9
-            ? "0" + heureSupp.getHours()
-            : heureSupp.getHours();
+            ? "0" + heureSupp.getHours() - 1
+            : heureSupp.getHours() - 1;
         minutes =
           heureSupp.getMinutes() < 9
             ? "0" + heureSupp.getMinutes()
@@ -126,7 +127,8 @@ export default {
           heureSupp.getSeconds() < 9
             ? "0" + heureSupp.getSeconds()
             : heureSupp.getSeconds();
-        heure.heureSupp = hours + ":" + minutes + ":" + seconds;
+        let res = hours + ":" + minutes + ":" + seconds;
+        heure.heureSupp = res;
       }
       heure.heureTotal = heureTotal;
     }

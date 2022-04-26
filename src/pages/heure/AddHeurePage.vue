@@ -4,7 +4,7 @@
       ><q-card-section>
         <div class="row items-center justify-center">
           <q-btn
-            :to="{ name: 'Fiches heure' }"
+            :to="{ name: 'Heure' }"
             text-color="secondary"
             round
             flat

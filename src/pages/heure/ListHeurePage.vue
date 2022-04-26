@@ -52,7 +52,7 @@
     </section>
   </main>
   <q-page-sticky position="bottom-right" :offset="[18, 18]">
-    <q-btn fab icon="add" :to="{ name: 'Ajout heure' }" color="secondary" />
+    <q-btn fab icon="add" :to="{ name: 'Ajout' }" color="secondary" />
   </q-page-sticky>
 </template>
 

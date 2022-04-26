@@ -42,22 +42,22 @@ const routes = [
         component: () => import("pages/heure/IndexPage.vue"),
       },
       {
-        name: "Fiches heure",
+        name: "Heure",
         path: "/heure",
         component: () => import("pages/heure/ListHeurePage.vue"),
       },
       {
-        name: "Ajout heure",
+        name: "Ajout",
         path: "/heure/add",
         component: () => import("pages/heure/AddHeurePage.vue"),
       },
       {
-        name: "Edition heure",
+        name: "Edition",
         path: "/heure/edit/:index",
         component: () => import("pages/heure/EditHeurePage.vue"),
       },
       {
-        name: "Détail des heures",
+        name: "Détail",
         path: "/heure/detail/:index",
         component: () => import("pages/heure/DetailHeurePage.vue"),
       },
