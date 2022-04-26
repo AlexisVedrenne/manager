@@ -36,7 +36,7 @@
     >
     <q-card
       class="q-ml-lg q-mr-lg q-mb-md"
-      v-for="(event, index) in journer.event"
+      v-for="(event, index) in journer.event.list"
       :key="index"
     >
       <q-card-section>
@@ -68,10 +68,17 @@ import Store from "src/store";
 const timer = new Timer();
 var store = Store();
 timer.addEventListener("secondsUpdated", async function () {
-  document.getElementById("time").innerText = timer.getTimeValues().toString();
-  await store.dispatch("setWorkTime", {
-    time: timer.getTimeValues(),
-  });
+  try {
+    document.getElementById("time").innerText = timer
+      .getTimeValues()
+      .toString();
+    await store.dispatch("setWorkTime", {
+      time: timer.getTimeValues(),
+    });
+  } catch (error) {
+    timer.stop();
+    timer.reset();
+  }
 });
 export default {
   data() {
@@ -84,7 +91,7 @@ export default {
       journer: {
         start: { value: null, parse: null },
         status: 0,
-        event: [],
+        event: { index: [], list: [] },
         end: { value: null, parse: null },
       },
     };
@@ -100,27 +107,21 @@ export default {
         timer.start({ startValues: workTime });
         timer.pause();
         this.journer = dayly;
+        let tempsTotalPause = this.getTimePause();
         document.getElementById("time").innerText = timer
           .getTimeValues()
           .toString();
       } else {
         let value = { hours: null, minutes: null, seconds: null };
         this.journer = dayly;
+        let tempsTotalPause = this.getTimePause();
         let timeNow = this.date.getTime(this.date);
         let start = new Date(dayly.start.value);
-        let event = 0;
-        let eventTime = 0;
-        if (dayly.event.length > 1) {
-          event = new Date(dayly.event[dayly.event.length - 2].time);
-          eventTime = event.getTime(event);
-        }
-
         let timeStarted = start.getTime(start);
-        timeStarted = event - timeStarted;
         let diff = timeNow - timeStarted;
-        let timeDiff = new Date(diff);
-        timeStarted = new Date(timeStarted);
-        value.hours = timeStarted.getHours() - 1;
+        let time = diff - tempsTotalPause;
+        let timeDiff = new Date(time);
+        value.hours = timeDiff.getHours() - 1;
         value.minutes = timeDiff.getMinutes();
         value.seconds = timeDiff.getSeconds();
         timer.stop();
@@ -184,16 +185,12 @@ export default {
           this.journer = dayly;
           this.utils.localStorage.set("dayly", this.journer);
           let start = new Date(dayly.start.value);
-          let event = 0;
-          let eventTime = 0;
-          if (dayly.event.length > 1) {
-            event = new Date(dayly.event[dayly.event.length - 2].time);
-            eventTime = event.getTime(event);
-          }
+          let tempsTotalPause = this.getTimePause();
+          let timeNow = this.date.getTime(this.date);
           let timeStarted = start.getTime(start);
-          timeStarted = event - timeStarted;
           let diff = timeNow - timeStarted;
-          let timeDiff = new Date(diff);
+          let time = diff - tempsTotalPause;
+          let timeDiff = new Date(time);
           value.hours = timeDiff.getHours() - 1;
           value.minutes = timeDiff.getMinutes();
           value.seconds = timeDiff.getSeconds();
@@ -209,11 +206,13 @@ export default {
           let dayly = user.heure.dayly;
           this.journer = dayly;
           this.utils.localStorage.set("dayly", this.journer);
-          let timeNow = this.date.getTime(this.date);
           let start = new Date(dayly.start.value);
+          let tempsTotalPause = this.getTimePause();
+          let timeNow = this.date.getTime(this.date);
           let timeStarted = start.getTime(start);
           let diff = timeNow - timeStarted;
-          let timeDiff = new Date(diff);
+          let time = diff - tempsTotalPause;
+          let timeDiff = new Date(time);
           value.hours = timeDiff.getHours() - 1;
           value.minutes = timeDiff.getMinutes();
           value.seconds = timeDiff.getSeconds();
@@ -225,22 +224,23 @@ export default {
         return;
       }
     },
-    getTempsPause() {
-      let res = 0;
-    },
     async start() {
       if (!this.firstStart) {
         this.journer = {
           start: { value: null, parse: null },
           status: 0,
-          event: [],
+          event: { index: [], list: [] },
           end: { value: null, parse: null },
         };
         timer.start();
         this.journer.start.value = new Date();
         let value = this.journer.start.value;
         this.journer.start.parse = this.journer.start.parse =
-          value.getHours() + ":" + value.getMinutes();
+          (value.getHours() < 9 ? "0" + value.getHours() : value.getHours()) +
+          ":" +
+          (value.getMinutes() < 9
+            ? "0" + value.getMinutes()
+            : value.getMinutes());
         this.journer.start.value = this.journer.start.value.getTime(
           this.journer.start.value
         );
@@ -255,12 +255,23 @@ export default {
       if (timer.isPaused()) {
         let tmpDate = new Date();
         let time = tmpDate.getTime();
-        tmpDate = tmpDate.getHours() + ":" + tmpDate.getMinutes();
-        this.journer.event.push({
+        tmpDate =
+          (tmpDate.getHours() < 9
+            ? "0" + tmpDate.getHours()
+            : tmpDate.getHours()) +
+          ":" +
+          (tmpDate.getMinutes() < 9
+            ? "0" + tmpDate.getMinutes()
+            : tmpDate.getMinutes());
+        this.journer.event.list.push({
           time: time,
           value: tmpDate,
           type: "terminé à",
         });
+        let index = this.journer.event.list.length - 2;
+        if (!this.journer.event.index.includes(index)) {
+          this.journer.event.index.push(index);
+        }
         this.journer.status = 0;
         let dayly = this.utils.localStorage.getItem("dayly");
         dayly.event = this.journer.event;
@@ -278,12 +289,23 @@ export default {
       if (timer.isRunning()) {
         let tmpDate = new Date();
         let time = tmpDate.getTime();
-        tmpDate = tmpDate.getHours() + ":" + tmpDate.getMinutes();
-        this.journer.event.push({
+        tmpDate =
+          (tmpDate.getHours() < 9
+            ? "0" + tmpDate.getHours()
+            : tmpDate.getHours()) +
+          ":" +
+          (tmpDate.getMinutes() < 9
+            ? "0" + tmpDate.getMinutes()
+            : tmpDate.getMinutes());
+        this.journer.event.list.push({
           time: time,
           value: tmpDate,
           type: "prise à",
         });
+        let index = this.journer.event.list.length - 1;
+        if (!this.journer.event.index.includes(index)) {
+          this.journer.event.index.push(index);
+        }
         this.journer.status = 1;
         let dayly = this.utils.localStorage.getItem("dayly");
         dayly.event = this.journer.event;
@@ -296,6 +318,21 @@ export default {
         this.icon = "play_arrow";
         timer.pause();
         return;
+      }
+    },
+    getTimePause() {
+      let totalPause = 0;
+      try {
+        for (let i = 0; i < this.journer.event.index.length; i++) {
+          let index = this.journer.event.index[i];
+          let debut = new Date(this.journer.event.list[index].time);
+          let fin = new Date(this.journer.event.list[index + 1].time);
+          let tempsPause = fin.getTime(fin) - debut.getTime(debut);
+          totalPause += tempsPause;
+        }
+        return totalPause;
+      } catch (error) {
+        return totalPause;
       }
     },
   },

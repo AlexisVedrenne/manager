@@ -4,7 +4,7 @@
       ><q-card-section>
         <div class="row items-center justify-center">
           <q-btn
-            :to="{ name: 'Fiches heure' }"
+            :to="{ name: 'Heure' }"
             text-color="secondary"
             round
             flat
@@ -202,12 +202,7 @@
         />
       </q-page-sticky>
       <q-page-sticky position="bottom-left" :offset="[18, 18]">
-        <q-btn
-          :to="{ name: 'Fiches heure' }"
-          fab
-          icon="close"
-          color="negative"
-        />
+        <q-btn :to="{ name: 'Heure' }" fab icon="close" color="negative" />
       </q-page-sticky>
     </q-form>
   </main>
