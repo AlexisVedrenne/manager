@@ -56,6 +56,9 @@
           :fiche="heure"
         />
       </section>
+      <section v-if="heures.length == 0" class="q-ma-sm q-mt-lg">
+        <p class="text-center text-grey">Aucun résultat trouvé...</p>
+      </section>
     </main>
   </q-pull-to-refresh>
   <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -154,6 +157,8 @@ export default {
     },
     async forceRefresh(done) {
       await this.$store.dispatch("getUserInfo");
+      this.mois = "";
+      this.annee = "";
       this.refresh();
       this.setAnnee();
       done();
