@@ -34,7 +34,7 @@
         <q-btn color="secondary" flat dense round icon="more_vert">
           <q-menu>
             <q-list style="width: 180px">
-              <q-item clickable v-close-popup>
+              <q-item :to="{ name: 'Réglages' }" clickable v-close-popup>
                 <q-item-section avatar>
                   <q-icon color="primary" name="settings" />
                 </q-item-section>
