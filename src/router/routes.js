@@ -47,6 +47,11 @@ const routes = [
         component: () => import("pages/params/IndexPage.vue"),
       },
       {
+        name: "Profil",
+        path: "/settings/profil",
+        component: () => import("pages/params/ProfilPage.vue"),
+      },
+      {
         name: "Heure",
         path: "/heure",
         component: () => import("pages/heure/ListHeurePage.vue"),

@@ -2,9 +2,9 @@
   <main class="q-mb-xl">
     <p style="font-size: 18px" class="q-ma-none q-mt-lg q-ml-sm">Indentité</p>
     <q-separator />
-    <q-item clickable v-ripple class="q-pa-none q-">
+    <q-item :to="{ name: 'Profil' }" clickable v-ripple class="q-pa-none">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md">
+        <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="account_circle" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Mon profil
@@ -12,7 +12,7 @@
 
           <p class="text-grey q-ml-xl">{{ user.prenom }} {{ user.nom }}</p>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
@@ -24,7 +24,7 @@
     <q-separator />
     <q-item clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md">
+        <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="mail" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Adresse Email
@@ -34,7 +34,7 @@
             {{ credential.user.email }}
           </p>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
@@ -45,7 +45,7 @@
     <q-separator />
     <q-item clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md">
+        <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="call" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Téléphone
@@ -55,7 +55,7 @@
             {{ credential.user.phone || "Aucun..." }}
           </p>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
@@ -66,7 +66,7 @@
     <q-separator />
     <q-item clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md">
+        <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="lock" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Mot de passe
@@ -74,7 +74,7 @@
 
           <p class="text-grey q-ml-xl">********</p>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
@@ -86,7 +86,7 @@
     <q-separator />
     <q-item clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md">
+        <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="schedule" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Nombre heure semaine
@@ -96,7 +96,7 @@
             {{ user.heure.param.nbHeureSemaine }}h
           </p>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
@@ -109,7 +109,7 @@
     <q-separator />
     <q-item clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md">
+        <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="paid" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Salaire mensuel
@@ -119,7 +119,7 @@
             {{ user.paie.param.mensuel }}€
           </p>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
@@ -130,7 +130,7 @@
     <q-separator />
     <q-item clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md">
+        <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="paid" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Salaire horraire
@@ -140,7 +140,7 @@
             {{ user.paie.param.horraire }}€
           </p>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
@@ -151,7 +151,7 @@
     <q-separator />
     <q-item clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md">
+        <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="paid" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Salaire annuel
@@ -159,7 +159,7 @@
 
           <p v-if="credential" class="text-grey q-ml-xl">{{ user.paie.param.annuel }}€</p>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
@@ -172,7 +172,7 @@
     <q-separator />
     <q-item clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md">
+        <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="account_balance" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Liste de mes comptes
@@ -183,7 +183,7 @@
             }}{{ user.banque.comptes.length > 1 ? " comptes" : " compte" }}
           </p>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
@@ -195,13 +195,13 @@
     <q-separator />
     <q-item clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
-        <div class="col-6 q-mt-md q-mb-lg">
+        <div class="col q-mt-md q-mb-lg">
           <q-icon color="secondary" size="20px" name="account_balance" />
           <span style="font-size: 15px" class="q-ma-none q-ml-sm text-primary">
             Condition général d'utilisation
           </span>
         </div>
-        <div class="col">
+        <div class="col-1">
           <div class="row justify-end">
             <q-btn round flat color="scondary" icon="arrow_forward_ios" />
           </div>
