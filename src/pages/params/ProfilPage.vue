@@ -14,7 +14,7 @@
       <q-btn color="secondary" flat label="Modifier" />
     </div>
     <q-separator />
-    <q-item clickable v-ripple class="q-pa-none q-">
+    <q-item @click="nom = true" clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
         <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="person" />
@@ -35,7 +35,7 @@
     </q-item>
     <q-separator class="q-mb-md" />
     <q-separator />
-    <q-item clickable v-ripple class="q-pa-none q-">
+    <q-item @click="prenom = true" clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
         <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="person" />
@@ -56,7 +56,7 @@
     </q-item>
     <q-separator class="q-mb-md" />
     <q-separator />
-    <q-item clickable v-ripple class="q-pa-none q-">
+    <q-item @click="naissance = true" clickable v-ripple class="q-pa-none q-">
       <section style="width: 100%" class="row items-center q-ml-sm">
         <div class="col q-mt-md">
           <q-icon color="secondary" size="20px" name="cake" />
@@ -77,6 +77,95 @@
     </q-item>
     <q-separator />
   </main>
+  <q-dialog persistent v-model="naissance" :position="'bottom'">
+    <q-card style="width: 700px; max-width: 80vw">
+      <div class="row justify-end">
+        <q-btn flat round icon="close" v-close-popup />
+      </div>
+      <q-card-section>
+        <q-form @submit="submit">
+          <div class="row justify-center q-mb-md">
+            <q-input
+              input-class="text-center"
+              type="date"
+              label="Modifier votre date de naissance"
+              v-model="user.birth"
+              color="secondary"
+              class="col"
+            />
+          </div>
+
+          <div class="row justify-center">
+            <q-btn
+              :loading="loading"
+              type="submit"
+              color="accent"
+              class="col-5"
+              label="Enregistrer"
+            />
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+  <q-dialog persistent v-model="prenom" :position="'bottom'">
+    <q-card style="width: 700px; max-width: 80vw">
+      <div class="row justify-end">
+        <q-btn flat round icon="close" v-close-popup />
+      </div>
+      <q-card-section>
+        <q-form @submit="submit">
+          <div class="row justify-center q-mb-md">
+            <q-input
+              label="Modifier votre prénom"
+              v-model="user.prenom"
+              color="secondary"
+              class="col"
+            />
+          </div>
+
+          <div class="row justify-center">
+            <q-btn
+              :loading="loading"
+              type="submit"
+              color="accent"
+              class="col-5"
+              label="Enregistrer"
+            />
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+  <q-dialog persistent v-model="nom" :position="'bottom'">
+    <q-card style="width: 700px; max-width: 80vw">
+      <div class="row justify-end">
+        <q-btn flat round icon="close" v-close-popup />
+      </div>
+      <q-card-section>
+        <q-form @submit="submit">
+          <div class="row justify-center q-mb-md">
+            <q-input
+              label="Modifier votre nom"
+              v-model="user.nom"
+              color="secondary"
+              class="col"
+            />
+          </div>
+
+          <div class="row justify-center">
+            <q-btn
+              :loading="loading"
+              type="submit"
+              color="accent"
+              class="col-5"
+              label="Enregistrer"
+            />
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -84,12 +173,26 @@ import { useQuasar } from "quasar";
 export default {
   data() {
     return {
+      prenom: false,
+      nom: false,
+      naissance: false,
+      loading: false,
       user: {},
       utils: useQuasar(),
     };
   },
   mounted() {
     this.user = this.utils.localStorage.getItem("user");
+  },
+  methods: {
+    async submit() {
+      this.loading = true;
+      await this.$store.dispatch("updateUserInfo", { userInfos: this.user });
+      this.loading = false;
+      this.nom = false;
+      this.prenom = false;
+      this.naissance = false;
+    },
   },
 };
 </script>

@@ -52,6 +52,11 @@ const routes = [
         component: () => import("pages/params/ProfilPage.vue"),
       },
       {
+        name: "Comptes",
+        path: "/settings/bank",
+        component: () => import("pages/params/BanquePage.vue"),
+      },
+      {
         name: "Heure",
         path: "/heure",
         component: () => import("pages/heure/ListHeurePage.vue"),

@@ -101,8 +101,10 @@ export default {
 
   mounted() {
     this.refresh();
-    this.setAnnee();
-    this.save = this.heures;
+    if (this.heures.length > 0) {
+      this.setAnnee();
+      this.save = this.heures;
+    }
   },
   methods: {
     filtre() {
@@ -110,16 +112,14 @@ export default {
       this.heures = this.save;
       if (this.mois != "") {
         filtre = this.heures.filter(
-          (fiche) =>
-            fiche.date.substring(3, fiche.date.length - 5) === this.mois.value
+          (fiche) => fiche.date.substring(3, fiche.date.length - 5) === this.mois.value
         );
         this.heures = filtre;
       }
       if (this.annee != "") {
         filtre = this.heures.filter(
           (fiche) =>
-            fiche.date.substring(fiche.date.length - 4, fiche.date.length) ===
-            this.annee
+            fiche.date.substring(fiche.date.length - 4, fiche.date.length) === this.annee
         );
         this.heures = filtre;
       }
@@ -167,8 +167,7 @@ export default {
       this.utils
         .dialog({
           title: "Attention !",
-          message:
-            "Vous etes sur de vouloir supprimer la fiche '" + name + "' ?",
+          message: "Vous etes sur de vouloir supprimer la fiche '" + name + "' ?",
           cancel: true,
           persistent: true,
           ok: {

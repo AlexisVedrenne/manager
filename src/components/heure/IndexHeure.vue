@@ -17,11 +17,7 @@
     <p id="time" class="text-center text-grey" style="font-size: 18px">
       Cliquer sur le bouton...
     </p>
-    <p
-      v-if="journer.start.parse"
-      class="text-grey-8 q-ml-md"
-      style="font-size: 20px"
-    >
+    <p v-if="journer.start.parse" class="text-grey-8 q-ml-md" style="font-size: 20px">
       Détail de votre journée
     </p>
     <q-card class="q-ml-md q-mr-md q-mb-md" v-if="journer.start.parse"
@@ -69,9 +65,7 @@ const timer = new Timer();
 var store = Store();
 timer.addEventListener("secondsUpdated", async function () {
   try {
-    document.getElementById("time").innerText = timer
-      .getTimeValues()
-      .toString();
+    document.getElementById("time").innerText = timer.getTimeValues().toString();
     await store.dispatch("setWorkTime", {
       time: timer.getTimeValues(),
     });
@@ -108,9 +102,7 @@ export default {
         timer.pause();
         this.journer = dayly;
         let tempsTotalPause = this.getTimePause();
-        document.getElementById("time").innerText = timer
-          .getTimeValues()
-          .toString();
+        document.getElementById("time").innerText = timer.getTimeValues().toString();
       } else {
         let value = { hours: null, minutes: null, seconds: null };
         this.journer = dayly;
@@ -198,9 +190,7 @@ export default {
           this.icon = "play_arrow";
           timer.start({ startValues: value });
           timer.pause();
-          document.getElementById("time").innerText = timer
-            .getTimeValues()
-            .toString();
+          document.getElementById("time").innerText = timer.getTimeValues().toString();
         } else {
           let value = { hours: null, minutes: null, seconds: null };
           let dayly = user.heure.dayly;
@@ -238,9 +228,7 @@ export default {
         this.journer.start.parse = this.journer.start.parse =
           (value.getHours() < 9 ? "0" + value.getHours() : value.getHours()) +
           ":" +
-          (value.getMinutes() < 9
-            ? "0" + value.getMinutes()
-            : value.getMinutes());
+          (value.getMinutes() < 9 ? "0" + value.getMinutes() : value.getMinutes());
         this.journer.start.value = this.journer.start.value.getTime(
           this.journer.start.value
         );
@@ -256,13 +244,9 @@ export default {
         let tmpDate = new Date();
         let time = tmpDate.getTime();
         tmpDate =
-          (tmpDate.getHours() < 9
-            ? "0" + tmpDate.getHours()
-            : tmpDate.getHours()) +
+          (tmpDate.getHours() < 9 ? "0" + tmpDate.getHours() : tmpDate.getHours()) +
           ":" +
-          (tmpDate.getMinutes() < 9
-            ? "0" + tmpDate.getMinutes()
-            : tmpDate.getMinutes());
+          (tmpDate.getMinutes() < 9 ? "0" + tmpDate.getMinutes() : tmpDate.getMinutes());
         this.journer.event.list.push({
           time: time,
           value: tmpDate,
@@ -290,13 +274,9 @@ export default {
         let tmpDate = new Date();
         let time = tmpDate.getTime();
         tmpDate =
-          (tmpDate.getHours() < 9
-            ? "0" + tmpDate.getHours()
-            : tmpDate.getHours()) +
+          (tmpDate.getHours() < 9 ? "0" + tmpDate.getHours() : tmpDate.getHours()) +
           ":" +
-          (tmpDate.getMinutes() < 9
-            ? "0" + tmpDate.getMinutes()
-            : tmpDate.getMinutes());
+          (tmpDate.getMinutes() < 9 ? "0" + tmpDate.getMinutes() : tmpDate.getMinutes());
         this.journer.event.list.push({
           time: time,
           value: tmpDate,

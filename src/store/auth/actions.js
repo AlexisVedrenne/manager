@@ -23,7 +23,7 @@ import {
   sendEmailVerification,
   setPersistence,
   indexedDBLocalPersistence,
-  dqsdq,
+  updateEmail,
 } from "firebase/auth";
 import { Notify } from "quasar";
 import "core-js/es/array";
@@ -39,6 +39,7 @@ export async function lostPassword({ commit }, { email }) {
       color: "positive",
     });
   } catch (error) {
+    console.log(error);
     Notify.create({
       progress: true,
       timeout: 1000,
@@ -222,7 +223,7 @@ export async function createUser({ commit }, { user, infos }) {
       dayly: {
         start: { value: null, parse: null },
         status: 0,
-        event: [],
+        event: { index: [], list: [] },
         end: { value: null, parse: null },
       },
       fiches: [],
@@ -382,6 +383,22 @@ export async function updateUserInfo({ commit }, { userInfos }) {
     const id = res.docs[0].ref.id;
     await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
     LocalStorage.set("user", userInfos);
+  } catch (error) {
+    console.log(error);
+    Notify.create({
+      progress: true,
+      timeout: 1000,
+      icon: "error",
+      message:
+        "Erreur lors de la sauvegarde du profile, veuillez vous reconnectez !",
+      color: "red",
+    });
+  }
+}
+
+export async function updateProfil({ commit }, { email }) {
+  try {
+    await updateEmail(fire.auth.currentUser, email);
   } catch (error) {
     console.log(error);
     Notify.create({

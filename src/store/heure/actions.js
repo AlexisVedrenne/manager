@@ -61,15 +61,14 @@ export async function endDay({ dispatch }) {
     user.heure.fiches.push({
       baniere: null,
       nom:
-        "Fiche du " + date.getDate() < 9
-          ? "0" + date.getDate()
-          : date.getDate() +
-            "/" +
-            (date.getMonth() + 1 < 9
-              ? "0" + (date.getMonth() + 1)
-              : date.getMonth() + 1) +
-            "/" +
-            date.getFullYear(),
+        "Fiche du " +
+        (date.getDate() < 9 ? "0" + date.getDate() : date.getDate()) +
+        "/" +
+        (date.getMonth() + 1 < 9
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1) +
+        "/" +
+        date.getFullYear(),
       nomEntreprise: "",
       tag: [],
       date:
@@ -88,7 +87,7 @@ export async function endDay({ dispatch }) {
     });
     user.heure.dayly.start.value = null;
     user.heure.dayly.start.parse = null;
-    user.heure.dayly.event = [];
+    user.heure.dayly.event = { index: [], list: [] };
     user.heure.dayly.end.value = null;
     user.heure.dayly.end.parse = null;
     LocalStorage.set("workTime", "null");
