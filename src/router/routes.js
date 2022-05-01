@@ -76,6 +76,16 @@ const routes = [
         path: "/heure/detail/:index",
         component: () => import("pages/heure/DetailHeurePage.vue"),
       },
+      {
+        name: "Paie",
+        path: "/paie",
+        component: () => import("pages/paie/ListPaiePage.vue"),
+      },
+      {
+        name: "Ajout paie",
+        path: "/paie/add",
+        component: () => import("pages/paie/AddPaiePage.vue"),
+      },
     ],
   },
   {

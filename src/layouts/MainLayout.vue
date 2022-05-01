@@ -72,11 +72,7 @@
           </div> </q-card-section
       ></q-card>
       <q-list>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
       </q-list>
     </q-drawer>
 
@@ -96,6 +92,12 @@ const linksList = [
     caption: "Consulter, ajouter...",
     icon: "watch_later",
     link: { name: "Heure" },
+  },
+  {
+    title: "Paie",
+    caption: "Consulter,ajouter...",
+    icon: "paid",
+    link: { name: "Paie" },
   },
 ];
 

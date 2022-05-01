@@ -20,21 +20,14 @@
       ></q-card
     >
     <div class="column items-center">
-      <p
-        style="font-size: 20px"
-        class="text-center q-ma-none text-grey-8 q-mt-sm"
-      >
+      <p style="font-size: 20px" class="text-center q-ma-none text-grey-8 q-mt-sm">
         {{ heure.nom }}
       </p>
-      <q-separator
-        color="secondary"
-        style="height: 3px; width: 75%"
-        spaced
-        inset
-      />
+      <q-separator color="secondary" style="height: 3px; width: 75%" spaced inset />
     </div>
     <q-form @submit="submit" class="q-ma-md">
       <q-file
+        accept="image/*"
         v-model="heure.baniere"
         color="secondary"
         class="q-mb-md"
@@ -193,13 +186,7 @@
         }"
       />
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
-        <q-btn
-          :loading="loading"
-          type="submit"
-          fab
-          icon="done"
-          color="accent"
-        />
+        <q-btn :loading="loading" type="submit" fab icon="done" color="accent" />
       </q-page-sticky>
       <q-page-sticky position="bottom-left" :offset="[18, 18]">
         <q-btn :to="{ name: 'Heure' }" fab icon="close" color="negative" />
