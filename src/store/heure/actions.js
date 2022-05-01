@@ -1,17 +1,6 @@
 import { LocalStorage, Loading, QSpinnerGears } from "quasar";
-import route from "src/router";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  setDoc,
-  doc,
-} from "firebase/firestore";
 import { Notify } from "quasar";
 import "core-js/es/array";
-import { RouterLink, RouterView } from "vue-router";
 
 export async function setWorkTime({ commit }, { time }) {
   await LocalStorage.set("workTime", time);

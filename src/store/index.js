@@ -6,6 +6,7 @@ import auth from "./auth";
 import banque from "./banque";
 import heure from "./heure";
 import storage from "./storage";
+import paie from "./paie";
 
 /*
  * If not building with SSR mode, you can
@@ -23,6 +24,7 @@ export default store(function (/* { ssrContext } */) {
       banque,
       heure,
       storage,
+      paie,
     },
 
     // enable strict mode (adds overhead!)

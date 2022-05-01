@@ -218,7 +218,7 @@ export default {
         index: this.$route.params.index,
       });
       this.loading = false;
-      this.$router.push({ name: "Fiches heure" });
+      this.$router.push({ name: "Heure" });
     },
     addTag() {
       this.heure.tag.push("tag");

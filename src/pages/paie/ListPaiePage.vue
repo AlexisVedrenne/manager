@@ -47,6 +47,10 @@
     >
       <template v-slot:prepend> <q-icon name="search" /> </template
     ></q-input>
+    <div v-for="(paie, index) in paies" :key="index" class="q-ma-sm">
+      <CardPaie :paie="paie" />
+    </div>
+
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" :to="{ name: 'Ajout paie' }" color="secondary" />
     </q-page-sticky>
@@ -54,11 +58,22 @@
 </template>
 
 <script>
+import { useQuasar } from "quasar";
+import CardPaie from "components/paie/CardPaie.vue";
 export default {
+  components: {
+    CardPaie,
+  },
   data() {
     return {
-      paie: [],
+      paies: [],
+      utils: useQuasar(),
     };
+  },
+  mounted() {
+    let user = this.utils.localStorage.getItem("user");
+    this.paies = user.paie.fiches;
+    console.log(this.paies);
   },
 };
 </script>

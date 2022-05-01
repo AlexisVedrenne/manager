@@ -118,7 +118,12 @@ export default {
     this.paie.mois = this.options[date.getMonth()];
   },
   methods: {
-    async submit() {},
+    async submit() {
+      this.loading = true;
+      await this.$store.dispatch("addPaie", { paie: this.paie });
+      this.loading = false;
+      this.$router.push({ name: "Paie" });
+    },
   },
 };
 </script>
