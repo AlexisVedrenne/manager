@@ -61,15 +61,13 @@ export async function endDay({ dispatch }) {
       nomEntreprise: "",
       tag: [],
       date:
-        date.getDate() < 9
-          ? "0" + date.getDate()
-          : date.getDate() +
-            "/" +
-            (date.getMonth() + 1 < 9
-              ? "0" + (date.getMonth() + 1)
-              : date.getMonth() + 1) +
-            "/" +
-            date.getFullYear(),
+        (date.getDate() < 9 ? "0" + date.getDate() : date.getDate()) +
+        "/" +
+        (date.getMonth() + 1 < 9
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1) +
+        "/" +
+        date.getFullYear(),
       description: "",
       heureTotal: totalTime.getTime(),
       heureSupp: heureSupp,

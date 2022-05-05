@@ -86,6 +86,11 @@ const routes = [
         path: "/paie/add",
         component: () => import("pages/paie/AddPaiePage.vue"),
       },
+      {
+        name: "Détail paie",
+        path: "/paie/detail/:index",
+        component: () => import("pages/paie/DetailPaiePage.vue"),
+      },
     ],
   },
   {

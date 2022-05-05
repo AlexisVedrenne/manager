@@ -5,7 +5,7 @@
         <section class="row">
           <q-select
             v-model="annee"
-            :options="anneeOptions"
+            :options="optionsAnnee"
             input-class="text-center"
             class="col q-mr-sm"
             rounded
@@ -22,7 +22,7 @@
           <q-select
             v-model="mois"
             @update:model-value="filtre"
-            :options="options"
+            :options="optionsMois"
             input-class="text-center"
             class="col q-ml-sm"
             rounded
@@ -48,7 +48,7 @@
       <template v-slot:prepend> <q-icon name="search" /> </template
     ></q-input>
     <div v-for="(paie, index) in paies" :key="index" class="q-ma-sm">
-      <CardPaie :paie="paie" />
+      <CardPaie @detail="detail(index)" :paie="paie" />
     </div>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -66,14 +66,24 @@ export default {
   },
   data() {
     return {
+      search: "",
       paies: [],
+      mois: "",
+      annee: "",
       utils: useQuasar(),
+      optionsMois: [],
+      optionsAnnee: [],
     };
   },
   mounted() {
     let user = this.utils.localStorage.getItem("user");
     this.paies = user.paie.fiches;
-    console.log(this.paies);
+  },
+
+  methods: {
+    detail(index) {
+      this.$router.push("/paie/detail/" + index);
+    },
   },
 };
 </script>
