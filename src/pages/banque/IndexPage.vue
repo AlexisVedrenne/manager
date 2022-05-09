@@ -6,7 +6,7 @@
       ></q-card
     >
 
-    <section v-if="titres.length > 0" class="q-ml-md q-mr-md">
+    <section v-if="titres.length > 0" class="q-ml-md q-mr-md q-mb-md">
       <p class="q-ml-sm text-primary q-ma-none q-mt-lg" style="font-size: 18px">
         Compte courrant
       </p>
@@ -16,7 +16,7 @@
         <CardBanque :compte="compte" />
       </div>
     </section>
-    <section v-if="epargne.length > 0" class="q-ml-md q-mr-md">
+    <section v-if="epargne.length > 0" class="q-ml-md q-mr-md q-mb-md">
       <p class="q-ml-sm text-primary q-ma-none q-mt-lg" style="font-size: 18px">
         Compte épargne
       </p>
@@ -26,7 +26,7 @@
         <CardBanque :compte="compte" />
       </div>
     </section>
-    <section v-if="terme.length > 0" class="q-ml-md q-mr-md">
+    <section v-if="terme.length > 0" class="q-ml-md q-mr-md q-mb-md">
       <p class="q-ml-sm text-primary q-ma-none q-mt-lg" style="font-size: 18px">
         Compte à terme
       </p>
@@ -36,7 +36,7 @@
         <CardBanque :compte="compte" />
       </div>
     </section>
-    <section v-if="joint.length > 0" class="q-ml-md q-mr-md">
+    <section v-if="joint.length > 0" class="q-ml-md q-mr-md q-mb-md">
       <p class="q-ml-sm text-primary q-ma-none q-mt-lg" style="font-size: 18px">
         Compte joint
       </p>

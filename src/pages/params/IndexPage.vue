@@ -206,7 +206,7 @@
 
   <!-- Les dialog pour les modif des param -->
 
-  <q-dialog persistent v-model="salaire" :position="'bottom'">
+  <q-dialog full-width persistent v-model="salaire" :position="'bottom'">
     <q-card style="width: 700px; max-width: 80vw">
       <div class="row justify-end">
         <q-btn flat round icon="close" v-close-popup />
@@ -236,7 +236,7 @@
       </q-card-section>
     </q-card>
   </q-dialog>
-  <q-dialog persistent v-model="nbHeure" :position="'bottom'">
+  <q-dialog full-width persistent v-model="nbHeure" :position="'bottom'">
     <q-card style="width: 700px; max-width: 80vw">
       <div class="row justify-end">
         <q-btn flat round icon="close" v-close-popup />
@@ -266,7 +266,7 @@
       </q-card-section>
     </q-card>
   </q-dialog>
-  <q-dialog persistent v-model="phone" :position="'bottom'">
+  <q-dialog full-width persistent v-model="phone" :position="'bottom'">
     <q-card style="width: 700px; max-width: 80vw">
       <div class="row justify-end">
         <q-btn flat round icon="close" v-close-popup />
@@ -296,7 +296,7 @@
       </q-card-section>
     </q-card>
   </q-dialog>
-  <q-dialog persistent v-model="email" :position="'bottom'">
+  <q-dialog full-width persistent v-model="email" :position="'bottom'">
     <q-card style="width: 700px; max-width: 80vw">
       <div class="row justify-end">
         <q-btn flat round icon="close" v-close-popup />
