@@ -11,7 +11,7 @@ import {
 import { Notify } from "quasar";
 import "core-js/es/array";
 
-export async function addBanque({ commit }, { banque }) {
+export async function addBanque({ dispatch }, { banque }) {
   const uid = fire.auth.currentUser.uid;
   const q = await query(
     collection(fire.firebasebd, "utilisateurs"),
@@ -22,6 +22,7 @@ export async function addBanque({ commit }, { banque }) {
   const id = res.docs[0].ref.id;
   user.banque.comptes.push(banque);
   await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
+  await dispatch("getUserInfo");
   Notify.create({
     progress: true,
     timeout: 1000,

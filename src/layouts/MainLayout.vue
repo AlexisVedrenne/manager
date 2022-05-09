@@ -99,6 +99,12 @@ const linksList = [
     icon: "paid",
     link: { name: "Paie" },
   },
+  {
+    title: "Banque",
+    caption: "Consulter,opération...",
+    icon: "account_balance",
+    link: { name: "Banque" },
+  },
 ];
 
 export default defineComponent({

@@ -96,6 +96,16 @@ const routes = [
         path: "/paie/edit/:index",
         component: () => import("pages/paie/EditPaiePage.vue"),
       },
+      {
+        name: "Banque",
+        path: "/banque",
+        component: () => import("pages/banque/IndexPage.vue"),
+      },
+      {
+        name: "Banque ajout",
+        path: "/banque/ajout",
+        component: () => import("pages/banque/AddBanquePage.vue"),
+      },
     ],
   },
   {

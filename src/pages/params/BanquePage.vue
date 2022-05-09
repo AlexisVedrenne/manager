@@ -139,7 +139,7 @@ export default {
             userInfos: this.user,
           });
           this.refresh();
-          this.utils.hide();
+          this.utils.loading.hide();
         })
         .onOk(async () => {})
         .onCancel(() => {})

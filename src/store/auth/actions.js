@@ -50,7 +50,7 @@ export async function lostPassword({ commit }, { email }) {
   }
 }
 
-export async function getUserInfo({ commit, dispatch }) {
+export async function getUserInfo({ dispatch }) {
   try {
     let credential = LocalStorage.getItem("authCredential");
     let uid = "";
