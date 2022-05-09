@@ -61,6 +61,7 @@
       </div>
       <div v-for="(paie, index) in paies" :key="index" class="q-ma-sm">
         <CardPaie
+          @edit="edit(index)"
           @delete="confirm(index, paie.nomEntreprise)"
           @detail="detail(index)"
           :paie="paie"
@@ -129,6 +130,9 @@ export default {
     },
     detail(index) {
       this.$router.push("/paie/detail/" + index);
+    },
+    edit(index) {
+      this.$router.push("/paie/edit/" + index);
     },
     setAnnee() {
       this.paies.forEach((paie) => {

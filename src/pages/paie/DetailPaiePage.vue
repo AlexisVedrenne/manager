@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main v-if="paie">
     <q-card square class="bg-primary text-white"
       ><q-card-section class="column items-center">
         <div class="row items-center justify-center">
@@ -25,7 +25,7 @@
       <q-btn
         icon-right="download"
         target="_blank"
-        :href="paie.fiche"
+        :href="lien"
         no-caps
         label="Télécharger"
         color="accent"
@@ -36,7 +36,7 @@
       <embed
         style="width: 100%; height: 100%"
         class="form-control"
-        :src="paie.fiche"
+        :src="lien"
         type="application/pdf"
       />
     </div>
@@ -50,12 +50,14 @@ export default {
     return {
       paie: {},
       utils: useQuasar(),
+      lien: null,
     };
   },
 
   mounted() {
     let user = this.utils.localStorage.getItem("user");
     this.paie = user.paie.fiches[this.$route.params.index];
+    this.lien = this.paie.fiche.lien;
   },
 };
 </script>

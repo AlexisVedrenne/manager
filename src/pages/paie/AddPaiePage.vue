@@ -27,7 +27,7 @@
     </div>
     <q-form @submit="submit" class="q-ma-md">
       <q-file
-        v-model="paie.fiche"
+        v-model="paie.fiche.lien"
         accept=".pdf"
         color="secondary"
         class="q-mb-md"
@@ -104,7 +104,10 @@ export default {
         "Décembre",
       ],
       paie: {
-        fiche: null,
+        fiche: {
+          lien: null,
+          nom: "",
+        },
         nomEntreprise: "",
         montant: "",
         annee: "",

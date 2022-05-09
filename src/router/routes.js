@@ -91,6 +91,11 @@ const routes = [
         path: "/paie/detail/:index",
         component: () => import("pages/paie/DetailPaiePage.vue"),
       },
+      {
+        name: "Edit paie",
+        path: "/paie/edit/:index",
+        component: () => import("pages/paie/EditPaiePage.vue"),
+      },
     ],
   },
   {
