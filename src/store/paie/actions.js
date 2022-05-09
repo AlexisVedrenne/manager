@@ -15,3 +15,29 @@ export async function addPaie({ dispatch }, { paie }) {
     console.log(error);
   }
 }
+
+export async function deletePaie({ dispatch }, { index }) {
+  try {
+    Loading.show();
+    let user = LocalStorage.getItem("user");
+    user.paie.fiches.splice(index, 1);
+    await dispatch("updateUserInfo", { userInfos: user });
+    Loading.hide();
+    Notify.create({
+      progress: true,
+      timeout: 1000,
+      icon: "info",
+      textColor: "primary",
+      message: "Fiche paie supprimée.",
+      color: "info",
+    });
+  } catch (error) {
+    Notify.create({
+      progress: true,
+      timeout: 1000,
+      icon: "error",
+      message: "Erreur lors de la supression de la fiche !",
+      color: "red",
+    });
+  }
+}

@@ -60,7 +60,11 @@
         />
       </div>
       <div v-for="(paie, index) in paies" :key="index" class="q-ma-sm">
-        <CardPaie @detail="detail(index)" :paie="paie" />
+        <CardPaie
+          @delete="confirm(index, paie.nomEntreprise)"
+          @detail="detail(index)"
+          :paie="paie"
+        />
       </div>
       <div v-if="paies.length == 0">
         <p class="text-grey text-center q-mt-lg">Aucun résultat...</p>
@@ -151,6 +155,32 @@ export default {
         filtre = this.paies.filter((fiche) => fiche.annee === this.annee);
         this.paies = filtre;
       }
+    },
+    async confirm(index, name) {
+      this.utils
+        .dialog({
+          title: "Attention !",
+          message: "Vous etes sur de vouloir supprimer la paie '" + name + "' ?",
+          cancel: true,
+          persistent: true,
+          ok: {
+            label: "Supprimer",
+            color: "negative",
+            flat: true,
+          },
+          cancel: {
+            label: "fermer",
+            flat: true,
+            color: "primary",
+          },
+        })
+        .onOk(async () => {
+          await this.$store.dispatch("deletePaie", { index: index });
+          this.forceRefresh();
+        })
+        .onOk(async () => {})
+        .onCancel(() => {})
+        .onDismiss(() => {});
     },
   },
 };
