@@ -62,11 +62,29 @@
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="Historique">
-          <q-input class="q-mb-lg" color="secondary" label="Rechercher une opération...">
-            <template v-slot:prepend> <q-icon name="search" /> </template
-          ></q-input>
+          <div class="row">
+            <q-input
+              v-model="recherche"
+              class="q-mb-lg col"
+              color="secondary"
+              label="Rechercher une opération..."
+            >
+              <template v-slot:prepend> <q-icon name="search" /> </template
+            ></q-input>
+            <q-btn
+              flat
+              @click="search"
+              round
+              color="accent"
+              class="col-1 q-mr-sm q-mb-md"
+              icon="search"
+            />
+          </div>
           <div class="q-gutter-md q-mt-lg">
             <CardOperation v-for="(op, index) in compte.op" :key="index" :op="op" />
+          </div>
+          <div v-if="compte.op.length == 0">
+            <p class="q-mt-md text-center text-grey">Aucune opération...</p>
           </div>
         </q-tab-panel>
 
@@ -182,6 +200,7 @@ export default {
   },
   data() {
     return {
+      recherche: "",
       opModal: false,
       loading: false,
       options: [
@@ -205,6 +224,7 @@ export default {
       tab: "Historique",
       date: "",
       compte: null,
+      save: [],
       utils: useQuasar(),
       user: null,
     };
@@ -214,6 +234,17 @@ export default {
   },
 
   methods: {
+    search() {
+      this.compte.op = this.save;
+      if (this.recherche !== "") {
+        let filtre = this.compte.op.filter((op) =>
+          op.libelle.toLowerCase().includes(this.recherche.toLowerCase())
+        );
+        this.compte.op = filtre;
+      } else {
+        this.compte.op = this.save;
+      }
+    },
     ouvreModal() {
       let date = new Date();
       this.op = {
@@ -244,6 +275,7 @@ export default {
       let op = this.user.banque.comptes[this.$route.params.index].op;
       op = op.reverse();
       let opTri = op.sort((a, b) => new Date(b.date) - new Date(a.date));
+      this.save = opTri;
       this.user.banque.comptes[this.$route.params.index].op = opTri;
       this.compte = this.user.banque.comptes[this.$route.params.index];
     },
