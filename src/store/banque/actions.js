@@ -52,6 +52,7 @@ export async function addOp({ dispatch }, { op, index }) {
   try {
     let user = LocalStorage.getItem("user");
     let val = 0.0;
+    op.montant = !op.montant ? "00.0" : op.montant;
     if (op.type === "Virement") {
       val = parseFloat(user.banque.comptes[index].solde);
       val += parseFloat(op.montant);
@@ -60,7 +61,7 @@ export async function addOp({ dispatch }, { op, index }) {
       val = parseFloat(user.banque.comptes[index].solde);
       val -= parseFloat(op.montant);
     }
-    user.banque.comptes[index].solde = val;
+    user.banque.comptes[index].solde = val.toFixed(2);
     user.banque.comptes[index].op.push(op);
     await dispatch("updateUserInfo", { userInfos: user });
   } catch (error) {

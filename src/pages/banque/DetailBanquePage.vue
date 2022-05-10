@@ -62,9 +62,12 @@
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="Historique">
-          <q-input color="secondary" label="Rechercher une opération...">
+          <q-input class="q-mb-lg" color="secondary" label="Rechercher une opération...">
             <template v-slot:prepend> <q-icon name="search" /> </template
           ></q-input>
+          <div class="q-gutter-md q-mt-lg">
+            <CardOperation v-for="(op, index) in compte.op" :key="index" :op="op" />
+          </div>
         </q-tab-panel>
 
         <q-tab-panel name="A venir">
@@ -106,6 +109,7 @@
             <q-radio color="secondary" v-model="op.type" val="Retrait" label="Retrait" />
           </div>
           <q-input
+            required
             class="q-mb-md"
             v-model="op.libelle"
             color="secondary"
@@ -114,6 +118,7 @@
             <template v-slot:prepend> <q-icon color="secondary" name="work" /> </template
           ></q-input>
           <q-select
+            required
             :options="options"
             class="q-mb-md"
             v-model="op.typeOp"
@@ -124,6 +129,7 @@
               <q-icon color="secondary" name="alt_route" /> </template
           ></q-select>
           <q-input
+            required
             type="date"
             class="q-mb-md"
             v-model="op.date"
@@ -133,6 +139,7 @@
             <template v-slot:prepend> <q-icon color="secondary" name="event" /> </template
           ></q-input>
           <q-input
+            required
             class="q-mb-md"
             v-model="op.lieu"
             color="secondary"
@@ -142,6 +149,7 @@
               <q-icon color="secondary" name="pin_drop" /> </template
           ></q-input>
           <q-input
+            required
             class="q-mb-md"
             v-model="op.montant"
             color="secondary"
@@ -167,7 +175,11 @@
 
 <script>
 import { useQuasar } from "quasar";
+import CardOperation from "components/banque/CardOperation.vue";
 export default {
+  components: {
+    CardOperation,
+  },
   data() {
     return {
       opModal: false,
@@ -229,6 +241,10 @@ export default {
         "/" +
         date.getFullYear();
       this.user = this.utils.localStorage.getItem("user");
+      let op = this.user.banque.comptes[this.$route.params.index].op;
+      op = op.reverse();
+      let opTri = op.sort((a, b) => new Date(b.date) - new Date(a.date));
+      this.user.banque.comptes[this.$route.params.index].op = opTri;
       this.compte = this.user.banque.comptes[this.$route.params.index];
     },
     async addOp() {
