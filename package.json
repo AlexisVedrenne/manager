@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "dev": "cross-env QENV=DEV quasar dev",
+    "build": "cross-env QENV=DEV quasar build",
     "android": "cross-env QENV=DEV quasar dev -m cordova -T android",
     "buildAndroid": "cross-env QENV=DEV quasar build -m cordova -T android",
     "windows": "cross-env QENV=DEV quasar dev -m electron",
