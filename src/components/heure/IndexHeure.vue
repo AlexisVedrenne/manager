@@ -58,20 +58,18 @@
 </template>
 
 <script>
-import Timer from "easytimer.js";
+import timer from "src/boot/Timer";
 import { useQuasar } from "quasar";
 import Store from "src/store";
-const timer = new Timer();
 var store = Store();
-timer.addEventListener("secondsUpdated", async function () {
+timer.timer.addEventListener("secondsUpdated", async function () {
   try {
-    document.getElementById("time").innerText = timer.getTimeValues().toString();
+    document.getElementById("time").innerText = timer.timer.getTimeValues().toString();
     await store.dispatch("setWorkTime", {
-      time: timer.getTimeValues(),
+      time: timer.timer.getTimeValues(),
     });
   } catch (error) {
-    timer.stop();
-    timer.reset();
+    timer.timer.stop();
   }
 });
 export default {
@@ -92,49 +90,17 @@ export default {
   },
   async mounted() {
     this.date = new Date();
-    let workTime = this.utils.localStorage.getItem("workTime");
-    let dayly = this.utils.localStorage.getItem("dayly");
-    if (workTime !== "null" && dayly !== "null" && workTime && dayly) {
-      if (dayly.status === 1) {
-        this.icon = "play_arrow";
-        timer.stop();
-        timer.start({ startValues: workTime });
-        timer.pause();
-        this.journer = dayly;
-        let tempsTotalPause = this.getTimePause();
-        document.getElementById("time").innerText = timer.getTimeValues().toString();
-      } else {
-        let value = { hours: null, minutes: null, seconds: null };
-        this.journer = dayly;
-        let tempsTotalPause = this.getTimePause();
-        let timeNow = this.date.getTime(this.date);
-        let start = new Date(dayly.start.value);
-        let timeStarted = start.getTime(start);
-        let diff = timeNow - timeStarted;
-        let time = diff - tempsTotalPause;
-        let timeDiff = new Date(time);
-        value.hours = timeDiff.getHours() - 1;
-        value.minutes = timeDiff.getMinutes();
-        value.seconds = timeDiff.getSeconds();
-        timer.stop();
-        timer.start({ startValues: value });
-        this.icon = "pause";
-      }
-      this.firstStart = true;
-    } else {
-      await this.timeDataCloud();
-    }
+    await this.timeDataCloud();
   },
   methods: {
     async stop() {
-      if (timer.isRunning()) {
+      if (timer.timer.isRunning()) {
         this.journer.end.value = new Date();
         let value = this.journer.end.value;
         this.journer.end.parse = this.journer.end.parse =
           value.getHours() + ":" + value.getMinutes();
-        timer.pause();
-        timer.reset();
-        timer.stop();
+        timer.timer.pause();
+        timer.timer.stop();
         this.icon = "schedule";
         this.firstStart = false;
         document.getElementById("time").innerText = "Cliquer sur le bouton...";
@@ -171,6 +137,7 @@ export default {
     async timeDataCloud() {
       let user = await this.$store.dispatch("getUserInfo");
       if (user.heure.dayly.start.value) {
+        document.getElementById("time").innerText = "Chargement...";
         if (user.heure.dayly.status === 1) {
           let value = { hours: null, minutes: null, seconds: null };
           let dayly = user.heure.dayly;
@@ -186,11 +153,13 @@ export default {
           value.hours = timeDiff.getHours() - 1;
           value.minutes = timeDiff.getMinutes();
           value.seconds = timeDiff.getSeconds();
-          timer.start({ startValues: value });
+          timer.timer.start({ startValues: value });
           this.icon = "play_arrow";
-          timer.start({ startValues: value });
-          timer.pause();
-          document.getElementById("time").innerText = timer.getTimeValues().toString();
+          timer.timer.start({ startValues: value });
+          timer.timer.pause();
+          document.getElementById(
+            "time"
+          ).innerText = timer.timer.getTimeValues().toString();
         } else {
           let value = { hours: null, minutes: null, seconds: null };
           let dayly = user.heure.dayly;
@@ -206,7 +175,7 @@ export default {
           value.hours = timeDiff.getHours() - 1;
           value.minutes = timeDiff.getMinutes();
           value.seconds = timeDiff.getSeconds();
-          timer.start({ startValues: value });
+          timer.timer.start({ startValues: value });
           this.icon = "pause";
         }
 
@@ -222,7 +191,7 @@ export default {
           event: { index: [], list: [] },
           end: { value: null, parse: null },
         };
-        timer.start();
+        timer.timer.start();
         this.journer.start.value = new Date();
         let value = this.journer.start.value;
         this.journer.start.parse = this.journer.start.parse =
@@ -240,7 +209,7 @@ export default {
         });
         return;
       }
-      if (timer.isPaused()) {
+      if (timer.timer.isPaused()) {
         let tmpDate = new Date();
         let time = tmpDate.getTime();
         tmpDate =
@@ -267,10 +236,10 @@ export default {
         });
 
         this.icon = "pause";
-        timer.start();
+        timer.timer.start();
         return;
       }
-      if (timer.isRunning()) {
+      if (timer.timer.isRunning()) {
         let tmpDate = new Date();
         let time = tmpDate.getTime();
         tmpDate =
@@ -296,7 +265,7 @@ export default {
           status: this.journer.status,
         });
         this.icon = "play_arrow";
-        timer.pause();
+        timer.timer.pause();
         return;
       }
     },

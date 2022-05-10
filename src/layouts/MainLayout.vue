@@ -86,6 +86,7 @@
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import { useQuasar } from "quasar";
+import timer from "src/boot/Timer";
 const linksList = [
   {
     title: "Heure",
@@ -129,6 +130,7 @@ export default defineComponent({
   methods: {
     async left() {
       await this.$store.dispatch("signLeft");
+      timer.timer.stop();
       this.$router.push({ name: "connexion" });
     },
     getIcon(name) {
