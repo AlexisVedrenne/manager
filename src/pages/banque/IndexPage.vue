@@ -13,7 +13,11 @@
       <q-separator color="secondary" style="height: 2px; width: 50%" />
 
       <div class="q-mt-md" v-for="(compte, index) in titres" :key="index">
-        <CardBanque :compte="compte" />
+        <CardBanque
+          @click="detail(compte.index)"
+          @detail="detail(compte.index)"
+          :compte="compte.value"
+        />
       </div>
     </section>
     <section v-if="epargne.length > 0" class="q-ml-md q-mr-md q-mb-md">
@@ -23,7 +27,11 @@
       <q-separator color="secondary" style="height: 2px; width: 50%" />
 
       <div class="q-mt-md" v-for="(compte, index) in epargne" :key="index">
-        <CardBanque :compte="compte" />
+        <CardBanque
+          @click="detail(compte.index)"
+          @detail="detail(compte.index)"
+          :compte="compte.value"
+        />
       </div>
     </section>
     <section v-if="terme.length > 0" class="q-ml-md q-mr-md q-mb-md">
@@ -33,7 +41,11 @@
       <q-separator color="secondary" style="height: 2px; width: 50%" />
 
       <div class="q-mt-md" v-for="(compte, index) in terme" :key="index">
-        <CardBanque :compte="compte" />
+        <CardBanque
+          @click="detail(compte.index)"
+          @detail="detail(compte.index)"
+          :compte="compte.value"
+        />
       </div>
     </section>
     <section v-if="joint.length > 0" class="q-ml-md q-mr-md q-mb-md">
@@ -43,7 +55,11 @@
       <q-separator color="secondary" style="height: 2px; width: 50%" />
 
       <div class="q-mt-md" v-for="(compte, index) in joint" :key="index">
-        <CardBanque :compte="compte" />
+        <CardBanque
+          @click="detail(compte.index)"
+          @detail="detail(compte.index)"
+          :compte="compte.value"
+        />
       </div>
     </section>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -80,15 +96,26 @@ export default {
   mounted() {
     let user = this.utils.localStorage.getItem("user");
     this.comptes = user.banque.comptes;
-    this.titres = this.comptes.filter((compte) => compte.type === "Compte individuel");
-    this.epargne = this.comptes.filter(
-      (compte) =>
-        compte.type === "Livret A" ||
-        compte.type === "Livret jeune" ||
-        compte.type === "LDD"
-    );
-    this.terme = this.comptes.filter((compte) => compte.type === "Compte à terme");
-    this.joint = this.comptes.filter((compte) => compte.type === "Compte joint");
+    for (let i = 0; i < this.comptes.length; i++) {
+      if (this.comptes[i].type === "Compte individuel") {
+        this.titres.push({ index: i, value: this.comptes[i] });
+      } else if (
+        this.comptes[i].type === "Livret A" ||
+        this.comptes[i].type === "Livret jeune" ||
+        this.comptes[i].type == "LDD"
+      ) {
+        this.epargne.push({ index: i, value: this.comptes[i] });
+      } else if (this.comptes[i].type === "Compte à terme") {
+        this.terme.push({ index: i, value: this.comptes[i] });
+      } else if (this.comptes[i].type === "Compte joint") {
+        this.joint.push({ index: i, value: this.comptes[i] });
+      }
+    }
+  },
+  methods: {
+    detail(index) {
+      this.$router.push("/banque/detail/" + index);
+    },
   },
 };
 </script>

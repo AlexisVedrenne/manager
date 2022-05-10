@@ -22,7 +22,13 @@
         </div>
         <div class="q-ml-md">
           <div class="row justify-end">
-            <q-btn round flat color="scondary" icon="arrow_forward_ios" />
+            <q-btn
+              @click="this.$emit('detail')"
+              round
+              flat
+              color="scondary"
+              icon="arrow_forward_ios"
+            />
           </div>
         </div></div></q-card-section
   ></q-card>

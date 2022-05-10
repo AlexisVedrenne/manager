@@ -106,6 +106,11 @@ const routes = [
         path: "/banque/ajout",
         component: () => import("pages/banque/AddBanquePage.vue"),
       },
+      {
+        name: "Banque détail",
+        path: "/banque/detail/:index",
+        component: () => import("pages/banque/DetailBanquePage.vue"),
+      },
     ],
   },
   {
