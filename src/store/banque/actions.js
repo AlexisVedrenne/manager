@@ -8,7 +8,7 @@ import {
   setDoc,
   doc,
 } from "firebase/firestore";
-import { Notify } from "quasar";
+import { LocalStorage, Notify } from "quasar";
 import "core-js/es/array";
 
 export async function addBanque({ dispatch }, { banque }) {
@@ -41,9 +41,28 @@ export async function fetchCompte({ commit }, { indice }) {
       where("banque.comptes", "array-contains", indice)
     );
     const res = await getDocs(q);
-    console.log(res);
     let compte = res.docs[0].data();
     return compte;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function addOp({ dispatch }, { op, index }) {
+  try {
+    let user = LocalStorage.getItem("user");
+    let val = 0.0;
+    if (op.type === "Virement") {
+      val = parseFloat(user.banque.comptes[index].solde);
+      val += parseFloat(op.montant);
+      user;
+    } else {
+      val = parseFloat(user.banque.comptes[index].solde);
+      val -= parseFloat(op.montant);
+    }
+    user.banque.comptes[index].solde = val;
+    user.banque.comptes[index].op.push(op);
+    await dispatch("updateUserInfo", { userInfos: user });
   } catch (error) {
     console.log(error);
   }

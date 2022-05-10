@@ -17,7 +17,7 @@
             style="font-size: 15px"
             :class="'q-mb-none ' + (compte.solde < 0 ? 'text-negative' : 'text-positive')"
           >
-            {{ compte.solde < 0 ? "-" + compte.solde : "+" + compte.solde }}€
+            {{ compte.solde < 0 ? compte.solde : "+" + compte.solde }}€
           </p>
         </div>
         <div class="q-ml-md">

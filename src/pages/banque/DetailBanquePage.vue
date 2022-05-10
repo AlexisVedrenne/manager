@@ -29,7 +29,7 @@
           'q-mb-none text-bold ' + (compte.solde < 0 ? 'text-negative' : 'text-positive')
         "
       >
-        {{ compte.solde < 0 ? "-" + compte.solde : "+" + compte.solde }}€
+        {{ compte.solde < 0 ? +compte.solde : "+" + compte.solde }}€
       </p>
       <p style="font-size: 17px" class="text-grey">Solde du {{ date }}</p>
       <q-separator color="secondary" style="height: 1.5px; width: 50%" />
@@ -62,7 +62,7 @@
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="Historique">
-          <q-input v-model="search" color="secondary" label="Rechercher une opération...">
+          <q-input color="secondary" label="Rechercher une opération...">
             <template v-slot:prepend> <q-icon name="search" /> </template
           ></q-input>
         </q-tab-panel>
@@ -74,8 +74,8 @@
     </q-card>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-fab color="accent" icon="keyboard_arrow_up" direction="up">
-        <q-fab-action color="secondary" @click="opModal = true" icon="add" />
-        <q-fab-action color="primary" @click="onClick" icon="schedule_send" />
+        <q-fab-action color="secondary" @click="ouvreModal" icon="add" />
+        <q-fab-action color="primary" icon="schedule_send" />
       </q-fab>
     </q-page-sticky>
   </main>
@@ -198,20 +198,48 @@ export default {
     };
   },
   mounted() {
-    let date = new Date();
-    this.date =
-      (date.getDate() < 9 ? "0" + date.getDate() : date.getDate()) +
-      "/" +
-      (date.getMonth() + 1 < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) +
-      "/" +
-      date.getFullYear();
-    this.user = this.utils.localStorage.getItem("user");
-    this.compte = this.user.banque.comptes[this.$route.params.index];
+    this.refresh();
   },
 
   methods: {
+    ouvreModal() {
+      let date = new Date();
+      this.op = {
+        type: "Virement",
+        libelle: "",
+        typeOp: "",
+        date:
+          date.getFullYear() +
+          "-" +
+          (date.getMonth() + 1 < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) +
+          "-" +
+          (date.getDate() < 9 ? "0" + date.getDate() : date.getDate()),
+
+        lieu: "",
+        montant: null,
+      };
+      this.opModal = true;
+    },
+    refresh() {
+      let date = new Date();
+      this.date =
+        (date.getDate() < 9 ? "0" + date.getDate() : date.getDate()) +
+        "/" +
+        (date.getMonth() + 1 < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) +
+        "/" +
+        date.getFullYear();
+      this.user = this.utils.localStorage.getItem("user");
+      this.compte = this.user.banque.comptes[this.$route.params.index];
+    },
     async addOp() {
       this.loading = true;
+      await this.$store.dispatch("addOp", {
+        op: this.op,
+        index: this.$route.params.index,
+      });
+      this.refresh();
+      this.loading = false;
+      this.opModal = false;
     },
   },
 };
