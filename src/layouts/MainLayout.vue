@@ -89,6 +89,12 @@ import { useQuasar } from "quasar";
 import timer from "src/boot/Timer";
 const linksList = [
   {
+    title: "Accueil",
+    caption: "",
+    icon: "home",
+    link: { name: "home" },
+  },
+  {
     title: "Heure",
     caption: "Consulter, ajouter...",
     icon: "watch_later",

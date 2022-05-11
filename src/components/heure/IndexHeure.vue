@@ -153,7 +153,6 @@ export default {
           value.hours = timeDiff.getHours() - 1;
           value.minutes = timeDiff.getMinutes();
           value.seconds = timeDiff.getSeconds();
-          timer.timer.start({ startValues: value });
           this.icon = "play_arrow";
           timer.timer.start({ startValues: value });
           timer.timer.pause();
@@ -178,7 +177,6 @@ export default {
           timer.timer.start({ startValues: value });
           this.icon = "pause";
         }
-
         this.firstStart = true;
         return;
       }

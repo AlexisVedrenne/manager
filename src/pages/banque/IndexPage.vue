@@ -62,6 +62,9 @@
         />
       </div>
     </section>
+    <div v-if="comptes.length == 0">
+      <p style="font-size: 17px" class="text-center text-grey q-mt-md">Aucun compte...</p>
+    </div>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-fab color="accent" icon="keyboard_arrow_up" direction="up">
         <q-fab-action

@@ -118,13 +118,8 @@
       <q-card-section>
         <q-form @submit="addOp">
           <div class="row justify-evenly">
-            <q-radio
-              color="secondary"
-              v-model="op.type"
-              val="Virement"
-              label="Virement"
-            />
-            <q-radio color="secondary" v-model="op.type" val="Retrait" label="Retrait" />
+            <q-radio color="secondary" v-model="op.type" val="Virement" label="Crédit" />
+            <q-radio color="secondary" v-model="op.type" val="Retrait" label="Débit" />
           </div>
           <q-input
             required
@@ -214,7 +209,7 @@ export default {
         "Virement",
       ],
       op: {
-        type: "Virement",
+        type: "",
         libelle: "",
         typeOp: "",
         date: "27/12/2001",
@@ -281,13 +276,25 @@ export default {
     },
     async addOp() {
       this.loading = true;
-      await this.$store.dispatch("addOp", {
-        op: this.op,
-        index: this.$route.params.index,
-      });
-      this.refresh();
+      if (this.op.montant) {
+        await this.$store.dispatch("addOp", {
+          op: this.op,
+          index: this.$route.params.index,
+        });
+        this.refresh();
+        this.opModal = false;
+      } else {
+        this.utils.notify({
+          message: "L'opération ne peux pas être égal à 0",
+          progress: true,
+          timeout: 1000,
+          icon: "info",
+          color: "warning",
+          textColor: "black",
+        });
+      }
+
       this.loading = false;
-      this.opModal = false;
     },
   },
 };
