@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <q-page>
     <q-card square class="q-mb-md bg-primary"
       ><q-card-section class="">
         <h4 class="text-white q-ma-none q-mb-md q-ml-lg">Bonjour !</h4>
@@ -7,17 +7,12 @@
           {{ user.prenom }} {{ user.nom }}
         </p>
         <div class="row q-pa-none q-ma-none justify-center">
-          <q-separator
-            color="secondary"
-            style="height: 3px; width: 75%"
-            spaced
-            inset
-          />
+          <q-separator color="secondary" style="height: 3px; width: 75%" spaced inset />
         </div>
       </q-card-section>
     </q-card>
     <IndexHeure />
-  </main>
+  </q-page>
 </template>
 
 <script>

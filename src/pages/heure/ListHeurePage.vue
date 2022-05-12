@@ -1,69 +1,72 @@
 <template>
-  <q-pull-to-refresh @refresh="forceRefresh" color="primary" icon="refresh">
-    <main class="q-mb-xl">
-      <q-card square class="bg-primary"
-        ><q-card-section>
-          <section class="row">
-            <q-select
-              v-model="annee"
-              :options="anneeOptions"
-              input-class="text-center"
-              class="col q-mr-sm"
-              rounded
-              outlined
-              color="primary"
-              bg-color="secondary"
-              label-color="primary"
-              label="Année"
-            >
-              <template v-slot:prepend>
-                <q-icon color="primary" name="event" />
-              </template>
-            </q-select>
-            <q-select
-              v-model="mois"
-              @update:model-value="filtre"
-              :options="options"
-              input-class="text-center"
-              class="col q-ml-sm"
-              rounded
-              outlined
-              color="primary"
-              bg-color="secondary"
-              label-color="primary"
-              label="Mois"
-            >
-              <template v-slot:prepend>
-                <q-icon color="primary" name="event" />
-              </template>
-            </q-select></section></q-card-section
-      ></q-card>
-      <q-input
-        v-model="search"
-        color="secondary"
-        rounded
-        outlined
-        class="q-ma-md"
-        label="Rechercher une fiche..."
-      >
-        <template v-slot:prepend> <q-icon name="search" /> </template
-      ></q-input>
-      <section v-for="(heure, index) in heures" :key="index" class="q-ma-sm">
-        <CardHeure
-          @delete="confirm(index, heure.nom)"
-          @edit="edit(index)"
-          @detail="detail(index)"
-          :fiche="heure"
-        />
-      </section>
-      <section v-if="heures.length == 0" class="q-ma-sm q-mt-lg">
-        <p class="text-center text-grey">Aucun résultat trouvé...</p>
-      </section>
-    </main>
-  </q-pull-to-refresh>
-  <q-page-sticky position="bottom-right" :offset="[18, 18]">
-    <q-btn fab icon="add" :to="{ name: 'Ajout' }" color="secondary" />
-  </q-page-sticky>
+  <q-page class="q-mb-xl">
+    <q-card square class="bg-primary"
+      ><q-card-section>
+        <section class="row">
+          <q-select
+            v-model="annee"
+            :options="anneeOptions"
+            input-class="text-center"
+            class="col q-mr-sm"
+            rounded
+            outlined
+            color="primary"
+            bg-color="secondary"
+            label-color="primary"
+            label="Année"
+          >
+            <template v-slot:prepend>
+              <q-icon color="primary" name="event" />
+            </template>
+          </q-select>
+          <q-select
+            v-model="mois"
+            @update:model-value="filtre"
+            :options="options"
+            input-class="text-center"
+            class="col q-ml-sm"
+            rounded
+            outlined
+            color="primary"
+            bg-color="secondary"
+            label-color="primary"
+            label="Mois"
+          >
+            <template v-slot:prepend>
+              <q-icon color="primary" name="event" />
+            </template>
+          </q-select></section></q-card-section
+    ></q-card>
+    <q-input
+      v-model="search"
+      color="secondary"
+      rounded
+      outlined
+      class="q-ma-md"
+      label="Rechercher une fiche..."
+    >
+      <template v-slot:prepend> <q-icon name="search" /> </template
+    ></q-input>
+    <q-intersection
+      transition="scale"
+      v-for="(heure, index) in heures"
+      :key="index"
+      class="q-ma-sm"
+    >
+      <CardHeure
+        @delete="confirm(index, heure.nom)"
+        @edit="edit(index)"
+        @detail="detail(index)"
+        :fiche="heure"
+      />
+    </q-intersection>
+    <section v-if="heures.length == 0" class="q-ma-sm q-mt-lg">
+      <p class="text-center text-grey">Aucun résultat trouvé...</p>
+    </section>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab icon="add" :to="{ name: 'Ajout' }" color="secondary" />
+    </q-page-sticky>
+  </q-page>
 </template>
 
 <script>

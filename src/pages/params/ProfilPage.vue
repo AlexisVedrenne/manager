@@ -1,5 +1,5 @@
 <template>
-  <main class="q-mt-md">
+  <q-page class="q-mt-md">
     <q-btn
       :to="{ name: 'Réglages' }"
       flat
@@ -76,96 +76,97 @@
       </section>
     </q-item>
     <q-separator />
-  </main>
-  <q-dialog full-width persistent v-model="naissance" :position="'bottom'">
-    <q-card style="width: 700px; max-width: 80vw">
-      <div class="row justify-end">
-        <q-btn flat round icon="close" v-close-popup />
-      </div>
-      <q-card-section>
-        <q-form @submit="submit">
-          <div class="row justify-center q-mb-md">
-            <q-input
-              input-class="text-center"
-              type="date"
-              label="Modifier votre date de naissance"
-              v-model="user.birth"
-              color="secondary"
-              class="col"
-            />
-          </div>
 
-          <div class="row justify-center">
-            <q-btn
-              :loading="loading"
-              type="submit"
-              color="accent"
-              class="col-5"
-              label="Enregistrer"
-            />
-          </div>
-        </q-form>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
-  <q-dialog full-width persistent v-model="prenom" :position="'bottom'">
-    <q-card style="width: 700px; max-width: 80vw">
-      <div class="row justify-end">
-        <q-btn flat round icon="close" v-close-popup />
-      </div>
-      <q-card-section>
-        <q-form @submit="submit">
-          <div class="row justify-center q-mb-md">
-            <q-input
-              label="Modifier votre prénom"
-              v-model="user.prenom"
-              color="secondary"
-              class="col"
-            />
-          </div>
+    <q-dialog full-width persistent v-model="naissance" :position="'bottom'">
+      <q-card style="width: 700px; max-width: 80vw">
+        <div class="row justify-end">
+          <q-btn flat round icon="close" v-close-popup />
+        </div>
+        <q-card-section>
+          <q-form @submit="submit">
+            <div class="row justify-center q-mb-md">
+              <q-input
+                input-class="text-center"
+                type="date"
+                label="Modifier votre date de naissance"
+                v-model="user.birth"
+                color="secondary"
+                class="col"
+              />
+            </div>
 
-          <div class="row justify-center">
-            <q-btn
-              :loading="loading"
-              type="submit"
-              color="accent"
-              class="col-5"
-              label="Enregistrer"
-            />
-          </div>
-        </q-form>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
-  <q-dialog full-width persistent v-model="nom" :position="'bottom'">
-    <q-card style="width: 700px; max-width: 80vw">
-      <div class="row justify-end">
-        <q-btn flat round icon="close" v-close-popup />
-      </div>
-      <q-card-section>
-        <q-form @submit="submit">
-          <div class="row justify-center q-mb-md">
-            <q-input
-              label="Modifier votre nom"
-              v-model="user.nom"
-              color="secondary"
-              class="col"
-            />
-          </div>
+            <div class="row justify-center">
+              <q-btn
+                :loading="loading"
+                type="submit"
+                color="accent"
+                class="col-5"
+                label="Enregistrer"
+              />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+    <q-dialog full-width persistent v-model="prenom" :position="'bottom'">
+      <q-card style="width: 700px; max-width: 80vw">
+        <div class="row justify-end">
+          <q-btn flat round icon="close" v-close-popup />
+        </div>
+        <q-card-section>
+          <q-form @submit="submit">
+            <div class="row justify-center q-mb-md">
+              <q-input
+                label="Modifier votre prénom"
+                v-model="user.prenom"
+                color="secondary"
+                class="col"
+              />
+            </div>
 
-          <div class="row justify-center">
-            <q-btn
-              :loading="loading"
-              type="submit"
-              color="accent"
-              class="col-5"
-              label="Enregistrer"
-            />
-          </div>
-        </q-form>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+            <div class="row justify-center">
+              <q-btn
+                :loading="loading"
+                type="submit"
+                color="accent"
+                class="col-5"
+                label="Enregistrer"
+              />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+    <q-dialog full-width persistent v-model="nom" :position="'bottom'">
+      <q-card style="width: 700px; max-width: 80vw">
+        <div class="row justify-end">
+          <q-btn flat round icon="close" v-close-popup />
+        </div>
+        <q-card-section>
+          <q-form @submit="submit">
+            <div class="row justify-center q-mb-md">
+              <q-input
+                label="Modifier votre nom"
+                v-model="user.nom"
+                color="secondary"
+                class="col"
+              />
+            </div>
+
+            <div class="row justify-center">
+              <q-btn
+                :loading="loading"
+                type="submit"
+                color="accent"
+                class="col-5"
+                label="Enregistrer"
+              />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+  </q-page>
 </template>
 
 <script>

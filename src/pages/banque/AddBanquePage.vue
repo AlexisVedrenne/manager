@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <q-page>
     <q-form @submit="submit" class="q-mr-md q-ml-md">
       <q-select
         class="q-mb-md"
@@ -59,7 +59,7 @@
           color="negative"
         /> </q-page-sticky
     ></q-form>
-  </main>
+  </q-page>
 </template>
 <script>
 import { useQuasar } from "quasar";

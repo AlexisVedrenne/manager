@@ -1,5 +1,5 @@
 <template>
-  <main v-if="compte">
+  <q-page v-if="compte">
     <q-card square class="bg-primary"
       ><q-card-section>
         <div class="row justify-center items-center q-mb-md">
@@ -81,7 +81,14 @@
             />
           </div>
           <div class="q-gutter-md q-mt-lg">
-            <CardOperation v-for="(op, index) in compte.op" :key="index" :op="op" />
+            <q-intersection
+              transition="scale"
+              v-for="(op, index) in compte.op"
+              :key="index"
+              class="q-ma-sm"
+            >
+              <CardOperation :op="op" />
+            </q-intersection>
           </div>
           <div v-if="compte.op.length == 0">
             <p class="q-mt-md text-center text-grey">Aucune opération...</p>
@@ -93,97 +100,105 @@
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
+
+    <q-dialog
+      v-model="opModal"
+      persistent
+      :maximized="true"
+      transition-show="slide-up"
+      transition-hide="slide-down"
+    >
+      <q-card class="">
+        <q-bar>
+          <p class="q-ma-none">Opération bancaire</p>
+          <q-space />
+          <q-btn dense flat icon="close" v-close-popup>
+            <q-tooltip class="">Fermer</q-tooltip>
+          </q-btn>
+        </q-bar>
+        <q-card-section>
+          <q-form @submit="addOp">
+            <div class="row justify-evenly">
+              <q-radio
+                color="secondary"
+                v-model="op.type"
+                val="Virement"
+                label="Crédit"
+              />
+              <q-radio color="secondary" v-model="op.type" val="Retrait" label="Débit" />
+            </div>
+            <q-input
+              required
+              class="q-mb-md"
+              v-model="op.libelle"
+              color="secondary"
+              label="Libellé de l'opération"
+            >
+              <template v-slot:prepend>
+                <q-icon color="secondary" name="work" /> </template
+            ></q-input>
+            <q-select
+              required
+              :options="options"
+              class="q-mb-md"
+              v-model="op.typeOp"
+              color="secondary"
+              label="Type de l'opération"
+            >
+              <template v-slot:prepend>
+                <q-icon color="secondary" name="alt_route" /> </template
+            ></q-select>
+            <q-input
+              required
+              type="date"
+              class="q-mb-md"
+              v-model="op.date"
+              color="secondary"
+              label="Date de l'opération"
+            >
+              <template v-slot:prepend>
+                <q-icon color="secondary" name="event" /> </template
+            ></q-input>
+            <q-input
+              required
+              class="q-mb-md"
+              v-model="op.lieu"
+              color="secondary"
+              label="Lieu de l'opération"
+            >
+              <template v-slot:prepend>
+                <q-icon color="secondary" name="pin_drop" /> </template
+            ></q-input>
+            <q-input
+              required
+              class="q-mb-md"
+              v-model="op.montant"
+              color="secondary"
+              label="Montant de l'opération"
+              mask="#.##"
+              fill-mask="0"
+              reverse-fill-mask
+            >
+              <template v-slot:prepend>
+                <q-icon color="secondary" name="point_of_sale" /> </template
+            ></q-input>
+            <q-page-sticky position="bottom-right" :offset="[18, 18]">
+              <q-btn :loading="loading" type="submit" fab icon="done" color="accent" />
+            </q-page-sticky>
+            <q-page-sticky position="bottom-left" :offset="[18, 18]">
+              <q-btn v-close-popup fab icon="close" color="negative" />
+            </q-page-sticky>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-fab color="accent" icon="keyboard_arrow_up" direction="up">
         <q-fab-action color="secondary" @click="ouvreModal" icon="add" />
         <q-fab-action color="primary" icon="schedule_send" />
       </q-fab>
     </q-page-sticky>
-  </main>
-  <q-dialog
-    v-model="opModal"
-    persistent
-    :maximized="true"
-    transition-show="slide-up"
-    transition-hide="slide-down"
-  >
-    <q-card class="">
-      <q-bar>
-        <p class="q-ma-none">Opération bancaire</p>
-        <q-space />
-        <q-btn dense flat icon="close" v-close-popup>
-          <q-tooltip class="">Fermer</q-tooltip>
-        </q-btn>
-      </q-bar>
-      <q-card-section>
-        <q-form @submit="addOp">
-          <div class="row justify-evenly">
-            <q-radio color="secondary" v-model="op.type" val="Virement" label="Crédit" />
-            <q-radio color="secondary" v-model="op.type" val="Retrait" label="Débit" />
-          </div>
-          <q-input
-            required
-            class="q-mb-md"
-            v-model="op.libelle"
-            color="secondary"
-            label="Libellé de l'opération"
-          >
-            <template v-slot:prepend> <q-icon color="secondary" name="work" /> </template
-          ></q-input>
-          <q-select
-            required
-            :options="options"
-            class="q-mb-md"
-            v-model="op.typeOp"
-            color="secondary"
-            label="Type de l'opération"
-          >
-            <template v-slot:prepend>
-              <q-icon color="secondary" name="alt_route" /> </template
-          ></q-select>
-          <q-input
-            required
-            type="date"
-            class="q-mb-md"
-            v-model="op.date"
-            color="secondary"
-            label="Date de l'opération"
-          >
-            <template v-slot:prepend> <q-icon color="secondary" name="event" /> </template
-          ></q-input>
-          <q-input
-            required
-            class="q-mb-md"
-            v-model="op.lieu"
-            color="secondary"
-            label="Lieu de l'opération"
-          >
-            <template v-slot:prepend>
-              <q-icon color="secondary" name="pin_drop" /> </template
-          ></q-input>
-          <q-input
-            required
-            class="q-mb-md"
-            v-model="op.montant"
-            color="secondary"
-            label="Montant de l'opération"
-            mask="#.##"
-            fill-mask="0"
-            reverse-fill-mask
-          >
-            <template v-slot:prepend>
-              <q-icon color="secondary" name="point_of_sale" /> </template
-          ></q-input>
-          <q-page-sticky position="bottom-right" :offset="[18, 18]">
-            <q-btn :loading="loading" type="submit" fab icon="done" color="accent" />
-          </q-page-sticky>
-          <q-page-sticky position="bottom-left" :offset="[18, 18]">
-            <q-btn v-close-popup fab icon="close" color="negative" />
-          </q-page-sticky>
-        </q-form>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+  </q-page>
 </template>
 
 <script>

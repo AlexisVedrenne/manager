@@ -1,5 +1,5 @@
 <template>
-  <main v-if="paie">
+  <q-page v-if="paie">
     <q-card square class="bg-primary">
       <q-card-section>
         <div class="row items-center justify-center">
@@ -89,7 +89,7 @@
         <q-btn :to="{ name: 'Paie' }" fab icon="close" color="negative" />
       </q-page-sticky>
     </q-form>
-  </main>
+  </q-page>
 </template>
 
 <script>

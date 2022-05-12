@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <q-page>
     <q-card square class="bg-primary text-white"
       ><q-card-section class="column items-center">
         <div class="row items-center justify-center">
@@ -20,9 +20,7 @@
     ></q-card>
     <q-parallax :height="200" :speed="0.5">
       <template v-slot:media>
-        <img
-          :src="fiche.baniere !== null ? fiche.baniere : 'images/heure.png'"
-        />
+        <img :src="fiche.baniere !== null ? fiche.baniere : 'images/heure.png'" />
       </template>
 
       <h1 class="text-white text-center">{{ fiche.nomEntreprise }}</h1>
@@ -48,27 +46,18 @@
       <p
         class="text-primary text-justify q-ma-md"
         style="font-size: 16px"
-        v-html="
-          fiche.description != '' ? fiche.description : 'Aucune description...'
-        "
+        v-html="fiche.description != '' ? fiche.description : 'Aucune description...'"
       />
 
-      <p
-        class="q-ml-sm text-primary text-bold q-ma-none"
-        style="font-size: 15px"
-      >
+      <p class="q-ml-sm text-primary text-bold q-ma-none" style="font-size: 15px">
         Heure travaillée
       </p>
       <q-separator color="secondary" style="height: 2px; width: 30%" />
       <section class="row justify-center q-mt-lg">
         <div class="col">
-          <p class="text-primary text-bold text-center" style="font-size: 15px">
-            Total
-          </p>
+          <p class="text-primary text-bold text-center" style="font-size: 15px">Total</p>
           <p class="text-primary text-center text-bold" style="font-size: 40px">
-            {{
-              fiche.heureTotal != "NaN:NaN:NaN" ? fiche.heureTotal : "00:00:00"
-            }}
+            {{ fiche.heureTotal != "NaN:NaN:NaN" ? fiche.heureTotal : "00:00:00" }}
           </p>
         </div>
         <span class="vertical text-grey"></span>
@@ -82,7 +71,7 @@
         </div>
       </section>
     </section>
-  </main>
+  </q-page>
 </template>
 
 <script>
@@ -100,9 +89,7 @@ export default {
     if (!heure.heureTotal.toString().includes(":")) {
       let heureTotal = new Date(heure.heureTotal);
       let hours =
-        heureTotal.getHours() < 9
-          ? "0" + heureTotal.getHours()
-          : heureTotal.getHours();
+        heureTotal.getHours() < 9 ? "0" + heureTotal.getHours() : heureTotal.getHours();
       let minutes =
         heureTotal.getMinutes() < 9
           ? "0" + heureTotal.getMinutes()

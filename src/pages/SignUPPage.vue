@@ -1,5 +1,5 @@
 <template>
-  <main class="container q-mt-xl">
+  <q-page class="container q-mt-xl">
     <section class="row items-center">
       <div>
         <q-btn
@@ -69,13 +69,9 @@
           label="mot de passe *"
           type="password"
           lazy-rules
-          :rules="[
-            (val) =>
-              val.length >= 6 || 'Un minimum de 6 caractère est requis !',
-          ]"
+          :rules="[(val) => val.length >= 6 || 'Un minimum de 6 caractère est requis !']"
         >
-          <template v-slot:prepend>
-            <q-icon color="secondary" name="lock" /> </template
+          <template v-slot:prepend> <q-icon color="secondary" name="lock" /> </template
         ></q-input>
         <q-input
           v-model="password"
@@ -86,13 +82,10 @@
           type="password"
           lazy-rules
           :rules="[
-            (val) =>
-              val == inscription.password ||
-              'Le mot de passe ne correspond pas !',
+            (val) => val == inscription.password || 'Le mot de passe ne correspond pas !',
           ]"
         >
-          <template v-slot:prepend>
-            <q-icon color="secondary" name="lock" /> </template
+          <template v-slot:prepend> <q-icon color="secondary" name="lock" /> </template
         ></q-input>
         <div class="row">
           <div class="col-1">
@@ -121,7 +114,7 @@
         </div>
       </q-form>
     </section>
-  </main>
+  </q-page>
 </template>
 <script>
 import { useQuasar } from "quasar";

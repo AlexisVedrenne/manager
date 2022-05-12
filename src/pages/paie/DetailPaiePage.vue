@@ -1,5 +1,5 @@
 <template>
-  <main v-if="paie">
+  <q-page v-if="paie">
     <q-card square class="bg-primary text-white"
       ><q-card-section class="column items-center">
         <div class="row items-center justify-center">
@@ -40,7 +40,7 @@
         type="application/pdf"
       />
     </div>
-  </main>
+  </q-page>
 </template>
 
 <script>

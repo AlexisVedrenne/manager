@@ -1,5 +1,5 @@
 <template>
-  <main v-if="heure" class="q-mb-xl q-pb-xl">
+  <q-page v-if="heure" class="q-mb-xl q-pb-xl">
     <q-card square class="bg-primary"
       ><q-card-section>
         <div class="row items-center justify-center">
@@ -192,7 +192,7 @@
         <q-btn :to="{ name: 'Heure' }" fab icon="close" color="negative" />
       </q-page-sticky>
     </q-form>
-  </main>
+  </q-page>
 </template>
 
 <script>

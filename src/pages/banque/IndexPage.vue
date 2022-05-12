@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <q-page>
     <q-card square class="bg-primary text-white"
       ><q-card-section class="text-center" style="font-size: 25px"
         >Tous mes comptes</q-card-section
@@ -76,7 +76,7 @@
         <q-fab-action color="primary" @click="onClick" icon="credit_card" />
       </q-fab>
     </q-page-sticky>
-  </main>
+  </q-page>
 </template>
 
 <script>

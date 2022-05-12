@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <q-page>
     <q-pull-to-refresh @refresh="forceRefresh" color="primary" icon="refresh">
       <q-card square class="bg-primary"
         ><q-card-section>
@@ -59,14 +59,19 @@
           icon="search"
         />
       </div>
-      <div v-for="(paie, index) in paies" :key="index" class="q-ma-sm">
+      <q-intersection
+        transition="scale"
+        v-for="(paie, index) in paies"
+        :key="index"
+        class="q-ma-sm"
+      >
         <CardPaie
           @edit="edit(index)"
           @delete="confirm(index, paie.nomEntreprise)"
           @detail="detail(index)"
           :paie="paie"
         />
-      </div>
+      </q-intersection>
       <div v-if="paies.length == 0">
         <p class="text-grey text-center q-mt-lg">Aucun résultat...</p>
       </div>
@@ -74,7 +79,7 @@
         <q-btn fab icon="add" :to="{ name: 'Ajout paie' }" color="secondary" />
       </q-page-sticky>
     </q-pull-to-refresh>
-  </main>
+  </q-page>
 </template>
 
 <script>

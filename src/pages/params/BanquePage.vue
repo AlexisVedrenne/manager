@@ -1,5 +1,5 @@
 <template>
-  <main class="q-mt-md">
+  <q-page class="q-mt-md">
     <q-btn
       :to="{ name: 'Réglages' }"
       flat
@@ -62,7 +62,7 @@
         </div>
       </q-form>
     </section>
-  </main>
+  </q-page>
 </template>
 <script>
 import { ref } from "vue";
