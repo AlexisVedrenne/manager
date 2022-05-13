@@ -11,11 +11,7 @@
         <div class="row">
           <div class="col">
             <p style="font-size: 20px">{{ fiche.nom }}</p>
-            <q-separator
-              color="secondary"
-              style="height: 3px; width: 65%"
-              spaced
-            />
+            <q-separator color="secondary" style="height: 3px; width: 65%" spaced />
             <p class="text-grey">{{ fiche.date }}</p>
           </div>
           <div class="col">

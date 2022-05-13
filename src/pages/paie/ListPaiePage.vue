@@ -59,19 +59,22 @@
           icon="search"
         />
       </div>
-      <q-intersection
-        transition="scale"
-        v-for="(paie, index) in paies"
-        :key="index"
-        class="q-ma-sm"
-      >
-        <CardPaie
-          @edit="edit(index)"
-          @delete="confirm(index, paie.nomEntreprise)"
-          @detail="detail(index)"
-          :paie="paie"
-        />
-      </q-intersection>
+      <div class="q-pa-md row justify-center items-start q-gutter-md">
+        <q-intersection
+          once
+          transition="scale"
+          v-for="(paie, index) in paies"
+          :key="index"
+          class="col-md-5"
+        >
+          <CardPaie
+            @edit="edit(index)"
+            @delete="confirm(index, paie.nomEntreprise)"
+            @detail="detail(index)"
+            :paie="paie"
+          />
+        </q-intersection>
+      </div>
       <div v-if="paies.length == 0">
         <p class="text-grey text-center q-mt-lg">Aucun résultat...</p>
       </div>

@@ -47,19 +47,22 @@
     >
       <template v-slot:prepend> <q-icon name="search" /> </template
     ></q-input>
-    <q-intersection
-      transition="scale"
-      v-for="(heure, index) in heures"
-      :key="index"
-      class="q-ma-sm"
-    >
-      <CardHeure
-        @delete="confirm(index, heure.nom)"
-        @edit="edit(index)"
-        @detail="detail(index)"
-        :fiche="heure"
-      />
-    </q-intersection>
+    <div class="q-pa-md row justify-center items-start q-gutter-md">
+      <q-intersection
+        once
+        transition="scale"
+        v-for="(heure, index) in heures"
+        :key="index"
+        class="col-md-5"
+      >
+        <CardHeure
+          @delete="confirm(index, heure.nom)"
+          @edit="edit(index)"
+          @detail="detail(index)"
+          :fiche="heure"
+        />
+      </q-intersection>
+    </div>
     <section v-if="heures.length == 0" class="q-ma-sm q-mt-lg">
       <p class="text-center text-grey">Aucun résultat trouvé...</p>
     </section>

@@ -1,5 +1,5 @@
 <template>
-  <q-card>
+  <q-card class="my-box cursor-pointer q-hoverable scale-hover">
     <q-card-section>
       <div class="row">
         <p class="q-ma-none">
@@ -44,3 +44,29 @@ export default {
   },
 };
 </script>
+
+<style>
+.scale-hover {
+  position: relative;
+  -webkit-transition: all 200ms ease-in;
+  -webkit-transform: scale(1);
+  -ms-transition: all 200ms ease-in;
+  -ms-transform: scale(1);
+  -moz-transition: all 200ms ease-in;
+  -moz-transform: scale(1);
+  transition: all 200ms ease-in;
+  transform: scale(1);
+}
+.scale-hover:hover {
+  box-shadow: 0px 0px 150px #000000;
+  z-index: 1;
+  -webkit-transition: all 200ms ease-in;
+  -webkit-transform: scale(1.005);
+  -ms-transition: all 200ms ease-in;
+  -ms-transform: scale(1.005);
+  -moz-transition: all 200ms ease-in;
+  -moz-transform: scale(1.005);
+  transition: all 200ms ease-in;
+  transform: scale(1.005);
+}
+</style>

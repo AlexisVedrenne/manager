@@ -78,8 +78,21 @@
 
     <q-page-container>
       <transition
-        enter-active-class="animated slideInDown"
-        leave-active-class="animated slideOutDown"
+        :enter-active-class="
+          this.$route.name === 'Détail' ||
+          this.$route.name === 'Détail paie' ||
+          this.$route.name === 'Banque détail' ||
+          this.$route.name === 'Comptes' ||
+          this.$route.name === 'Profil' ||
+          this.$route.path.includes('/starting')
+            ? 'animated slideInLeft'
+            : 'animated slideInDown'
+        "
+        :leave-active-class="
+          this.$route.name === 'Détail'
+            ? 'animated slideOutLeft'
+            : 'animated slideOutDown'
+        "
         appear
         :duration="2000"
       >
