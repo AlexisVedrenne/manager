@@ -1,7 +1,16 @@
 <template>
   <main>
     <section class="row justify-center q-mb-xl">
-      <q-img style="width: 80%; height: 80%" src="~assets/images/logo.svg" />
+      <img
+        v-if="utils.screen.lt.md"
+        style="width: 80%; height: 80%"
+        src="~assets/images/logo.svg"
+      />
+      <img
+        v-if="utils.screen.gt.md"
+        style="width: 30%; height: 30%"
+        src="~assets/images/logo.svg"
+      />
     </section>
     <section>
       <p class="text-center text-primary" style="font-size: 20px">

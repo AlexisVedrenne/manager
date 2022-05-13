@@ -1,7 +1,16 @@
 <template>
   <main class="q-mr-md q-ml-md">
     <section class="row justify-center q-mb-xl">
-      <q-img style="width: 80%; height: 80%" src="~assets/images/logo.svg" />
+      <img
+        v-if="utils.screen.lt.md"
+        style="width: 80%; height: 80%"
+        src="~assets/images/logo.svg"
+      />
+      <img
+        v-if="utils.screen.gt.md"
+        style="width: 30%; height: 30%"
+        src="~assets/images/logo.svg"
+      />
     </section>
     <section>
       <p style="font-size: 17px" class="text-primary text-center">
@@ -10,27 +19,26 @@
       <p class="text-grey text-center">
         Note : Vous pouvez toujours compléter ces informations plus tard.
       </p>
-      <q-form>
+      <q-form class="column items-center">
         <q-input
+          style="width: 500px"
           v-model="infos.phone"
           class="q-mb-md"
           type="tel"
           color="secondary"
           label="Numéro de téléphone"
           lazy-rules
-          :rules="[
-            (val) =>
-              val.length == 10 || 'Entrer un numéro de téléphone valide !',
-          ]"
+          :rules="[(val) => val.length == 10 || 'Entrer un numéro de téléphone valide !']"
         >
           <template v-slot:prepend>
             <q-icon color="secondary" name="phone" />
           </template>
         </q-input>
         <q-input
+          style="width: 500px"
           type="date"
           color="secondary"
-          label="Date de naissance"
+          hint="Date de naissance"
           v-model="infos.date"
         >
           <template v-slot:prepend>

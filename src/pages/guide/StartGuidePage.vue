@@ -1,8 +1,18 @@
 <template>
   <main>
     <section class="row justify-center q-mb-xl">
-      <q-img style="width: 80%; height: 80%" src="~assets/images/logo.svg" />
+      <img
+        v-if="utils.screen.lt.md"
+        style="width: 80%; height: 80%"
+        src="~assets/images/logo.svg"
+      />
+      <img
+        v-if="utils.screen.gt.md"
+        style="width: 30%; height: 30%"
+        src="~assets/images/logo.svg"
+      />
     </section>
+
     <section class="row justify-center">
       <p style="font-size: 35px" v-if="user" class="text-secondary">
         {{ user.prenom }} {{ user.nom }},
@@ -11,8 +21,8 @@
         Bienvenue sur votre nouvelle application.
       </p>
       <p class="text-grey q-ml-md" style="font-size: 14px">
-        Découvrez une application entièrement repensée afin de vous proposer une
-        meilleure expérience utilisateur et une utilisation simplifiée.
+        Découvrez une application entièrement repensée afin de vous proposer une meilleure
+        expérience utilisateur et une utilisation simplifiée.
       </p>
     </section>
     <section class="row items-end justify-end q-mt-xl q-mb-sm q-mr-md">

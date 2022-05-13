@@ -1,7 +1,16 @@
 <template>
   <main class="q-mr-md q-ml-md">
     <section class="row justify-center q-mb-xl">
-      <q-img style="width: 80%; height: 80%" src="~assets/images/logo.svg" />
+      <img
+        v-if="utils.screen.lt.md"
+        style="width: 80%; height: 80%"
+        src="~assets/images/logo.svg"
+      />
+      <img
+        v-if="utils.screen.gt.md"
+        style="width: 30%; height: 30%"
+        src="~assets/images/logo.svg"
+      />
     </section>
     <section>
       <p style="font-size: 17px" class="text-primary text-center">
@@ -19,29 +28,15 @@
           />
         </div>
         <div class="col">
-          <q-checkbox
-            v-model="choix.paie"
-            color="secondary"
-            label="Gestion de paies"
-          />
+          <q-checkbox v-model="choix.paie" color="secondary" label="Gestion de paies" />
         </div>
         <div class="col">
-          <q-checkbox
-            v-model="choix.banque"
-            color="secondary"
-            label="Gestion bancaire"
-          />
+          <q-checkbox v-model="choix.banque" color="secondary" label="Gestion bancaire" />
         </div>
       </section>
     </section>
     <section class="row items-end justify-end q-mt-xl q-mb-sm q-mr-md">
-      <q-btn
-        :loading="loading"
-        @click="submit"
-        flat
-        color="secondary"
-        label="Suivant"
-      />
+      <q-btn :loading="loading" @click="submit" flat color="secondary" label="Suivant" />
     </section>
   </main>
 </template>
