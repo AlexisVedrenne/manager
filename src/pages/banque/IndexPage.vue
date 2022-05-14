@@ -11,13 +11,20 @@
         Compte courrant
       </p>
       <q-separator color="secondary" style="height: 2px; width: 50%" />
-
-      <div class="q-mt-md" v-for="(compte, index) in titres" :key="index">
-        <CardBanque
-          @click="detail(compte.index)"
-          @detail="detail(compte.index)"
-          :compte="compte.value"
-        />
+      <div
+        :class="
+          utils.screen.lt.md
+            ? 'row q-pa-md justify-center items-start q-gutter-md'
+            : ' q-pa-md justify-center items-start q-gutter-md'
+        "
+      >
+        <div class="q-mt-md col-md-3" v-for="(compte, index) in titres" :key="index">
+          <CardBanque
+            @click="detail(compte.index)"
+            @detail="detail(compte.index)"
+            :compte="compte.value"
+          />
+        </div>
       </div>
     </section>
     <section v-if="epargne.length > 0" class="q-ml-md q-mr-md q-mb-md">
@@ -25,13 +32,14 @@
         Compte épargne
       </p>
       <q-separator color="secondary" style="height: 2px; width: 50%" />
-
-      <div class="q-mt-md" v-for="(compte, index) in epargne" :key="index">
-        <CardBanque
-          @click="detail(compte.index)"
-          @detail="detail(compte.index)"
-          :compte="compte.value"
-        />
+      <div class="q-pa-md row justify-center items-start q-gutter-md">
+        <div class="q-mt-md col-md-4" v-for="(compte, index) in epargne" :key="index">
+          <CardBanque
+            @click="detail(compte.index)"
+            @detail="detail(compte.index)"
+            :compte="compte.value"
+          />
+        </div>
       </div>
     </section>
     <section v-if="terme.length > 0" class="q-ml-md q-mr-md q-mb-md">
@@ -39,13 +47,14 @@
         Compte à terme
       </p>
       <q-separator color="secondary" style="height: 2px; width: 50%" />
-
-      <div class="q-mt-md" v-for="(compte, index) in terme" :key="index">
-        <CardBanque
-          @click="detail(compte.index)"
-          @detail="detail(compte.index)"
-          :compte="compte.value"
-        />
+      <div class="q-pa-md row justify-center items-start q-gutter-md">
+        <div class="q-mt-md col-md-3" v-for="(compte, index) in terme" :key="index">
+          <CardBanque
+            @click="detail(compte.index)"
+            @detail="detail(compte.index)"
+            :compte="compte.value"
+          />
+        </div>
       </div>
     </section>
     <section v-if="joint.length > 0" class="q-ml-md q-mr-md q-mb-md">
@@ -53,13 +62,14 @@
         Compte joint
       </p>
       <q-separator color="secondary" style="height: 2px; width: 50%" />
-
-      <div class="q-mt-md" v-for="(compte, index) in joint" :key="index">
-        <CardBanque
-          @click="detail(compte.index)"
-          @detail="detail(compte.index)"
-          :compte="compte.value"
-        />
+      <div class="q-pa-md row justify-center items-start q-gutter-md">
+        <div class="q-mt-md col-md-3" v-for="(compte, index) in joint" :key="index">
+          <CardBanque
+            @click="detail(compte.index)"
+            @detail="detail(compte.index)"
+            :compte="compte.value"
+          />
+        </div>
       </div>
     </section>
     <div v-if="comptes.length == 0">
