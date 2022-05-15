@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div class="row justify-center">
+      <q-btn
+        @click="helpStart"
+        style="border-radius: 100px"
+        color="accent"
+        label="Besoin d'aide ?"
+        no-caps
+        icon="help"
+      />
+    </div>
     <p class="text-center text-grey-8 q-pr-lg q-pl-lg" style="font-size: 30px">
       Commencer le travail ?
     </p>
@@ -14,6 +24,7 @@
         size="50px"
       />
     </div>
+
     <p id="time" class="text-center text-grey" style="font-size: 18px">
       Cliquer sur le bouton...
     </p>
@@ -54,6 +65,104 @@
         </div></q-card-section
       ></q-card
     >
+    <q-dialog v-model="help"
+      ><q-card
+        ><div class="row justify-end items-center">
+          <p class="q-ma-none">Aide sur l'utilisation de la gestion des heures</p>
+          <q-btn flat v-close-popup icon="close" />
+        </div>
+        <q-card-section>
+          <q-stepper v-model="step" flat vertical color="secondary" animated>
+            <q-step :name="1" title="Démarage" icon="start" :done="step > 1">
+              <p>Une fois le bouton cliquer vous verrez que son icon va passe de :</p>
+              <div class="row justify-center">
+                <q-icon color="secondary" size="50px" name="schedule" />
+              </div>
+              <p>a :</p>
+
+              <div class="row justify-center">
+                <q-icon color="secondary" size="50px" name="pause" />
+              </div>
+              <p>
+                Cela signifie que l'application commence à compter les heures et l'on peut
+                apercevoir le compteur juste en dessous du bouton commence à tourner
+              </p>
+
+              <q-stepper-navigation>
+                <q-btn @click="step = 2" color="primary" no-caps label="Suivant" />
+              </q-stepper-navigation>
+            </q-step>
+
+            <q-step :name="2" title="Les pauses" icon="pause" :done="step > 2">
+              <p>
+                Si vous re cliquez sur le bouton son icon va encore changer comme ceci :
+              </p>
+              <div class="row justify-center">
+                <q-icon color="secondary" size="50px" name="play_arrow" />
+              </div>
+              <p>
+                Cela signifie que vous etes acutellement en pause. Pour terminé la pause
+                il suffit de cliqué dessus et le compteur repars.
+              </p>
+
+              <q-stepper-navigation>
+                <q-btn @click="step = 3" color="primary" no-caps label="Suivant" />
+                <q-btn
+                  flat
+                  no-caps
+                  @click="step = 1"
+                  color="primary"
+                  label="Retour"
+                  class="q-ml-sm"
+                />
+              </q-stepper-navigation>
+            </q-step>
+
+            <q-step :name="3" title="Stoper" icon="stop" :done="step > 3">
+              <p>
+                Pour stoper le chronométre et donc le temps de travail. Il suffit de
+                rester <strong>appuyer 2 secondes</strong> sur le bouton. Le système va
+                générer une fiche de travail partiellement complété, que l'on pourra
+                compléter sur l'instant ou plus tard.
+              </p>
+
+              <q-stepper-navigation>
+                <q-btn @click="step = 4" color="primary" no-caps label="Suivant" />
+                <q-btn
+                  flat
+                  no-caps
+                  @click="step = 2"
+                  color="primary"
+                  label="Retour"
+                  class="q-ml-sm"
+                />
+              </q-stepper-navigation>
+            </q-step>
+            <q-step :name="4" title="Fin" icon="arrow_back">
+              <p>
+                Vous avez terminé ! Vous pouvez maintenant utilisé cette fonctionalitée
+                sans soucis !
+              </p>
+
+              <q-stepper-navigation>
+                <q-btn
+                  v-close-popup
+                  @click="step = 4"
+                  color="primary"
+                  no-caps
+                  label="Terminé"
+                />
+                <q-btn
+                  flat
+                  no-caps
+                  @click="step = 3"
+                  color="primary"
+                  label="Retour"
+                  class="q-ml-sm"
+                />
+              </q-stepper-navigation> </q-step></q-stepper></q-card-section
+      ></q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -75,6 +184,8 @@ timer.timer.addEventListener("secondsUpdated", async function () {
 export default {
   data() {
     return {
+      step: 1,
+      help: false,
       icon: "schedule",
       firstStart: false,
       utils: useQuasar(),
@@ -93,6 +204,9 @@ export default {
     await this.timeDataCloud();
   },
   methods: {
+    helpStart() {
+      (this.help = true), (this.step = 1);
+    },
     async stop() {
       if (timer.timer.isRunning()) {
         this.journer.end.value = new Date();
