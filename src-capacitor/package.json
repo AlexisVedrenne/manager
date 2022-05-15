@@ -1,0 +1,12 @@
+{
+  "name": "manager",
+  "version": "0.0.1",
+  "description": "L'objectif de cette application est de faciliter la vie à tous ceux qui voudrons l'utiliser. Je voulais créer quelque de chose d'utilisable facilement et de façon intuitive. Pour que ceux qui comme moi on du mal à gérer leur quotidien et qui on besoin d'aide pour l'organiser un peu mieux chaque jours.",
+  "author": "Alexis <alexisvedrenne482@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "2.5.0",
+    "@capacitor/cli": "^2.0.0",
+    "@capacitor/core": "^2.0.0"
+  }
+}

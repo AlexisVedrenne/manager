@@ -78,6 +78,9 @@
       spaced
       inset
     />
+    <div v-if="!utils.platform.is.electron" class="row justify-center">
+      <q-btn color="secondary" no-caps label="Centre des téléchargements" />
+    </div>
     <p class="q-mt-md text-bold text-grey-8 text-center">Se connecter avec</p>
     <div class="row justify-center q-mb-md">
       <q-btn
@@ -142,6 +145,9 @@ export default {
       },
       loading: false,
     };
+  },
+  mounted() {
+    console.log(this.utils.platform.is.electron);
   },
   methods: {
     async submit() {

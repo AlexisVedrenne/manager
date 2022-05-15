@@ -10,6 +10,7 @@
     "dev": "cross-env QENV=DEV quasar dev",
     "build": "cross-env QENV=DEV quasar build",
     "android": "cross-env QENV=DEV quasar dev -m cordova -T android",
+    "apk": "cross-env QENV=DEV quasar build -m capacitor -T android",
     "buildAndroid": "cross-env QENV=DEV quasar build -m cordova -T android",
     "windows": "cross-env QENV=DEV quasar dev -m electron",
     "buildWindows": "cross-env QENV=DEV quasar build -m electron",
