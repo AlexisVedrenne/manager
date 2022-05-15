@@ -29,6 +29,11 @@ const routes = [
         path: "/contact",
         component: () => import("pages/app/ContactPage.vue"),
       },
+      {
+        name: "Centre Téléchargement",
+        path: "/download-center",
+        component: () => import("pages/app/DownloadCenterPage.vue"),
+      },
     ],
   },
   {

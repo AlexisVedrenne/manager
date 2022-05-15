@@ -32,7 +32,7 @@ function createWindow() {
     },
   });
 
-  // mainWindow.setMenuBarVisibility(false);
+  mainWindow.setMenuBarVisibility(false);
 
   mainWindow.loadURL(process.env.APP_URL);
 

@@ -78,8 +78,20 @@
       spaced
       inset
     />
-    <div v-if="!utils.platform.is.electron" class="row justify-center">
-      <q-btn color="secondary" no-caps label="Centre des téléchargements" />
+    <div
+      v-if="
+        !utils.platform.is.electron &&
+        !utils.platform.is.capacitor &&
+        !utils.platform.is.cordova
+      "
+      class="row justify-center"
+    >
+      <q-btn
+        :to="{ name: 'Centre Téléchargement' }"
+        color="secondary"
+        no-caps
+        label="Centre des téléchargements"
+      />
     </div>
     <p class="q-mt-md text-bold text-grey-8 text-center">Se connecter avec</p>
     <div class="row justify-center q-mb-md">
