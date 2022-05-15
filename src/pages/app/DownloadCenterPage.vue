@@ -39,7 +39,7 @@
             <p class="text-center text-accent" style="font-size: 25px">OU</p>
             <div v-if="apks">
               <div class="row justify-center q-col-gutter-sm">
-                <div class="col-4" v-for="(download, index) in apks.docs" :key="index">
+                <div class="col-md-4" v-for="(download, index) in apks.docs" :key="index">
                   <DownloadCard :download="download.data()" />
                 </div>
               </div>
@@ -58,7 +58,7 @@
             <p class="text-center text-accent" style="font-size: 25px">OU</p>
             <div v-if="ioss">
               <div class="row justify-center q-col-gutter-sm">
-                <div class="col-4" v-for="(download, index) in ioss.docs" :key="index">
+                <div class="col-md-4" v-for="(download, index) in ioss.docs" :key="index">
                   <DownloadCard :download="download.data()" />
                 </div>
               </div>
@@ -73,7 +73,11 @@
           <q-tab-panel name="Bureau">
             <div v-if="deskops">
               <div class="row justify-center q-col-gutter-sm">
-                <div class="col-4" v-for="(download, index) in deskops.docs" :key="index">
+                <div
+                  class="col-md-4"
+                  v-for="(download, index) in deskops.docs"
+                  :key="index"
+                >
                   <DownloadCard :download="download.data()" />
                 </div>
               </div>
