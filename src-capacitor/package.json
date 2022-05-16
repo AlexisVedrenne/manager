@@ -1,6 +1,6 @@
 {
   "name": "manager",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "L'objectif de cette application est de faciliter la vie à tous ceux qui voudrons l'utiliser. Je voulais créer quelque de chose d'utilisable facilement et de façon intuitive. Pour que ceux qui comme moi on du mal à gérer leur quotidien et qui on besoin d'aide pour l'organiser un peu mieux chaque jours.",
   "author": "Alexis <alexisvedrenne482@gmail.com>",
   "private": true,
