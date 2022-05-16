@@ -2,6 +2,13 @@
   <main>
     <q-page>
       <q-card class="bg-secondary">
+        <q-btn
+          :to="{ name: 'home' }"
+          text-color="primary"
+          round
+          flat
+          icon="arrow_back_ios"
+        />
         <q-card-section>
           <p class="text-primary text-h6 text-center q-mb-lg text-bold">
             Besoin de me contacter ?

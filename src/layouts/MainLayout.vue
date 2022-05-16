@@ -18,7 +18,7 @@
             :to="{ name: 'home' }"
             class="q-pa-none"
             :icon-right="iconSelect"
-            size="20px"
+            size="15px"
             no-caps
             flat
             :label="this.$route.name != 'home' ? this.$route.name : ''"
@@ -73,6 +73,25 @@
       ></q-card>
       <q-list>
         <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+        <q-item
+          v-if="
+            !utils.platform.is.electron &&
+            !utils.platform.is.capacitor &&
+            !utils.platform.is.cordova
+          "
+          class="text-primary"
+          clickable
+          :to="{ name: 'Centre Téléchargement' }"
+        >
+          <q-item-section avatar>
+            <q-icon color="primary" name="download" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Centre téléchargements</q-item-label>
+            <q-item-label caption>Android,IOS,Windows...</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 

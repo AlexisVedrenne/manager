@@ -13,6 +13,13 @@
           src="~assets/images/logo.svg"
         />
       </section>
+      <q-btn
+        :to="{ name: 'home' }"
+        text-color="secondary"
+        round
+        flat
+        icon="arrow_back_ios"
+      />
       <p class="text-center" style="font-size: 18px">Centre des téléchargements</p>
       <q-card class="q-mb-xl" flat square>
         <q-tabs

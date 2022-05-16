@@ -2,6 +2,13 @@
   <main>
     <q-page>
       <q-card>
+        <q-btn
+          :to="{ name: 'home' }"
+          text-color="secondary"
+          round
+          flat
+          icon="arrow_back_ios"
+        />
         <q-card-section>
           <div class="row justify-center">
             <q-img
