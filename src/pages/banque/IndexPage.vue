@@ -13,7 +13,7 @@
       <q-separator color="secondary" style="height: 2px; width: 50%" />
       <div
         :class="
-          utils.screen.lt.md
+          utils.screen.gt.md
             ? 'row q-pa-md justify-center items-start q-gutter-md'
             : ' q-pa-md justify-center items-start q-gutter-md'
         "
@@ -32,7 +32,13 @@
         Compte épargne
       </p>
       <q-separator color="secondary" style="height: 2px; width: 50%" />
-      <div class="q-pa-md row justify-center items-start q-gutter-md">
+      <div
+        :class="
+          utils.screen.gt.md
+            ? 'row q-pa-md justify-center items-start q-gutter-md'
+            : ' q-pa-md justify-center items-start q-gutter-md'
+        "
+      >
         <div class="q-mt-md col-md-4" v-for="(compte, index) in epargne" :key="index">
           <CardBanque
             @click="detail(compte.index)"
@@ -47,7 +53,13 @@
         Compte à terme
       </p>
       <q-separator color="secondary" style="height: 2px; width: 50%" />
-      <div class="q-pa-md row justify-center items-start q-gutter-md">
+      <div
+        :class="
+          utils.screen.gt.md
+            ? 'row q-pa-md justify-center items-start q-gutter-md'
+            : ' q-pa-md justify-center items-start q-gutter-md'
+        "
+      >
         <div class="q-mt-md col-md-3" v-for="(compte, index) in terme" :key="index">
           <CardBanque
             @click="detail(compte.index)"
