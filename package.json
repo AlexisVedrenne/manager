@@ -1,6 +1,6 @@
 {
   "name": "manager",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "L'objectif de cette application est de faciliter la vie à tous ceux qui voudrons l'utiliser. Je voulais créer quelque de chose d'utilisable facilement et de façon intuitive. Pour que ceux qui comme moi on du mal à gérer leur quotidien et qui on besoin d'aide pour l'organiser un peu mieux chaque jours.",
   "productName": "Manager",
   "author": "Alexis <alexisvedrenne482@gmail.com>",
@@ -14,6 +14,8 @@
     "buildAndroid": "cross-env QENV=DEV quasar build -m cordova -T android",
     "windows": "cross-env QENV=DEV quasar dev -m electron",
     "buildWindows": "cross-env QENV=DEV quasar build -m electron",
+    "signeApk": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore manager-key.keystore dist/capacitor/android/apk/release/app-release-unsigned.apk  manager",
+    "signeAab": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore manager-key.keystore dist/cordova/android/bundle/release/app-release.aab  manager",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"
   },
