@@ -9,7 +9,7 @@
         />
         <img
           v-if="utils.screen.gt.md"
-          style="width: 25%; height: 25%"
+          style="width: 15%; height: 15%"
           src="~assets/images/logo.svg"
         />
       </section>
@@ -46,11 +46,11 @@
             <p class="text-center text-accent" style="font-size: 25px">OU</p>
             <div v-if="apks">
               <div class="row justify-center q-col-gutter-sm">
-                <div class="col-md-4" v-for="(download, index) in apks.docs" :key="index">
+                <div class="col-md-4" v-for="(download, index) in apks" :key="index">
                   <DownloadCard :download="download.data()" />
                 </div>
               </div>
-              <div v-if="apks.docs.length == 0">
+              <div v-if="apks.length == 0">
                 <p class="text-center text-grey">
                   Aucune version disponible pour cette platforme...
                 </p>
@@ -65,11 +65,11 @@
             <p class="text-center text-accent" style="font-size: 25px">OU</p>
             <div v-if="ioss">
               <div class="row justify-center q-col-gutter-sm">
-                <div class="col-md-4" v-for="(download, index) in ioss.docs" :key="index">
+                <div class="col-md-4" v-for="(download, index) in ioss" :key="index">
                   <DownloadCard :download="download.data()" />
                 </div>
               </div>
-              <div v-if="ioss.docs.length == 0">
+              <div v-if="ioss.length == 0">
                 <p class="text-center text-grey">
                   Aucune version disponible pour cette platforme...
                 </p>
@@ -80,15 +80,11 @@
           <q-tab-panel name="Bureau">
             <div v-if="deskops">
               <div class="row justify-center q-col-gutter-sm">
-                <div
-                  class="col-md-4"
-                  v-for="(download, index) in deskops.docs"
-                  :key="index"
-                >
+                <div class="col-md-4" v-for="(download, index) in deskops" :key="index">
                   <DownloadCard :download="download.data()" />
                 </div>
               </div>
-              <div v-if="deskops.docs.length == 0">
+              <div v-if="deskops.length == 0">
                 <p class="text-center text-grey">
                   Aucune version disponible pour cette platforme...
                 </p>
@@ -121,12 +117,16 @@ export default {
     this.apks = await this.$store.dispatch("fetchExecutable", {
       platforme: "android",
     });
+    this.apks = this.apks.docs.reverse();
     this.ioss = await this.$store.dispatch("fetchExecutable", {
       platforme: "IOS",
     });
+    this.ioss = this.ioss.docs.reverse();
+
     this.deskops = await this.$store.dispatch("fetchExecutable", {
       platforme: "windows",
     });
+    this.deskops = this.deskops.docs.reverse();
   },
 };
 </script>
