@@ -85,16 +85,19 @@ export async function endDay({ dispatch }) {
   }
 }
 
+/*
+  Cette méthode permet d'ajouter une fiche d'heure à l'utilisatueur connecté.
+*/
 export async function addFiche({ dispatch }, { fiche }) {
   try {
     let user = await dispatch("getUserInfo");
     if (fiche.baniere) {
-      let img = await dispatch("uploadImage", { image: fiche.baniere });
+      let img = await dispatch("uploadImage", { image: fiche.baniere }); // Permet de mettre en ligne une image
       fiche.baniere = img;
     }
 
-    user.heure.fiches.push(fiche);
-    await dispatch("updateUserInfo", { userInfos: user });
+    user.heure.fiches.push(fiche); // Ajoute la fiche à la liste des fiches
+    await dispatch("updateUserInfo", { userInfos: user }); // Met à jour les données utilisateur
     Notify.create({
       progress: true,
       timeout: 1000,

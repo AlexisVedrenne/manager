@@ -85,8 +85,11 @@ export default {
   },
   mounted() {
     let user = this.utils.localStorage.getItem("user");
-    let heure = user.heure.fiches[this.$route.params.index];
+    let heures = user.heure.fiches;
+    heures = heures.reverse();
+    let heure = heures[this.$route.params.index];
     if (!heure.heureTotal.toString().includes(":")) {
+      //---- Traitement des informations des heure totals travailler et supplémentaire ----
       let heureTotal = new Date(heure.heureTotal);
       let hours =
         heureTotal.getHours() < 9 ? "0" + heureTotal.getHours() : heureTotal.getHours();
@@ -118,6 +121,7 @@ export default {
         heure.heureSupp = res;
       }
       heure.heureTotal = heureTotal;
+      //---- Traitement des informations des heure totals travailler et supplémentaire ----
     }
 
     this.fiche = heure;

@@ -206,19 +206,20 @@ export default {
     };
   },
   mounted() {
-    let user = this.utils.localStorage.getItem("user");
-    let heure = user.heure.fiches[this.$route.params.index];
+    let user = this.utils.localStorage.getItem("user"); // Récupération des informations utilisateurs
+    let heures = user.heure.fiches.reverse(); //Permet de changer l'ordre de selection
+    let heure = heures[this.$route.params.index]; // Réupération de la fiche parmis la listes des fiches
     this.heure = heure;
   },
   methods: {
     async submit() {
-      this.loading = true;
+      this.loading = true; //Affichage du chargement
       await this.$store.dispatch("editFiche", {
         fiche: this.heure,
         index: this.$route.params.index,
-      });
+      }); //Envoie la requete de modification de la fiche d'heure.
       this.loading = false;
-      this.$router.push({ name: "Heure" });
+      this.$router.push({ name: "Heure" }); // Redirige sur la page de la liste des fiches d'heure
     },
     addTag() {
       this.heure.tag.push("tag");
