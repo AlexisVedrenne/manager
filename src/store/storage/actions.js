@@ -56,10 +56,13 @@ export async function uploadVideo({ commit, dispatch }, { video }) {
   }
 }
 
+/*
+  Méthode pour upload une image
+*/
 export async function uploadImage({ commit, dispatch }, { image }) {
   try {
-    const storage = fire.storage;
-    let user = LocalStorage.getItem("user");
+    const storage = fire.storage; //Récupére le module de gestion du stokage
+    let user = LocalStorage.getItem("user"); // ---- Selection de l'emplacement de stokage de l'image ----
     const storageRef = store.ref(storage);
     const metaData = {
       type: image.type,
@@ -67,8 +70,9 @@ export async function uploadImage({ commit, dispatch }, { image }) {
       lastModifiedDate: image.lastModifiedDate,
     };
     const folder = store.ref(storageRef, user.uid + "/" + image.name);
-    const upload = await store.uploadBytes(folder, image, metaData);
-    return dispatch("fetchImg", { img: upload.ref.name });
+    // ---- Selection de l'emplacement de stokage de l'image ----
+    const upload = await store.uploadBytes(folder, image, metaData); // Upload de l'image à l'endroit donnée
+    return dispatch("fetchImg", { img: upload.ref.name }); //Retourne l'url d'accès à l'image
   } catch (e) {
     Notify.create({
       message: "Une erreur s'est produite dans storage : " + e.message,

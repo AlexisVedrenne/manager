@@ -370,21 +370,24 @@ export async function endGuide({ commit }) {
   } catch (error) {}
 }
 
+/*
+  Fonction qui va mettre à jour les données utilisateur
+*/
 export async function updateUserInfo({ commit }, { userInfos }) {
   try {
-    let currentUser = LocalStorage.getItem("user");
+    let currentUser = LocalStorage.getItem("user"); // Récupération de l'utilisateur connecté
     const uid = currentUser.uid;
     const q = await query(
+      // Réquete pour récupérer l'id de la collection qui correspond à l'utilisateur
       collection(fire.firebasebd, "utilisateurs"),
       where("uid", "==", uid)
     );
     const res = await getDocs(q);
     let user = userInfos;
     const id = res.docs[0].ref.id;
-    await setDoc(doc(fire.firebasebd, "utilisateurs", id), user);
-    LocalStorage.set("user", userInfos);
+    await setDoc(doc(fire.firebasebd, "utilisateurs", id), user); // Mise à jour des informations sur le serveur
+    LocalStorage.set("user", userInfos); // Mise à jour des informations localement
   } catch (error) {
-    console.log(error);
     Notify.create({
       progress: true,
       timeout: 1000,
