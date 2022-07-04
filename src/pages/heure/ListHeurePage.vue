@@ -159,7 +159,7 @@ export default {
     },
     refresh() {
       let user = this.utils.localStorage.getItem("user");
-      this.heures = user.heure.fiches.reverse();
+      this.heures = user.heure.fiches;
     },
     async forceRefresh(done) {
       await this.$store.dispatch("getUserInfo");

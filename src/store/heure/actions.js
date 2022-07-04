@@ -121,7 +121,9 @@ export async function deleteFiche({ dispatch }, { index }) {
   try {
     Loading.show();
     let user = LocalStorage.getItem("user");
-    user.heure.fiches.splice(index, 1);
+    let heures = user.heure.fiches;
+    heures.splice(index, 1);
+    user.heure.fiches = heures;
     await dispatch("updateUserInfo", { userInfos: user });
     Loading.hide();
     Notify.create({
@@ -146,11 +148,13 @@ export async function deleteFiche({ dispatch }, { index }) {
 export async function editFiche({ dispatch }, { fiche, index }) {
   try {
     let user = LocalStorage.getItem("user");
-    user.heure.fiches[index] = fiche;
+    let heures = user.heure.fiches;
+    heures[index] = fiche;
     if ((typeof fiche.baniere).includes("object") && fiche.baniere) {
       let img = await dispatch("uploadImage", { image: fiche.baniere });
       fiche.baniere = img;
     }
+    user.heure.fiches = heures;
     await dispatch("updateUserInfo", { userInfos: user });
     Notify.create({
       progress: true,

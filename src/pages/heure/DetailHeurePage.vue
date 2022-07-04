@@ -86,7 +86,7 @@ export default {
   mounted() {
     let user = this.utils.localStorage.getItem("user");
     let heures = user.heure.fiches;
-    heures = heures.reverse();
+    heures = heures;
     let heure = heures[this.$route.params.index];
     if (!heure.heureTotal.toString().includes(":")) {
       //---- Traitement des informations des heure totals travailler et supplémentaire ----

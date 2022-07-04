@@ -207,7 +207,7 @@ export default {
   },
   mounted() {
     let user = this.utils.localStorage.getItem("user"); // Récupération des informations utilisateurs
-    let heures = user.heure.fiches.reverse(); //Permet de changer l'ordre de selection
+    let heures = user.heure.fiches; //Permet de changer l'ordre de selection
     let heure = heures[this.$route.params.index]; // Réupération de la fiche parmis la listes des fiches
     this.heure = heure;
   },
